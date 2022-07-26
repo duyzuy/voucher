@@ -1390,6 +1390,53 @@ button:focus:not(:focus-visible){
 .pnr__page .buttons{
     text-align: center;
 }
+
+/*=====booking form======*/
+.booking__form .select2-container .select2-selection--single{
+    padding: 10px 15px;
+    height: 45px;
+}
+.booking__form .select2-container--default .select2-selection--single .select2-selection__rendered{
+    line-height: inherit;
+    padding: 0;
+}
+.booking__form  .select2-container--default .select2-selection--single .select2-selection__arrow{
+    height: 40px;
+    width: 30px;
+    display: none;
+    
+}
+.booking__form__dropdown .citypare,
+.booking__form .citypare {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.booking__form__dropdown .citypare p,
+.booking__form .citypare p{
+    margin-bottom: 0;
+}
+.booking__form__dropdown .citypare__code{
+    font-weight: 900;
+}
+.booking__form__dropdown .select2-results__group{
+    background-color: #f9f9f9;
+    padding: 10px 15px
+}
+.booking__form__dropdown .citypare__name i{
+    margin-right: 10px;
+}
+.select2-container--default .booking__form__dropdown .select2-results__option .select2-results__option{
+    padding: 10px 20px
+}
+.select2-container--default .booking__form__dropdown  .select2-results__option--highlighted.select2-results__option--selectable{
+    background-color: #f1f1f1;
+    color: inherit
+}
+form.booking__form{
+    background: #fff;
+    padding: 20px
+}
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
         padding: 60px 30px 60px

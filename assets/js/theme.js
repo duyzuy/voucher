@@ -1,168 +1,168 @@
-const btnMenu = document.getElementsByClassName('navbar-toggler')
-const wrapper = document.getElementsByClassName('wrapper')
+const btnMenu = document.getElementsByClassName("navbar-toggler");
+const wrapper = document.getElementsByClassName("wrapper");
 
-btnMenu[0].addEventListener('click', function(e) {
-    wrapper[0].parentElement.classList.toggle('active__menu')
-    this.classList.toggle('open');
+btnMenu[0].addEventListener("click", function (e) {
+  wrapper[0].parentElement.classList.toggle("active__menu");
+  this.classList.toggle("open");
 
-    if(wrapper[0].parentElement.classList.contains('active__menu')){
-        this.innerHTML = '<i class="bi bi-x"></i>'
-    }else{
-        this.innerHTML = '<span class="navbar-toggler-icon"></span>'
-    }
-})
-
+  if (wrapper[0].parentElement.classList.contains("active__menu")) {
+    this.innerHTML = '<i class="bi bi-x"></i>';
+  } else {
+    this.innerHTML = '<span class="navbar-toggler-icon"></span>';
+  }
+});
 
 //tab passenger
 
-const tabButtons = document.querySelectorAll('#passenger__items button');
-const tabs = document.querySelectorAll('#passenger__tabs > .passgenser__tab');
+const tabButtons = document.querySelectorAll("#passenger__items button");
+const tabs = document.querySelectorAll("#passenger__tabs > .passgenser__tab");
 
-tabButtons.forEach( function(tabButton) {
-    tabButton.addEventListener('click', function(){
-        const btnAttr = this.dataset.target;
+tabButtons.forEach(function (tabButton) {
+  tabButton.addEventListener("click", function () {
+    const btnAttr = this.dataset.target;
 
-        
-        if(!this.classList.contains('.current')){
-            tabButtons.forEach( function(tabButton) {
-                tabButton.classList.remove('current')
-            })
-            
-            this.classList.add('current')
-           
-        }else{
-
-        }
-      
-        
-        tabs.forEach( function (tab) {
-            if(tab.classList.contains('active')){
-                tab.classList.remove('active')
-            }
-        })
-        document.querySelectorAll(`#passenger__tabs ${btnAttr}`)[0].classList.add('active')
-    })
-})
-var homeSlider = document.getElementById('home__slider');
-if(homeSlider){
-    $(homeSlider).slick({
-        dots: true,
-        infinite: false,
-        speed: 300,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        arrows: false,
-        // responsive: [
-        //   {
-        //     breakpoint: 1024,
-        //     settings: {
-        //       slidesToShow: 3,
-        //       slidesToScroll: 3,
-        //       infinite: true,
-        //       dots: true
-        //     }
-        //   },
-        //   {
-        //     breakpoint: 600,
-        //     settings: {
-        //       slidesToShow: 2,
-        //       slidesToScroll: 2
-        //     }
-        //   },
-        //   {
-        //     breakpoint: 480,
-        //     settings: {
-        //       slidesToShow: 1,
-        //       slidesToScroll: 1
-        //     }
-        //   }
-        // ]
+    if (!this.classList.contains(".current")) {
+      tabButtons.forEach(function (tabButton) {
+        tabButton.classList.remove("current");
       });
-}
 
+      this.classList.add("current");
+    } else {
+    }
+
+    tabs.forEach(function (tab) {
+      if (tab.classList.contains("active")) {
+        tab.classList.remove("active");
+      }
+    });
+    document
+      .querySelectorAll(`#passenger__tabs ${btnAttr}`)[0]
+      .classList.add("active");
+  });
+});
+var homeSlider = document.getElementById("home__slider");
+if (homeSlider) {
+  $(homeSlider).slick({
+    dots: true,
+    infinite: false,
+    speed: 300,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    autoplay: true,
+    autoplaySpeed: 5000,
+    arrows: false,
+    // responsive: [
+    //   {
+    //     breakpoint: 1024,
+    //     settings: {
+    //       slidesToShow: 3,
+    //       slidesToScroll: 3,
+    //       infinite: true,
+    //       dots: true
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 600,
+    //     settings: {
+    //       slidesToShow: 2,
+    //       slidesToScroll: 2
+    //     }
+    //   },
+    //   {
+    //     breakpoint: 480,
+    //     settings: {
+    //       slidesToShow: 1,
+    //       slidesToScroll: 1
+    //     }
+    //   }
+    // ]
+  });
+}
 
 /**quantity voucher */
 
-const quantityMinus = document.getElementsByClassName('quantity__minus')
-const quantityPlus = document.getElementsByClassName('quantity__plus')
+const quantityMinus = document.getElementsByClassName("quantity__minus");
+const quantityPlus = document.getElementsByClassName("quantity__plus");
 
+for (var i = 0; i < quantityMinus.length; i++) {
+  quantityMinus[i].addEventListener("click", function () {
+    const parent = this.parentNode;
+    const input = parent.querySelector("input");
+    const oldValue = parseFloat(input.value);
+    const min = parseFloat(input.min);
 
-
-for(var i = 0; i < quantityMinus.length; i++){
-    quantityMinus[i].addEventListener('click', function() {
-        const parent = this.parentNode;
-        const input = parent.querySelector('input')
-        const oldValue = parseFloat(input.value);
-        const min = parseFloat(input.min);
-   
-        if(oldValue == min){
-            return;
-        }
-        const newValue = oldValue - 1;
-        input.value = newValue;
-    })
+    if (oldValue == min) {
+      return;
+    }
+    const newValue = oldValue - 1;
+    input.value = newValue;
+  });
 }
 
+for (var i = 0; i < quantityPlus.length; i++) {
+  quantityPlus[i].addEventListener("click", function () {
+    const parent = this.parentNode;
+    const input = parent.querySelector("input");
+    const oldValue = parseFloat(input.value);
+    const max = parseFloat(input.max);
 
-for(var i = 0; i < quantityPlus.length; i++){
-    quantityPlus[i].addEventListener('click', function() {
-        const parent = this.parentNode;
-        const input = parent.querySelector('input')
-        const oldValue = parseFloat(input.value);
-        const max = parseFloat(input.max);
-      
-        if(oldValue == max){
-            return;
-        }
-        const newValue = oldValue + 1;
-        input.value = newValue;
-    })
+    if (oldValue == max) {
+      return;
+    }
+    const newValue = oldValue + 1;
+    input.value = newValue;
+  });
 }
-
 
 //gift voucher reciept
 
-const checkGiftVoucher = document.getElementById('giftVoucher');
-const beneciaryContainer = document.getElementById('beneciaryContainer');
-if(!giftVoucher.checked){
-    beneciaryContainer.classList.add('hide')
-}
-giftVoucher.addEventListener('change', function(){
-   
-    if(giftVoucher.checked){
-        beneciaryContainer.classList.add('show');
-        beneciaryContainer.classList.remove('hide')
-        
-    }else{
-        beneciaryContainer.classList.remove('show')
-        beneciaryContainer.classList.add('hide')
+const checkGiftVoucher = document.getElementById("giftVoucher");
+const beneciaryContainer = document.getElementById("beneciaryContainer");
+if (checkGiftVoucher) {
+  if (!checkGiftVoucher.checked) {
+    beneciaryContainer.classList.add("hide");
+  }
+  checkGiftVoucher.addEventListener("change", function () {
+    if (giftVoucher.checked) {
+      beneciaryContainer.classList.add("show");
+      beneciaryContainer.classList.remove("hide");
+    } else {
+      beneciaryContainer.classList.remove("show");
+      beneciaryContainer.classList.add("hide");
     }
-})
+  });
+}
 
-
-const paxModal = document.getElementById('paxModal')
-const btnSavePax = document.getElementById('btnSavePax')
-const paxInformationInput = document.getElementById('paxInformationInput')
-const benefiCiaries = document.getElementById('beneficiaries')
-
-paxModal.addEventListener('show.bs.modal', function (event) {
-  // Button that triggered the modal
+const paxModal = document.getElementById("paxModal");
+const btnSavePax = document.getElementById("btnSavePax");
+const paxInformationInput = document.getElementById("paxInformationInput");
+const benefiCiaries = document.getElementById("beneficiaries");
+if (paxModal) {
+  paxModal.addEventListener("show.bs.modal", function (event) {
+    // Button that triggered the modal
     var button = event.relatedTarget;
-    
-    var html = null;
-    var paxFamilyName = paxInformationInput.querySelector('input[name="paxFamilyName"]');
-    var paxMiddleName = paxInformationInput.querySelector('input[name="paxMiddleName"]');
-    var paxEmail = paxInformationInput.querySelector('input[name="paxEmail"]');
-    var paxPhoneNumber = paxInformationInput.querySelector('input[name="paxPhoneNumber"]');
-    var templateTypes = paxInformationInput.querySelectorAll('input[name="templateType"]');
-    var paxMessage = paxInformationInput.querySelector('textarea[name="paxMessage"]');
-    var templateType = null;
-    var benefiCiariesItems = benefiCiaries.querySelectorAll('.beneficiary__item');
 
-    
-   
+    var html = null;
+    var paxFamilyName = paxInformationInput.querySelector(
+      'input[name="paxFamilyName"]'
+    );
+    var paxMiddleName = paxInformationInput.querySelector(
+      'input[name="paxMiddleName"]'
+    );
+    var paxEmail = paxInformationInput.querySelector('input[name="paxEmail"]');
+    var paxPhoneNumber = paxInformationInput.querySelector(
+      'input[name="paxPhoneNumber"]'
+    );
+    var templateTypes = paxInformationInput.querySelectorAll(
+      'input[name="templateType"]'
+    );
+    var paxMessage = paxInformationInput.querySelector(
+      'textarea[name="paxMessage"]'
+    );
+    var templateType = null;
+    var benefiCiariesItems =
+      benefiCiaries.querySelectorAll(".beneficiary__item");
+
     paxFamilyName.value = null;
     paxMiddleName.value = null;
     paxPhoneNumber.value = null;
@@ -172,78 +172,125 @@ paxModal.addEventListener('show.bs.modal', function (event) {
 
     console.log(html);
 
-    for(let i = 0; i < templateTypes.length; i++){
-        templateTypes[i].checked = false
+    for (let i = 0; i < templateTypes.length; i++) {
+      templateTypes[i].checked = false;
     }
 
-    if(button.id == 'btnAddPax'){
+    if (button.id == "btnAddPax") {
       //add new pax to reciept
-        var count = 0;
-        btnSavePax.addEventListener('click', function(e){
-            console.log(e)
-            for(let i = 0; i < templateTypes.length; i++){
-                if(templateTypes[i].checked){
-                    templateType = templateTypes[i].value
-                }
-            }
-            if(paxFamilyName.value.length == 0){
-                paxFamilyName.classList.add('is-invalid');
-                return;
-            }else{
-                paxFamilyName.classList.remove('is-invalid');
-            }
-            if(paxMiddleName.value.length == 0){
-                paxMiddleName.classList.add('is-invalid');
-                return;
-            }else{
-                paxMiddleName.classList.remove('is-invalid');
-            }
-            if(paxEmail.value.length == 0){
-                paxEmail.classList.add('is-invalid');
-                return;
-            }else{
-                paxEmail.classList.remove('is-invalid');
-            }
-            if(paxPhoneNumber.value.length == 0){
-                paxPhoneNumber.classList.add('is-invalid');
-                return;
-            }else{
-                paxPhoneNumber.classList.remove('is-invalid');
-            }
-        
-            html = renderBeneficiaryItem(benefiCiariesItems.length, paxFamilyName.value, paxMiddleName.value,paxPhoneNumber.value, paxEmail.value, templateType, paxMessage.value)
-            benefiCiaries.insertAdjacentHTML('afterbegin', html);
-            $('#paxModal').modal('hide');
-        
-        })
-    }else{
-        console.log('edit')
+      var count = 0;
+      btnSavePax.addEventListener("click", function (e) {
+        console.log(e);
+        for (let i = 0; i < templateTypes.length; i++) {
+          if (templateTypes[i].checked) {
+            templateType = templateTypes[i].value;
+          }
+        }
+        if (paxFamilyName.value.length == 0) {
+          paxFamilyName.classList.add("is-invalid");
+          return;
+        } else {
+          paxFamilyName.classList.remove("is-invalid");
+        }
+        if (paxMiddleName.value.length == 0) {
+          paxMiddleName.classList.add("is-invalid");
+          return;
+        } else {
+          paxMiddleName.classList.remove("is-invalid");
+        }
+        if (paxEmail.value.length == 0) {
+          paxEmail.classList.add("is-invalid");
+          return;
+        } else {
+          paxEmail.classList.remove("is-invalid");
+        }
+        if (paxPhoneNumber.value.length == 0) {
+          paxPhoneNumber.classList.add("is-invalid");
+          return;
+        } else {
+          paxPhoneNumber.classList.remove("is-invalid");
+        }
+
+        html = renderBeneficiaryItem(
+          benefiCiariesItems.length,
+          paxFamilyName.value,
+          paxMiddleName.value,
+          paxPhoneNumber.value,
+          paxEmail.value,
+          templateType,
+          paxMessage.value
+        );
+        benefiCiaries.insertAdjacentHTML("afterbegin", html);
+        $("#paxModal").modal("hide");
+      });
+    } else {
+      console.log("edit");
     }
+  });
+}
+function renderBeneficiaryItem(
+  index,
+  familyName,
+  middleName,
+  phone,
+  email,
+  type,
+  message
+) {
+  var html = "";
+  html +=
+    '<div class="beneficiary__item beneficiary"><div class="beneficiary__inner">';
+  html +=
+    '<div class="beneficiary__body"><div class="beneficiary__icon"><i class="bi bi-person-fill"></i></div>';
+  html += '<div class="beneficiary__information">';
+  html +=
+    '<p class="beneficiary__name">' + familyName + ", " + middleName + "</p>";
+  html += '<p class="beneficiary__phone">' + phone + "</p>";
+  html += '<p class="beneficiary__email">' + email + "</p>";
+  html += '</div></div><div class="beneficiary__footer">';
+  html +=
+    '<button class="btn btn-light btn-sm btn-edit" type="button"><i class="bi bi-pencil"></i>Chỉnh sửa</button>';
+  html +=
+    '<button class="btn btn-light btn-sm btn-delete" type="button"><i class="bi bi-trash"></i>Xóa</button>';
+  html +=
+    '<input type="hidden" name="pax[' +
+    index +
+    '][familyName]" value="' +
+    familyName +
+    '"/>';
+  html +=
+    '<input type="hidden" name="pax[' +
+    index +
+    '][middleName]" value="' +
+    middleName +
+    '" />';
+  html +=
+    '<input type="hidden" name="pax[' +
+    index +
+    '][phoneNumber]" value="' +
+    phone +
+    '" />';
+  html +=
+    '<input type="hidden" name="pax[' +
+    index +
+    '][email]" value=">' +
+    email +
+    '" />';
+  html +=
+    '<input type="hidden" name="pax[' +
+    index +
+    '][giftType]" value="' +
+    type +
+    '" />';
+  html +=
+    '<input type="hidden" name="pax[' +
+    index +
+    '][message]" value="' +
+    message +
+    '" />';
+  html += "</div></div></div>";
 
-})
-
-
-
-function renderBeneficiaryItem(index, familyName, middleName, phone, email, type, message){
-    var html = '';
-    html += '<div class="beneficiary__item beneficiary"><div class="beneficiary__inner">';
-    html += '<div class="beneficiary__body"><div class="beneficiary__icon"><i class="bi bi-person-fill"></i></div>';
-    html += '<div class="beneficiary__information">';
-    html += '<p class="beneficiary__name">' + familyName + ', ' + middleName + '</p>';
-    html += '<p class="beneficiary__phone">' + phone + '</p>';
-    html += '<p class="beneficiary__email">' + email + '</p>';
-    html += '</div></div><div class="beneficiary__footer">';
-    html += '<button class="btn btn-light btn-sm btn-edit" type="button"><i class="bi bi-pencil"></i>Chỉnh sửa</button>';
-    html += '<button class="btn btn-light btn-sm btn-delete" type="button"><i class="bi bi-trash"></i>Xóa</button>';
-    html += '<input type="hidden" name="pax['+index+'][familyName]" value="'+ familyName +'"/>';
-    html += '<input type="hidden" name="pax['+index+'][middleName]" value="' + middleName + '" />';
-    html += '<input type="hidden" name="pax['+index+'][phoneNumber]" value="' + phone + '" />';
-    html += '<input type="hidden" name="pax['+index+'][email]" value=">' + email + '" />';
-    html += '<input type="hidden" name="pax['+index+'][giftType]" value="'+type+'" />';
-    html += '<input type="hidden" name="pax['+index+'][message]" value="'+message+'" />';
-    html += '</div></div></div>';
-
-    return html;
+  return html;
 }
 
 // function closeModal(modal) {
@@ -259,7 +306,7 @@ function renderBeneficiaryItem(index, familyName, middleName, phone, email, type
 //     modal.removeAttribute('role', 'dialog');
 //     // Remove the `show` class from the backdrop
 //     backdrop.classList.remove('show');
-//     // Remove the `show` class from the modal 
+//     // Remove the `show` class from the modal
 //     setTimeout(() => {
 //         modal.classList.remove('show');
 //       });
@@ -268,3 +315,217 @@ function renderBeneficiaryItem(index, familyName, middleName, phone, email, type
 //           backdrop.remove();
 //       }, 500);
 //   }
+
+$("#tripdate").daterangepicker(
+  {
+    showDropdowns: true,
+    autoApply: true,
+    startDate: "07/20/2022",
+    endDate: "07/26/2022",
+    minDate: "20/08/2022",
+    drops: "auto",
+  },
+  function (start, end, label) {
+    console.log(
+      "New date range selected: " +
+        start.format("YYYY-MM-DD") +
+        " to " +
+        end.format("YYYY-MM-DD") +
+        " (predefined range: " +
+        label +
+        ")"
+    );
+  }
+);
+
+//get data from ajax
+// const data = [
+//   {
+//     id: "SGN",
+//     text: "Ho Chi Minh",
+//     code: "SGN",
+//   },
+//   {
+//     id: "HAN",
+//     text: "Ha Noi",
+//     code: "HAN",
+//   },
+//   {
+//     id: "DAD",
+//     text: "Da Nang",
+//     code: "DAD",
+//   },
+//   {
+//     id: "HPH",
+//     text: "Hai Phong",
+//     code: "HPH",
+//   },
+// ];
+
+$("#trip__departure").select2({
+  ajax: {
+    url: "https://vietjetcms-api.vietjetair.com/api/v1/airport?languageId=a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+      };
+    },
+    processResults: function (data, params) {
+      let airports = [];
+      data.airportGroups.forEach((group, groupInd) => {
+        let airport = [];
+        group.airports.forEach((item, itemInd) => {
+          airport.push({
+            id: item.code,
+            name: item.name,
+            code: item.code,
+            engName: item.engName,
+          });
+        });
+        if (params.term) {
+          airport = airport.filter((item, index) => {
+            return item.engName
+              .toLowerCase()
+              .includes(params.term.toLowerCase());
+          });
+        }
+        airports[groupInd] = {
+          name: group.name,
+          children: airport,
+          isParent: true,
+        };
+      });
+
+      return {
+        results: airports,
+      };
+    },
+    cache: true,
+  },
+  multiple: false,
+  maximumSelectionSize: 1,
+  placeholder: "Departure",
+  templateResult: customTemplateResult,
+  templateSelection: customTemplateSelection,
+  dropdownCssClass: "booking__form__dropdown",
+});
+
+$("#trip__return").select2({
+  ajax: {
+    url: "https://vietjetcms-api.vietjetair.com/api/v1/airport?languageId=a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+      };
+    },
+    processResults: function (data, params) {
+      let airports = [];
+      data.airportGroups.forEach((group, groupInd) => {
+        let airport = [];
+        group.airports.forEach((item, itemInd) => {
+          airport.push({
+            id: item.code,
+            name: item.name,
+            code: item.code,
+            engName: item.engName,
+          });
+        });
+        if (params.term) {
+          airport = airport.filter((item, index) => {
+            return item.engName
+              .toLowerCase()
+              .includes(params.term.toLowerCase());
+          });
+        }
+        airports[groupInd] = {
+          name: group.name,
+          children: airport,
+          isParent: true,
+        };
+      });
+
+      return {
+        results: airports,
+      };
+    },
+    cache: true,
+  },
+  multiple: false,
+  maximumSelectionSize: 1,
+  placeholder: "Return",
+  templateResult: customTemplateResult,
+  templateSelection: customTemplateSelection,
+  dropdownCssClass: "booking__form__dropdown",
+});
+
+function customTemplateResult(data) {
+  if (!data.name) {
+    return null;
+  }
+  var htmlTemplate = $(
+    `<div class="citypare citypare--result ${
+      data.isParent ? "parent" : "children"
+    }">
+      <p class="citypare__name">${
+        data.isParent ? '<i class="bi bi-building"></i>' + data.name : data.name
+      }
+      </p>${
+        data.isParent
+          ? ""
+          : '<span class="citypare__code">' + data.code + "</span>"
+      }</div>`
+  );
+  return htmlTemplate;
+}
+
+function customTemplateSelection(data) {
+  if (!data.name) {
+    return null;
+  }
+  var htmlTemplate = $(
+    `<div class="citypare citypare--selection ${
+      data.isParent ? "parent" : "children"
+    }">
+          <p class="citypare__name">${data.name}
+          </p>${
+            data.isParent
+              ? ""
+              : '<span class="citypare__code">' + data.code + "</span>"
+          }</div>`
+  );
+  return htmlTemplate;
+}
+
+const tripDate = $("input[name=triptype]");
+let singleDatePicker = false;
+tripDate.on("change", (e) => {
+  if (e.target.value === "oneway") {
+    singleDatePicker = false;
+  } else {
+    singleDatePicker = true;
+  }
+  $("#trip__date").daterangepicker({
+    singleDatePicker: singleDatePicker,
+  });
+});
+$("#trip__date").daterangepicker(
+  {
+    autoApply: true,
+    singleDatePicker: singleDatePicker,
+  },
+  function (start, end, label) {
+    console.log(
+      "New date range selected: " +
+        start.format("YYYY-MM-DD") +
+        " to " +
+        end.format("YYYY-MM-DD") +
+        " (predefined range: " +
+        label +
+        ")"
+    );
+  }
+);
