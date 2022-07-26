@@ -189,35 +189,51 @@
           <div class="booking__form__wrapper">
             <form class="booking__form">
               <div class="booking__form__inner">
-                <div class="row">
-                  <div class="col-12">
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="triptype" id="trip__type_oneway" value="oneway"
-                        checked />
-                      <label class="form-check-label" for="trip__type_oneway">One way</label>
+                <div class="booking__form__input">
+                  <div class="row booking__form__row">
+                    <div class="col-12">
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="triptype" id="trip__type_oneway"
+                          value="oneway" checked />
+                        <label class="form-check-label" for="trip__type_oneway">One way</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="triptype" id="trip__type_return"
+                          value="return" />
+                        <label class="form-check-label" for="trip__type_return">Return</label>
+                      </div>
                     </div>
-                    <div class="form-check form-check-inline">
-                      <input class="form-check-input" type="radio" name="triptype" id="trip__type_return"
-                        value="return" />
-                      <label class="form-check-label" for="trip__type_return">Return</label>
+                  </div>
+                  <div class="row booking__form__row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                      <select id="trip__departure" class="form-control inline-search" name="depature"></select>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                      <select id="trip__return" class="form-control inline-search" name="return"></select>
+                    </div>
+                    <div class="col-12 col-sm-12 col-lg-3">
+                      <input id="trip__date" type="text" placeholder="Return" class="form-control" name="tripdate" />
+                    </div>
+                  </div>
+                  <div class="row booking__form__row">
+                    <div class="col-12 col-sm-6 col-lg-3">
+                      <select id="trip__adults" class="form-control inline-search" name="adults"></select>
+                    </div>
+                    <div class="col-12 col-sm-6 col-lg-3">
+                      <select id="trip__children" class="form-control inline-search" name="children"></select>
+                    </div>
+                    <div class="col-12 col-sm-12 col-lg-3">
+                      <input id="trip__infant" type="text" placeholder="Return" class="form-control" name="infant" />
                     </div>
                   </div>
                 </div>
-                <div class="row">
-                  <div class="col-12 col-sm-6 col-lg-3">
-                    <select id="trip__departure" class="form-control inline-search" name="depature"></select>
-                  </div>
-                  <div class="col-12 col-sm-6 col-lg-3">
-                    <select id="trip__return" class="form-control inline-search" name="return"></select>
-                  </div>
-                  <div class="col-12 col-sm-12 col-lg-3">
-                    <input id="trip__date" type="text" placeholder="Return" class="form-control" name="tripdate" />
-                  </div>
+                <div class="booking__form__buttons">
+                  <button class="btn btn-primary" type="submit">
+                    Tìm chuyến bay
+                  </button>
                 </div>
               </div>
-              <button class="btn btn-primary" type="submit">
-                Tim chuyen bay
-              </button>
+
             </form>
           </div>
         </section>
@@ -296,6 +312,7 @@
   <script src="./assets/js/daterangepicker.js"></script>
   <script src="./assets/js/select.js"></script>
   <script src="./assets/js/theme.js"></script>
+  <script src="./assets/js/booking.js"></script>
 </body>
 
 </html>
