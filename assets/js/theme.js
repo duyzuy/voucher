@@ -118,12 +118,12 @@ for (var i = 0; i < quantityPlus.length; i++) {
 
 const checkGiftVoucher = document.getElementById("giftVoucher");
 const beneciaryContainer = document.getElementById("beneciaryContainer");
-if (checkGiftVoucher && beneciaryContainer) {
+if (checkGiftVoucher) {
   if (!checkGiftVoucher.checked) {
     beneciaryContainer.classList.add("hide");
   }
   checkGiftVoucher.addEventListener("change", function () {
-    if (checkGiftVoucher.checked) {
+    if (giftVoucher.checked) {
       beneciaryContainer.classList.add("show");
       beneciaryContainer.classList.remove("hide");
     } else {
@@ -315,15 +315,206 @@ function renderBeneficiaryItem(
 //       }, 500);
 //   }
 
-//datepicker
+$("#tripdate").daterangepicker(
+  {
+    showDropdowns: true,
+    autoApply: true,
+    startDate: "07/20/2022",
+    endDate: "07/26/2022",
+    minDate: "20/08/2022",
+    drops: "auto",
+  },
+  function (start, end, label) {
+    console.log(
+      "New date range selected: " +
+        start.format("YYYY-MM-DD") +
+        " to " +
+        end.format("YYYY-MM-DD") +
+        " (predefined range: " +
+        label +
+        ")"
+    );
+  }
+);
 
-const bookingDate = document.getElementById("");
+//get data from ajax
+// const data = [
+//   {
+//     id: "SGN",
+//     text: "Ho Chi Minh",
+//     code: "SGN",
+//   },
+//   {
+//     id: "HAN",
+//     text: "Ha Noi",
+//     code: "HAN",
+//   },
+//   {
+//     id: "DAD",
+//     text: "Da Nang",
+//     code: "DAD",
+//   },
+//   {
+//     id: "HPH",
+//     text: "Hai Phong",
+//     code: "HPH",
+//   },
+// ];
 
-$("#booking__date").daterangepicker(
+$("#trip__departure").select2({
+  ajax: {
+    url: "https://vietjetcms-api.vietjetair.com/api/v1/airport?languageId=a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+      };
+    },
+    processResults: function (data, params) {
+      let airports = [];
+      data.airportGroups.forEach((group, groupInd) => {
+        let airport = [];
+        group.airports.forEach((item, itemInd) => {
+          airport.push({
+            id: item.code,
+            name: item.name,
+            code: item.code,
+            engName: item.engName,
+          });
+        });
+        if (params.term) {
+          airport = airport.filter((item, index) => {
+            return item.engName
+              .toLowerCase()
+              .includes(params.term.toLowerCase());
+          });
+        }
+        airports[groupInd] = {
+          name: group.name,
+          children: airport,
+          isParent: true,
+        };
+      });
+
+      return {
+        results: airports,
+      };
+    },
+    cache: true,
+  },
+  multiple: false,
+  maximumSelectionSize: 1,
+  placeholder: "Departure",
+  templateResult: customTemplateResult,
+  templateSelection: customTemplateSelection,
+  dropdownCssClass: "booking__form__dropdown",
+});
+
+$("#trip__return").select2({
+  ajax: {
+    url: "https://vietjetcms-api.vietjetair.com/api/v1/airport?languageId=a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
+    dataType: "json",
+    delay: 250,
+    data: function (params) {
+      return {
+        q: params.term, // search term
+      };
+    },
+    processResults: function (data, params) {
+      let airports = [];
+      data.airportGroups.forEach((group, groupInd) => {
+        let airport = [];
+        group.airports.forEach((item, itemInd) => {
+          airport.push({
+            id: item.code,
+            name: item.name,
+            code: item.code,
+            engName: item.engName,
+          });
+        });
+        if (params.term) {
+          airport = airport.filter((item, index) => {
+            return item.engName
+              .toLowerCase()
+              .includes(params.term.toLowerCase());
+          });
+        }
+        airports[groupInd] = {
+          name: group.name,
+          children: airport,
+          isParent: true,
+        };
+      });
+
+      return {
+        results: airports,
+      };
+    },
+    cache: true,
+  },
+  multiple: false,
+  maximumSelectionSize: 1,
+  placeholder: "Return",
+  templateResult: customTemplateResult,
+  templateSelection: customTemplateSelection,
+  dropdownCssClass: "booking__form__dropdown",
+});
+
+function customTemplateResult(data) {
+  if (!data.name) {
+    return null;
+  }
+  var htmlTemplate = $(
+    `<div class="citypare citypare--result ${
+      data.isParent ? "parent" : "children"
+    }">
+      <p class="citypare__name">${
+        data.isParent ? '<i class="bi bi-building"></i>' + data.name : data.name
+      }
+      </p>${
+        data.isParent
+          ? ""
+          : '<span class="citypare__code">' + data.code + "</span>"
+      }</div>`
+  );
+  return htmlTemplate;
+}
+
+function customTemplateSelection(data) {
+  if (!data.name) {
+    return null;
+  }
+  var htmlTemplate = $(
+    `<div class="citypare citypare--selection ${
+      data.isParent ? "parent" : "children"
+    }">
+          <p class="citypare__name">${data.name}
+          </p>${
+            data.isParent
+              ? ""
+              : '<span class="citypare__code">' + data.code + "</span>"
+          }</div>`
+  );
+  return htmlTemplate;
+}
+
+const tripDate = $("input[name=triptype]");
+let singleDatePicker = false;
+tripDate.on("change", (e) => {
+  if (e.target.value === "oneway") {
+    singleDatePicker = false;
+  } else {
+    singleDatePicker = true;
+  }
+  $("#trip__date").daterangepicker({
+    singleDatePicker: singleDatePicker,
+  });
+});
+$("#trip__date").daterangepicker(
   {
     autoApply: true,
-    startDate: "07/19/2022",
-    endDate: "07/25/2022",
+    singleDatePicker: singleDatePicker,
   },
   function (start, end, label) {
     console.log(
