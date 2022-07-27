@@ -3,152 +3,207 @@ const languageId = "a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14";
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
+const constants = {
+  DEPART_LOCATION: "departLocation",
+  RETURN_LOCATION: "returnLocation",
+  ONEWAY: "oneway",
+  RETURN: "return",
+  DATE_FORMAT: "YYYY-MM-DD",
+  LOCALE_EN: "en",
+  LOCALE_VI: "vi",
+};
+const dateLocale = [
+  {
+    lang: "en",
+    departText: "Depart date",
+    returnText: "Return date",
+    locale: {
+      format: "MM-DD-YYYY",
+      separator: "-",
+      applyLabel: "Apply",
+      cancelLabel: "Cancel",
+      fromLabel: "From",
+      toLabel: "To",
+      customRangeLabel: "Custom",
+      weekLabel: "W",
+      daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      monthNames: [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ],
+      firstDay: 1,
+    },
+  },
+  {
+    lang: "vi",
+    departText: "Ngày đi",
+    returnText: "Ngày về",
+    locale: {
+      format: "DD-MM-YYYY",
+      separator: "-",
+      applyLabel: "Xác nhận",
+      cancelLabel: "Huỷ bỏ",
+      fromLabel: "Từ",
+      toLabel: "Đến",
+      customRangeLabel: "Custom",
+      weekLabel: "Tuần",
+      daysOfWeek: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+      monthNames: [
+        "Tháng 1",
+        "Tháng 2",
+        "Tháng 3",
+        "Tháng 4",
+        "Tháng 5",
+        "Tháng 6",
+        "Tháng 7",
+        "Tháng 8",
+        "Tháng 9",
+        "Tháng 10",
+        "Tháng 11",
+        "Tháng 12",
+      ],
+      firstDay: 1,
+    },
+  },
+];
+
+const tripType = $("#trip__type--oneway, #trip__type--return");
 const app = {
+  bookingInform: {
+    tripType: constants.RETURN,
+    departLocation: "",
+    returnLocation: "",
+    departDate: "",
+    returnDate: "",
+    passenngers: {
+      adults: 1,
+      children: 0,
+      infant: 0,
+    },
+    currentSelect: "",
+    locale: constants.LOCALE_VI,
+  },
   init() {
+    this.onSelectTripType();
     this.onSelectDeparture();
     this.onSelectReturn();
     this.onSelectDate();
+  },
+  onSelectTripType() {
+    const _this = this;
+    tripType.on("change", (e) => {
+      _this.bookingInform.tripType = e.target.value;
+      _this.onSelectDate();
+    });
   },
   onSelectDeparture() {
     const _this = this;
     tripDeparture
       .select2({
         ajax: {
-          url: baseURL + "?languageId=" + languageId,
+          url: () => {
+            const ajaxURL = baseURL + "?languageId=" + languageId;
+            return ajaxURL;
+          },
           dataType: "json",
-          delay: 250,
           data: function (params) {
             return {
-              q: params.term, // search term
+              q: params.term,
             };
           },
-          processResults: function (data, params) {
-            let airports = [];
-            data.airportGroups.forEach((group, groupInd) => {
-              let airport = [];
-              group.airports.forEach((item, itemInd) => {
-                airport.push({
-                  id: item.code,
-                  name: item.name,
-                  code: item.code,
-                  engName: item.engName,
-                });
-              });
-              if (params.term) {
-                airport = airport.filter((item, index) => {
-                  return item.engName
-                    .toLowerCase()
-                    .includes(params.term.toLowerCase());
-                });
-              }
-              airports[groupInd] = {
-                name: group.name,
-                children: airport,
-                isParent: true,
-              };
-            });
-
-            return {
-              results: airports,
-            };
-          },
+          processResults: _this.onProcessResults,
           cache: true,
         },
-        multiple: false,
-        maximumSelectionSize: 1,
+
         placeholder: "Departure",
         templateResult: this.customTemplateResult,
-        templateSelection: this.customTemplateSelection,
+        templateSelection: (data) =>
+          this.customTemplateSelection(data, {
+            type: constants.DEPART_LOCATION,
+          }),
         dropdownCssClass: "booking__form__dropdown",
-        multiple: true,
-        maximumSelectionLength: 2,
-        theme: "classic",
+        // dropdownParent: $("#dropdown__citypare--departure"),
+        width: "resolve",
       })
       .on("select2:select", function (e) {
-        $(this).val([]).trigger("change");
-        $(this).val([e.params.data.id]).trigger("change");
-        _this.onSelectReturn(e.params.data.id);
+        _this.bookingInform.departLocation = e.params.data.id;
+        // $(this).val(null).trigger("change");
+        // $(this).val(e.params.data.id).trigger("change");
+        tripReturn.val(null).trigger("change");
+        tripReturn.select2("open");
       });
   },
-  onSelectReturn(apCode = null) {
-    const url =
-      baseURL +
-      (apCode ? "?departureCode=" + apCode + "&languageId=" : "?languageId=") +
-      languageId;
+  onSelectReturn() {
     const _this = this;
     tripReturn
       .select2({
         ajax: {
-          url,
+          url: () => {
+            let departLocation = _this.bookingInform.departLocation;
+            const ajaxURL =
+              baseURL +
+              (departLocation !== ""
+                ? "?departureCode=" + departLocation + "&languageId="
+                : "?languageId=") +
+              languageId;
+            return ajaxURL;
+          },
           dataType: "json",
-          delay: 250,
           data: function (params) {
             return {
               q: params.term, // search term
             };
           },
-          processResults: function (data, params) {
-            let airports = [];
-            data.airportGroups.forEach((group, groupInd) => {
-              let airport = [];
-              group.airports.forEach((item, itemInd) => {
-                airport.push({
-                  id: item.code,
-                  name: item.name,
-                  code: item.code,
-                  engName: item.engName,
-                });
-              });
-              if (params.term) {
-                airport = airport.filter((item, index) => {
-                  return item.engName
-                    .toLowerCase()
-                    .includes(params.term.toLowerCase());
-                });
-              }
-              airports[groupInd] = {
-                name: group.name,
-                children: airport,
-                isParent: true,
-              };
-            });
-
-            return {
-              results: airports,
-            };
-          },
+          processResults: _this.onProcessResults,
           cache: true,
         },
-        multiple: false,
-        maximumSelectionSize: 1,
         placeholder: "Return",
         templateResult: this.customTemplateResult,
-        templateSelection: this.customTemplateSelection,
+        templateSelection: (data) =>
+          this.customTemplateSelection(data, {
+            type: constants.RETURN_LOCATION,
+          }),
         dropdownCssClass: "booking__form__dropdown",
-        multiple: true,
+        // dropdownParent: $("#dropdown__citypare--return"),
+        width: "resolve",
       })
       .on("select2:select", function (e) {
-        $(this).val([]).trigger("change");
-        $(this).val([e.params.data.id]).trigger("change");
-        _this.onSelectDeparture(e.params.data.id);
+        _this.bookingInform.returnLocation = e.params.data.id;
+        // $(this).val(null).trigger("change");
+        // $(this).val(e.params.data.id).trigger("change");
       });
   },
   onSelectDate() {
+    const _this = this;
+    const currentLocale = dateLocale.find((item, index) => {
+      return item.lang === _this.bookingInform.locale;
+    });
+    _this.renderDatePickerTemplate({
+      id: "trip__date",
+      type: "",
+      data: null,
+      locale: currentLocale,
+    });
+
     tripDate.daterangepicker(
       {
         autoApply: true,
         singleDatePicker: false,
+        numberOfMonths: 2,
       },
       function (start, end, label) {
-        console.log(
-          "New date range selected: " +
-            start.format("YYYY-MM-DD") +
-            " to " +
-            end.format("YYYY-MM-DD") +
-            " (predefined range: " +
-            label +
-            ")"
-        );
+        tripDate.val([start.format("MM/DD/YYYY"), end.format("MM/DD/YYYY")]);
+        console.log([start.format("MM/DD/YYYY"), end.format("MM/DD/YYYY")]);
       }
     );
   },
@@ -173,9 +228,11 @@ const app = {
     );
     return htmlTemplate;
   },
-  customTemplateSelection(data) {
+  customTemplateSelection(data, options) {
     if (!data.name) {
-      return null;
+      return options.type === constants.DEPART_LOCATION
+        ? "Điểm khởi hành"
+        : "Điểm đến";
     }
     var htmlTemplate = $(
       `<div class="citypare citypare--selection ${
@@ -190,28 +247,65 @@ const app = {
     );
     return htmlTemplate;
   },
+  onProcessResults: (data, params) => {
+    let airports = [];
+    let filterAirport = [];
+
+    data.airportGroups.forEach((group, groupInd) => {
+      let airport = [];
+      group.airports.forEach((item, itemInd) => {
+        airport.push({
+          id: item.code,
+          name: item.name,
+          provinceName: item.province.provinceName,
+          provinceEngName: item.province.provinceEngName,
+          code: item.code,
+          engName: item.engName,
+        });
+      });
+
+      if (params.term) {
+        $.each(airport, function (idx, child) {
+          if (
+            child.provinceEngName
+              .toUpperCase()
+              .indexOf(params.term.toUpperCase()) == 0 ||
+            child.engName.toUpperCase().indexOf(params.term.toUpperCase()) ==
+              0 ||
+            child.code.toUpperCase().indexOf(params.term.toUpperCase()) == 0
+          ) {
+            filterAirport.push(child);
+          }
+        });
+      }
+
+      airports[groupInd] = {
+        name: group.name,
+        children: airport,
+        isParent: true,
+      };
+    });
+    if (filterAirport.length > 0) {
+      return {
+        results: filterAirport,
+      };
+    }
+    return {
+      results: airports,
+    };
+  },
+  renderDatePickerTemplate({ id, type, data, locale }) {
+    if (!id) {
+      return;
+    }
+
+    const html = `<div class="booking__date booking__date--depart">
+    <div id="trip__date--depart" class="form-control">Ngày đi</div>
+  </div>
+  <div class="booking__date booking__date--return"><div id="trip__date--return" class="form-control">Ngày về</div>
+  </div>`;
+    $(`#${id}`).append(html);
+  },
 };
 
 app.init();
-
-// $("#tripdate").daterangepicker(
-//   {
-//     showDropdowns: true,
-//     autoApply: true,
-//     startDate: "07/20/2022",
-//     endDate: "07/26/2022",
-//     minDate: "20/08/2022",
-//     drops: "auto",
-//   },
-//   function (start, end, label) {
-//     console.log(
-//       "New date range selected: " +
-//         start.format("YYYY-MM-DD") +
-//         " to " +
-//         end.format("YYYY-MM-DD") +
-//         " (predefined range: " +
-//         label +
-//         ")"
-//     );
-//   }
-// );

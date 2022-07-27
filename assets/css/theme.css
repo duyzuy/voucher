@@ -1427,7 +1427,7 @@ button:focus:not(:focus-visible){
     margin-right: 10px;
 }
 .select2-container--default .booking__form__dropdown .select2-results__option .select2-results__option{
-    padding: 10px 20px
+    padding: 10px 15px
 }
 .select2-container--default .booking__form__dropdown  .select2-results__option--highlighted.select2-results__option--selectable{
     background-color: #f1f1f1;
@@ -1439,6 +1439,24 @@ form.booking__form{
 }
 .booking__form__row{
     margin-bottom: 15px;
+}
+.citypare--selection .citypare__code{
+    width: 60px;
+    text-align: right;
+    font-weight: bold;
+}
+.citypare--selection .citypare__name{
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.booking__form .select2-container--default .select2-selection--single,
+.booking__form__dropdown,
+.booking__form .select2-container--default .select2-search--dropdown .select2-search__field{
+    border-color: #ced4da;
+}
+
+.booking__form .select2-container{
+    width: 100% !important;
 }
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
