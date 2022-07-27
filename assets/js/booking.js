@@ -300,10 +300,9 @@ const app = {
     }
 
     const html = `<div class="booking__date booking__date--depart">
-    <div id="trip__date--depart" class="form-control">Ngày đi</div>
-  </div>
+    <div id="trip__date--depart" class="form-control">Ngày đi</div></div>
   <div class="booking__date booking__date--return"><div id="trip__date--return" class="form-control">Ngày về</div>
-  </div>`;
+  <input type="hidden" name="tripDate" /></div>`;
     $(`#${id}`).append(html);
   },
 };
