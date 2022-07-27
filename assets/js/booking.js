@@ -108,6 +108,8 @@ const app = {
   },
   onSelectDeparture() {
     const _this = this;
+    tripDeparture.val(_this.bookingInform.departDate).trigger("change");
+
     tripDeparture
       .select2({
         ajax: {
@@ -126,9 +128,9 @@ const app = {
         },
 
         placeholder: "Departure",
-        templateResult: this.customTemplateResult,
+        templateResult: _this.customTemplateResult,
         templateSelection: (data) =>
-          this.customTemplateSelection(data, {
+          _this.customTemplateSelection(data, {
             type: constants.DEPART_LOCATION,
           }),
         dropdownCssClass: "booking__form__dropdown",
@@ -137,8 +139,6 @@ const app = {
       })
       .on("select2:select", function (e) {
         _this.bookingInform.departLocation = e.params.data.id;
-        // $(this).val(null).trigger("change");
-        // $(this).val(e.params.data.id).trigger("change");
         tripReturn.val(null).trigger("change");
         tripReturn.select2("open");
       });
@@ -168,9 +168,9 @@ const app = {
           cache: true,
         },
         placeholder: "Return",
-        templateResult: this.customTemplateResult,
+        templateResult: _this.customTemplateResult,
         templateSelection: (data) =>
-          this.customTemplateSelection(data, {
+          _this.customTemplateSelection(data, {
             type: constants.RETURN_LOCATION,
           }),
         dropdownCssClass: "booking__form__dropdown",
@@ -179,8 +179,7 @@ const app = {
       })
       .on("select2:select", function (e) {
         _this.bookingInform.returnLocation = e.params.data.id;
-        // $(this).val(null).trigger("change");
-        // $(this).val(e.params.data.id).trigger("change");
+        $(this).val(_this.bookingInform.returnLocation).trigger("change");
       });
   },
   onSelectDate() {
@@ -188,22 +187,33 @@ const app = {
     const currentLocale = dateLocale.find((item, index) => {
       return item.lang === _this.bookingInform.locale;
     });
-    _this.renderDatePickerTemplate({
-      id: "trip__date",
-      type: "",
-      data: null,
-      locale: currentLocale,
-    });
+    let data = {
+      departDate: {
+        text: currentLocale.departText,
+        value: _this.bookingInform.departDate,
+      },
+      returnDate: {
+        text: currentLocale.returnText,
+        value: _this.bookingInform.returnDate,
+      },
+      tripType: _this.bookingInform.tripType,
+    };
+
+    _this.renderDatePickerTemplate(data);
 
     tripDate.daterangepicker(
       {
         autoApply: true,
         singleDatePicker: false,
-        numberOfMonths: 2,
+        minDate: new Date(),
       },
       function (start, end, label) {
-        tripDate.val([start.format("MM/DD/YYYY"), end.format("MM/DD/YYYY")]);
-        console.log([start.format("MM/DD/YYYY"), end.format("MM/DD/YYYY")]);
+        _this.bookingInform.departDate = start.format(constants.DATE_FORMAT);
+        _this.bookingInform.returnDate = end.format(constants.DATE_FORMAT);
+
+        data.departDate.value = start.format(constants.DATE_FORMAT);
+        data.returnDate.value = end.format(constants.DATE_FORMAT);
+        _this.renderDatePickerTemplate(data);
       }
     );
   },
@@ -294,16 +304,36 @@ const app = {
       results: airports,
     };
   },
-  renderDatePickerTemplate({ id, type, data, locale }) {
-    if (!id) {
-      return;
+  renderDatePickerTemplate(data) {
+    const classes = (type) => {
+      let classes = `trip__date--wrap trip__date--${type}`;
+      let keyObject = "departDate";
+      if (type === "return") {
+        keyObject = "returnDate";
+      }
+      if (data[keyObject].value !== "") {
+        // classes.concat(" ", "selected");
+        classes += " selected";
+      }
+      return classes;
+    };
+
+    let html = `<div id="trip__date--depart" class="${classes("depart")}">`;
+    html += `<div class="trip__date--icon"><i class="bi bi-calendar-week"></i></div>`;
+    html += `<div class="trip__date--text">`;
+    html += `<span class="booking__date--text">${data.departDate.text}</span>`;
+    html += `<span class="booking__date--value">${data.departDate.value}</span>`;
+    html += `</div><input type="hidden" name="departDate" value="${data.departDate.value}"/></div>`;
+    if (data.tripType === constants.RETURN) {
+      html += `<div id="trip__date--return" class="${classes("return")}">`;
+      html += `<div class="trip__date--icon"><i class="bi bi-calendar-week"></i></div>`;
+      html += `<div class="trip__date--text">`;
+      html += `<span class="booking__date--text">${data.returnDate.text}</span>`;
+      html += `<span class="booking__date--value">${data.returnDate.value}</span>`;
+      html += `</div><input type="hidden" name="returnDate" value="${data.returnDate.value}"/></div>`;
     }
 
-    const html = `<div class="booking__date booking__date--depart">
-    <div id="trip__date--depart" class="form-control">Ngày đi</div></div>
-  <div class="booking__date booking__date--return"><div id="trip__date--return" class="form-control">Ngày về</div>
-  <input type="hidden" name="tripDate" /></div>`;
-    $(`#${id}`).append(html);
+    $("#trip__date").html(html);
   },
 };
 

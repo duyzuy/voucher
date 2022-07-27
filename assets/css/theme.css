@@ -1392,7 +1392,25 @@ button:focus:not(:focus-visible){
 }
 
 /*=====booking form======*/
-.booking__form .select2-container .select2-selection--single{
+.booking__form--inner{
+    display: flex;
+
+}
+.booking__form--input{
+    flex: 1
+}
+.booking__form--buttons{
+    display: flex;
+    align-items: flex-end;
+}
+.booking__form--row{
+    padding-right: 30px;
+}
+.booking__form--row .booking__form--col{
+    margin-bottom: 15px;
+}
+.booking__form .select2-container .select2-selection--single,
+.trip__date{
     padding: 10px 15px;
     height: 45px;
 }
@@ -1458,6 +1476,17 @@ form.booking__form{
 .booking__form .select2-container{
     width: 100% !important;
 }
+.trip__date{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ced4da;
+
+}
+
+.trip__date--wrap{
+    flex: 1
+} 
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
         padding: 60px 30px 60px
