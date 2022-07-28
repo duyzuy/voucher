@@ -3,6 +3,7 @@ const languageId = "a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14";
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
+const tripType = $("#trip__type--oneway, #trip__type--return");
 const constants = {
   DEPART_LOCATION: "departLocation",
   RETURN_LOCATION: "returnLocation",
@@ -76,8 +77,27 @@ const dateLocale = [
     },
   },
 ];
+const bookingFormText = [
+  {
+    lang: "en",
+    departure: "Departure",
+    return: "Return",
+    searchFlight: "Search",
+    adults: "Adults",
+    children: "Children",
+    infant: "Infant",
+  },
+  {
+    lang: "vi",
+    departure: "Điểm Khởi hành",
+    return: "Điểm đến",
+    searchFlight: "Tìm chuyến bay",
+    adults: "Người lớn",
+    children: "Trẻ em",
+    infant: "Em bé",
+  },
+];
 
-const tripType = $("#trip__type--oneway, #trip__type--return");
 const app = {
   bookingInform: {
     tripType: constants.RETURN,
@@ -201,21 +221,25 @@ const app = {
 
     _this.renderDatePickerTemplate(data);
 
-    tripDate.daterangepicker(
-      {
-        autoApply: true,
-        singleDatePicker: false,
-        minDate: new Date(),
-      },
-      function (start, end, label) {
-        _this.bookingInform.departDate = start.format(constants.DATE_FORMAT);
-        _this.bookingInform.returnDate = end.format(constants.DATE_FORMAT);
+    tripDate
+      .daterangepicker(
+        {
+          autoApply: true,
+          singleDatePicker: false,
+          minDate: new Date(),
+        },
+        function (start, end, label) {
+          _this.bookingInform.departDate = start.format(constants.DATE_FORMAT);
+          _this.bookingInform.returnDate = end.format(constants.DATE_FORMAT);
 
-        data.departDate.value = start.format(constants.DATE_FORMAT);
-        data.returnDate.value = end.format(constants.DATE_FORMAT);
-        _this.renderDatePickerTemplate(data);
-      }
-    );
+          data.departDate.value = start.format(constants.DATE_FORMAT);
+          data.returnDate.value = end.format(constants.DATE_FORMAT);
+          _this.renderDatePickerTemplate(data);
+        }
+      )
+      .on("showCalendar.daterangepicker", function (ev, picker) {
+        console.log(ev);
+      });
   },
   customTemplateResult(data) {
     if (!data.name) {
@@ -225,30 +249,34 @@ const app = {
       `<div class="citypare citypare--result ${
         data.isParent ? "parent" : "children"
       }">
-        <p class="citypare__name">${
+        ${
           data.isParent
-            ? '<i class="bi bi-building"></i>' + data.name
-            : data.name
+            ? `<p class="citypare__name citypare__name--group"><i class="bi bi-building"></i>${data.name}</p>`
+            : `<p class="citypare__name citypare__name--item"><span class="province--name">${data.provinceName}</span><span class="citypare--name">${data.name}</span></p><span class="citypare__code">${data.code}</span>`
         }
-        </p>${
-          data.isParent
-            ? ""
-            : '<span class="citypare__code">' + data.code + "</span>"
-        }</div>`
+      </div>`
     );
     return htmlTemplate;
   },
   customTemplateSelection(data, options) {
+    const _this = this;
+    const currentLocale = _this.bookingInform.locale;
+    const formText = bookingFormText.find((item) => {
+      return item.lang === currentLocale;
+    });
+
     if (!data.name) {
       return options.type === constants.DEPART_LOCATION
-        ? "Điểm khởi hành"
-        : "Điểm đến";
+        ? formText.departure
+        : formText.return;
     }
-    var htmlTemplate = $(
-      `<div class="citypare citypare--selection ${
+    const htmlTemplate = $(
+      `<span class="select2-selection__placeholder selected">${
+        constants.DEPART_LOCATION ? formText.departure : formText.return
+      }</span><div class="citypare citypare--selection ${
         data.isParent ? "parent" : "children"
       }">
-            <p class="citypare__name">${data.name}
+            <p class="citypare__name">${data.provinceName}
             </p>${
               data.isParent
                 ? ""
@@ -319,14 +347,14 @@ const app = {
     };
 
     let html = `<div id="trip__date--depart" class="${classes("depart")}">`;
-    html += `<div class="trip__date--icon"><i class="bi bi-calendar-week"></i></div>`;
+    html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
     html += `<div class="trip__date--text">`;
     html += `<span class="booking__date--text">${data.departDate.text}</span>`;
     html += `<span class="booking__date--value">${data.departDate.value}</span>`;
     html += `</div><input type="hidden" name="departDate" value="${data.departDate.value}"/></div>`;
     if (data.tripType === constants.RETURN) {
       html += `<div id="trip__date--return" class="${classes("return")}">`;
-      html += `<div class="trip__date--icon"><i class="bi bi-calendar-week"></i></div>`;
+      html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
       html += `<div class="trip__date--text">`;
       html += `<span class="booking__date--text">${data.returnDate.text}</span>`;
       html += `<span class="booking__date--value">${data.returnDate.value}</span>`;

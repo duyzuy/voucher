@@ -1403,16 +1403,55 @@ button:focus:not(:focus-visible){
     display: flex;
     align-items: flex-end;
 }
-.booking__form--row{
+.booking__form--input{
     padding-right: 30px;
+}
+.booking__form--row{
+    display: flex;
+    align-items: center;
+
 }
 .booking__form--row .booking__form--col{
     margin-bottom: 15px;
 }
+.booking__form--row .booking__form--depart, 
+.booking__form--row .booking__form--return{
+    flex: 1
+}
+.booking__form--destination{
+    display: flex;
+    align-items: center;
+    flex: 1;
+    flex-basis: 60%;
+    position: relative;
+
+}
+.booking__form--date{
+    flex-basis: 40%;
+    padding-left: 15px;
+}
+
+.booking__form--destination .booking__flight--icon{
+    width: 20px;
+    height: 20px;
+    border-radius: 20px;
+    /* border: 1px solid #ced4da; */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    position: absolute;
+    left: calc(50% - 10px);
+
+    background-color: #fff;
+}
+.booking__form--destination .booking__flight--icon img{
+    opacity: 0.5;
+}
 .booking__form .select2-container .select2-selection--single,
-.trip__date{
-    padding: 10px 15px;
-    height: 45px;
+.trip__date .trip__date--wrap{
+    padding: 5px 15px;
+    height: 50px;
 }
 .booking__form .select2-container--default .select2-selection--single .select2-selection__rendered{
     line-height: inherit;
@@ -1441,7 +1480,8 @@ button:focus:not(:focus-visible){
     background-color: #f9f9f9;
     padding: 10px 15px
 }
-.booking__form__dropdown .citypare__name i{
+.booking__form__dropdown .citypare__name i,
+.trip__date--icon{
     margin-right: 10px;
 }
 .select2-container--default .booking__form__dropdown .select2-results__option .select2-results__option{
@@ -1452,41 +1492,294 @@ button:focus:not(:focus-visible){
     color: inherit
 }
 form.booking__form{
-    background: #fff;
+    background: linear-gradient(45deg, #f44336, #c30c13);
     padding: 20px
 }
 .booking__form__row{
     margin-bottom: 15px;
 }
 .citypare--selection .citypare__code{
-    width: 60px;
-    text-align: right;
+    text-align: center;
     font-weight: bold;
+    background: #767676;
+    border-radius: 4px;
+    color: #fff;
+    padding: 0 6px;
+    margin-left: 10px;
+}
+.trip__date--text .booking__date--text,
+.trip__date--text .booking__date--value{
+    display: block;
 }
 .citypare--selection .citypare__name{
     text-overflow: ellipsis;
     overflow: hidden;
+    font-weight: bold;
 }
 .booking__form .select2-container--default .select2-selection--single,
 .booking__form__dropdown,
 .booking__form .select2-container--default .select2-search--dropdown .select2-search__field{
-    border-color: #ced4da;
+    border-color: #fff;
+    border-radius: 0px;
 }
+.trip__date .trip__date--depart,
+.trip__date .trip__date--return{
+    cursor: pointer;
+    border: 1px solid #fff;
 
+}
+.booking__form .booking__form--depart .select2-container--default .select2-selection--single,
+.trip__date--wrap.trip__date--depart{
+    border-right-color: #f1f1f1;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+.booking__form .booking__form--return .select2-container--default .select2-selection--single,
+.trip__date--wrap.trip__date--return{
+    border-left-color: #f1f1f1;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.select2-search--dropdown .select2-search__field:focus-visible{
+    outline: none !important;
+}
+.booking__form--destination .select2-selection--single{
+    display: flex;
+    align-items: center;
+
+}
+.trip__date--depart,
+.trip__date--return{
+    display: flex;
+    align-items: center;
+
+}
+.province--name{
+    display: block;
+    font-weight: bold;
+}
+.citypare--name{
+    font-size: 13px;
+}
 .booking__form .select2-container{
     width: 100% !important;
+}
+.booking__form .select2-container--open .select2-selection--single, 
+.booking__form__dropdown, .booking__form .select2-container--default .select2-search--dropdown .select2-search__field{
+    border-color: #c30c13 !important;
+    box-shadow: 0px 6px 8px -4px #0000007a;
+}
+.select2-container--default .select2-selection--single .select2-selection__placeholder{
+    display: block;
+    color: inherit;
+    /* transition: all linear 240ms; */
+}
+/* .booking__form .select2-container--open .select2-selection__placeholder, */
+.booking__form .select2-selection__placeholder.selected{
+    font-size: 13px;
+    /* margin-top: -10px; */
 }
 .trip__date{
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid #ced4da;
 
 }
 
+
+
 .trip__date--wrap{
-    flex: 1
-} 
+    flex: 1;
+    background-color: #fff;
+}
+.trip__date--wrap.selected .booking__date--text{
+    font-size: 13px;
+}
+.trip__date--wrap.selected .booking__date--value{
+    font-weight: bold;
+}
+.booking__form--col--depart{
+    padding-right: 0;
+}
+.booking__form--col--return{
+    padding-left: 0;
+}
+.booking__form .booking__form--col--depart .select2-container--default .select2-selection--single{
+    border-right-width: 0;
+}
+.booking__form .booking__form--col--return .select2-container--default .select2-selection--single{
+    border-left-width: 0;
+}
+.btn-booking{
+    height: 50px;
+    padding: 0 30px;
+    border-radius: 5px;
+}
+.trip__date--icon i, 
+.passenger--icon i{
+    color: #ced4da;
+    font-size: 24px;
+}
+.booking__form--passenger--control{
+    height: 50px;
+    border: 1px solid #fff;
+    padding: 5px 15px;
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.booking__form--passenger--control .passenger--text .passenger--label{
+    display: block;
+    font-size: 13px;
+}
+.booking__form--passenger--control .passenger--icon{
+    margin-right: 10px;
+}
+.passenger--value{
+    font-weight: bold;
+}
+.booking__form--passenger{
+    width: 60%;
+    flex-basis: 60%;
+    margin-bottom: 0 !important;
+    position: relative;
+
+}
+.booking__form--passenger--dropdown{
+    position: absolute;
+    padding: 20px;
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 0px 6px 8px -4px #0000007a;
+    z-index: 9;
+    border-radius: 0 0 5px 5px;
+}
+.booking__form--passenger--dropdown--inner >div{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+.passenger__input--left{
+    display: flex;
+}
+.passenger__input--icon img{
+    width: 30px;
+}
+.passenger__input--icon{
+    margin-right: 15px;
+}
+.booking__form--adults p, 
+.booking__form--infant p,
+.booking__form--children p{
+    margin-bottom: 0;
+    font-weight: bold;
+}
+.booking__form--adults p.small, 
+.booking__form--infant p.small,
+.booking__form--children p.small{
+    font-weight: normal;
+    font-size: 13px;
+}
+.booking__quantity--up,
+.booking__quantity--down{
+    width: 30px;
+    height: 30px;
+    border-radius: 2px;
+    border: 1px solid #939598;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.booking__quantity--value{
+    display: inline-block;
+    width: 40px;
+    text-align: center;
+}
+.booking__quantity--up:hover,
+.booking__quantity--down:hover{
+    border-color: #c30c13 !important;
+    color: #c30c13;
+}
+.daterangepicker {
+
+}
+.booking__form--triptype .form-check-label{
+    color: #fff;
+    font-weight: bold;
+    position: relative;
+    padding-left: 30px;
+}
+.booking__form--triptype .form-check-inline{
+    padding-left: 0;
+}
+.booking__form--triptype .form-check-label:before{
+    content: "";
+    width: 22px;
+    height: 22px;
+    display: block;
+    border: 1px solid #fff;
+    position: absolute;
+    left: 0;
+    border-radius: 30px;
+    top: calc(50% - 11px);
+    background-color: #fff;
+}
+.booking__form--triptype .form-check-label:after{
+    content: "";
+    position: absolute;
+    border-radius: 20px;
+    background-color: #fab416;
+    width: 14px;
+    height: 14px;
+    border-width: 0;
+    left: 4px;
+    top: calc(50% - 7px);
+    box-shadow: 0px 0px 3px -1px rgb(0 0 0 / 70%);
+    opacity: 0;
+    display: none;
+}
+.booking__form--triptype input{
+    display: none;
+    pointer-events: none;
+}
+.booking__form--triptype input:checked ~ .form-check-label:before
+{
+    border-color: #fab416;
+}
+.booking__form--triptype input:checked ~ .form-check-label:after
+{
+    opacity: 1;
+    display: block;
+}
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+}
+.in-range.available:not(.end-date){
+    border-radius: 0 !important;
+}
+.daterangepicker td.start-date.end-date{
+    border-radius: 50%;
+}
+.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date{
+    text-decoration: inherit;
+    opacity: .5;
+}
+.daterangepicker td.active, .daterangepicker td.active:hover{
+    background-color: #ee0810
+}
+/* .start-date.active.available{
+    border-top-right-radius: 0 ;
+    border-bottom-right-radius: 0 ;
+}
+.end-date.active.available{
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+} */
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
         padding: 60px 30px 60px
