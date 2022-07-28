@@ -4,6 +4,8 @@ const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
 const tripType = $("#trip__type--oneway, #trip__type--return");
+const tripPassenger = $("#trip__passenger");
+const bookingForm = $("#booking__form");
 const constants = {
   DEPART_LOCATION: "departLocation",
   RETURN_LOCATION: "returnLocation",
@@ -118,6 +120,7 @@ const app = {
     this.onSelectDeparture();
     this.onSelectReturn();
     this.onSelectDate();
+    this.onSelectPassenger();
   },
   onSelectTripType() {
     const _this = this;
@@ -200,6 +203,11 @@ const app = {
       .on("select2:select", function (e) {
         _this.bookingInform.returnLocation = e.params.data.id;
         $(this).val(_this.bookingInform.returnLocation).trigger("change");
+        if (_this.bookingInform.departLocation !== "") {
+          setTimeout(() => {
+            bookingForm.addClass("expanded");
+          }, 200);
+        }
       });
   },
   onSelectDate() {
@@ -237,9 +245,14 @@ const app = {
           _this.renderDatePickerTemplate(data);
         }
       )
-      .on("showCalendar.daterangepicker", function (ev, picker) {
+      .on("show.daterangepicker", function (ev, picker) {
         console.log(ev);
       });
+  },
+  onSelectPassenger() {
+    tripPassenger.on("click", function (e) {
+      $(this).parent(".booking__form--passenger--inner").toggleClass("open");
+    });
   },
   customTemplateResult(data) {
     if (!data.name) {
@@ -345,7 +358,7 @@ const app = {
       }
       return classes;
     };
-
+    let defaultClass = "return";
     let html = `<div id="trip__date--depart" class="${classes("depart")}">`;
     html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
     html += `<div class="trip__date--text">`;
@@ -360,6 +373,15 @@ const app = {
       html += `<span class="booking__date--value">${data.returnDate.value}</span>`;
       html += `</div><input type="hidden" name="returnDate" value="${data.returnDate.value}"/></div>`;
     }
+    if (data.tripType === defaultClass) {
+      $("#trip__date").addClass(defaultClass);
+      $("#trip__date").removeClass("oneway");
+    } else {
+      $("#trip__date").removeClass(defaultClass);
+      $("#trip__date").addClass(data.tripType);
+    }
+
+    defaultClass = data.tripType;
 
     $("#trip__date").html(html);
   },
