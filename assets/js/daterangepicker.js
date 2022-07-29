@@ -915,6 +915,7 @@
         }
       },
       show: function (t) {
+        console.log(t);
         this.isShowing ||
           ((this._outsideClickProxy = e.proxy(function (t) {
             this.outsideClick(t);
@@ -1268,6 +1269,7 @@
     }),
     (e.fn.daterangepicker = function (t, i) {
       var s = e.extend(!0, {}, e.fn.daterangepicker.defaultOptions, t);
+
       return (
         this.each(function () {
           var t = e(this);

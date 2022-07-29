@@ -1397,7 +1397,9 @@ button:focus:not(:focus-visible){
 
 }
 .booking__form--input{
-    flex: 1
+    flex: 1;
+    width: 100%;
+    flex-basis: 100%;
 }
 .row--date--passenger{
     display: none;
@@ -1416,6 +1418,7 @@ button:focus:not(:focus-visible){
 .booking__form--row{
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 
 }
 .booking__form--row .booking__form--col{
@@ -1429,8 +1432,8 @@ button:focus:not(:focus-visible){
     display: flex;
     align-items: center;
     flex: 1;
-    flex-basis: 60%;
     position: relative;
+    flex-wrap: wrap;
 
 }
 .booking__form--date{
@@ -1438,7 +1441,9 @@ button:focus:not(:focus-visible){
     padding-right: 15px;
     margin-bottom: 0;
 }
-
+.booking__form--triptype{
+    display: flex;
+}
 .booking__form--destination .booking__flight--icon{
     width: 20px;
     height: 20px;
@@ -1530,7 +1535,7 @@ button:focus:not(:focus-visible){
     padding: 0 6px;
     margin-left: 10px;
 }
-trip__date.--text .booking__date--text,
+.trip__date--text .booking__date--text,
 .trip__date--text .booking__date--value{
     display: block;
 }
@@ -1587,17 +1592,36 @@ trip__date.--text .booking__date--text,
     width: 100% !important;
 }
 .booking__form .select2-container--open .select2-selection--single, 
-.booking__form__dropdown, .booking__form .select2-container--default .select2-search--dropdown .select2-search__field{
+.booking__form__dropdown:not(.select2-dropdown--above), .booking__form .select2-container--default .select2-search--dropdown .select2-search__field{
     box-shadow: 0px 6px 8px -4px #0000007a;
+}
+.booking__form__dropdown:not(.select2-dropdown--above){
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.booking__form__dropdown.select2-dropdown--above{
+    box-shadow: 0px -6px 8px -4px #0000007a;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+.booking__form__dropdown{
+    border-width: 0;
+    overflow: hidden;
 }
 .select2-search--dropdown{
     padding: 10px 15px
 }
-.booking__form .booking__form--depart .select2-container--open .select2-selection--single{
+.booking__form .booking__form--depart .select2-container--open:not(.select2-container--above) .select2-selection--single{
 border-bottom-left-radius: 0 !important;
 }
-.booking__form .booking__form--return .select2-container--open .select2-selection--single{
+.booking__form .booking__form--return .select2-container--open:not(.select2-container--above) .select2-selection--single{
     border-bottom-right-radius: 0 !important;
+}
+.booking__form .booking__form--depart .select2-container--open.select2-container--above .select2-selection--single{
+    border-top-left-radius: 0 !important;
+    }
+    .booking__form .booking__form--return .select2-container--open.select2-container--above .select2-selection--single{
+        border-top-right-radius: 0 !important;
     }
 .select2-container--default .select2-selection--single .select2-selection__placeholder{
     display: block;
@@ -1720,17 +1744,22 @@ border-bottom-left-radius: 0 !important;
 .passenger__input--icon{
     margin-right: 15px;
 }
-.booking__form--adults p, 
+.booking__form--adult p, 
 .booking__form--infant p,
 .booking__form--children p{
     margin-bottom: 0;
     font-weight: bold;
 }
-.booking__form--adults p.small, 
+.booking__form--adult p.small, 
 .booking__form--infant p.small,
 .booking__form--children p.small{
     font-weight: normal;
     font-size: 13px;
+}
+.booking__quantity{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
 }
 .booking__quantity--up,
 .booking__quantity--down{
@@ -1753,9 +1782,7 @@ border-bottom-left-radius: 0 !important;
     border-color: #c30c13 !important;
     color: #c30c13;
 }
-.daterangepicker {
 
-}
 .booking__form--triptype .form-check-label{
     color: #fff;
     position: relative;
@@ -1813,7 +1840,8 @@ border-bottom-left-radius: 0 !important;
     height: 36px;
     border-radius: 50%;
 }
-.in-range.available:not(.end-date){
+.in-range.available:not(.end-date), 
+.in-range.available:not(.active){
     border-radius: 0 !important;
 }
 .daterangepicker td.start-date.end-date{
@@ -1954,7 +1982,26 @@ border-bottom-left-radius: 0 !important;
     .account__inform{
         margin-bottom: 10px;
         padding-bottom: 10px
-    } 
+    }
+    .booking__form--input{
+        padding-right: 0;
+    }
+    .booking__form--inner{
+        flex-wrap: wrap;
+    }
+    .btn-booking{
+        width: 100%;
+    }
+    .booking__form--buttons{
+
+        width: 100%;
+    }
+    .booking__form__wrapper{
+        padding: 15px 20px 10px
+    }
+    .row--date--passenger{
+        display: block !important;
+    }
 }
 @media screen and (max-width: 767.98px) {
     .form__group{
@@ -1986,6 +2033,14 @@ border-bottom-left-radius: 0 !important;
     .account__information .table-inform{
         padding: 10px;
     }
+    .booking__form--date,
+    .booking__form--passenger{
+        width: 100%;
+        flex-basis: 100%;
+    }
+    .booking__form--date{
+        padding-right: 0;
+    }
 }
 @media screen and (max-width: 575.98px){
 
@@ -2005,7 +2060,27 @@ border-bottom-left-radius: 0 !important;
         height: 40px;
         background-size: cover;
         top: -40px;
-
+    }
+    .booking__form--depart, .booking__form--return{
+        flex-basis: 100%;
+        width: 100%;
+    }
+    .booking__form--depart{
+        margin-bottom: 1px;
+        width: 100%;
+        flex-basis: 100% !important;
+    }
+    .booking__form--return{
+        width: 100%;
+        flex-basis: 100% !important;
+    }
+    .booking__form .booking__form--depart .select2-container--default .select2-selection--single{
+        border-top-right-radius: 5px;
+        border-bottom-left-radius: 0;
+    }
+    .booking__form .booking__form--return .select2-container--default .select2-selection--single{
+        border-top-right-radius: 0px;
+        border-bottom-left-radius: 5px;
     }
 }
 @media (min-width: 576px){

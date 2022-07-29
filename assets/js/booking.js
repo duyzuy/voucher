@@ -1,11 +1,23 @@
 const baseURL = "https://vietjetcms-api.vietjetair.com/api/v1/airport";
-const languageId = "a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14";
+const languageId = {
+  vi: "a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
+  en: "2f321ebe-16dc-4c72-ac60-08f8a4e1f4f1",
+};
+
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
 const tripType = $("#trip__type--oneway, #trip__type--return");
 const tripPassenger = $("#trip__passenger");
 const bookingForm = $("#booking__form");
+const quantityControl = $(".booking__quantity--control");
+
+const config = {
+  PAXLIMIT: 9,
+  ADULT_MINIMUN: 1,
+  CHILDREN_MINIMUN: 0,
+  INFANT_MINIMUN: 0,
+};
 const constants = {
   DEPART_LOCATION: "departLocation",
   RETURN_LOCATION: "returnLocation",
@@ -14,6 +26,11 @@ const constants = {
   DATE_FORMAT: "YYYY-MM-DD",
   LOCALE_EN: "en",
   LOCALE_VI: "vi",
+  ADULT: "adult",
+  CHILDREN: "children",
+  INFANT: "infant",
+  INCREATE: "increate",
+  DECREATE: "decreate",
 };
 const dateLocale = [
   {
@@ -108,19 +125,23 @@ const app = {
     departDate: "",
     returnDate: "",
     passenngers: {
-      adults: 1,
+      adult: 1,
       children: 0,
       infant: 0,
     },
     currentSelect: "",
-    locale: constants.LOCALE_VI,
+    locale: "",
   },
-  init() {
+  init({ locale }) {
+    this.setLocale(locale);
     this.onSelectTripType();
     this.onSelectDeparture();
     this.onSelectReturn();
     this.onSelectDate();
     this.onSelectPassenger();
+  },
+  setLocale(locale) {
+    this.bookingInform.locale = locale;
   },
   onSelectTripType() {
     const _this = this;
@@ -137,7 +158,8 @@ const app = {
       .select2({
         ajax: {
           url: () => {
-            const ajaxURL = baseURL + "?languageId=" + languageId;
+            const ajaxURL =
+              baseURL + "?languageId=" + languageId[_this.bookingInform.locale];
             return ajaxURL;
           },
           dataType: "json",
@@ -146,7 +168,13 @@ const app = {
               q: params.term,
             };
           },
-          processResults: _this.onProcessResults,
+          processResults: (data, params) => {
+            return _this.onProcessResults(
+              data,
+              params,
+              _this.bookingInform.locale
+            );
+          },
           cache: true,
         },
 
@@ -155,6 +183,7 @@ const app = {
         templateSelection: (data) =>
           _this.customTemplateSelection(data, {
             type: constants.DEPART_LOCATION,
+            locale: _this.bookingInform.locale,
           }),
         dropdownCssClass: "booking__form__dropdown",
         // dropdownParent: $("#dropdown__citypare--departure"),
@@ -168,17 +197,19 @@ const app = {
   },
   onSelectReturn() {
     const _this = this;
+
     tripReturn
       .select2({
         ajax: {
           url: () => {
             let departLocation = _this.bookingInform.departLocation;
+
             const ajaxURL =
               baseURL +
               (departLocation !== ""
                 ? "?departureCode=" + departLocation + "&languageId="
                 : "?languageId=") +
-              languageId;
+              languageId[_this.bookingInform.locale];
             return ajaxURL;
           },
           dataType: "json",
@@ -187,7 +218,13 @@ const app = {
               q: params.term, // search term
             };
           },
-          processResults: _this.onProcessResults,
+          processResults: (data, params) => {
+            return _this.onProcessResults(
+              data,
+              params,
+              _this.bookingInform.locale
+            );
+          },
           cache: true,
         },
         placeholder: "Return",
@@ -195,6 +232,7 @@ const app = {
         templateSelection: (data) =>
           _this.customTemplateSelection(data, {
             type: constants.RETURN_LOCATION,
+            locale: _this.bookingInform.locale,
           }),
         dropdownCssClass: "booking__form__dropdown",
         // dropdownParent: $("#dropdown__citypare--return"),
@@ -215,6 +253,7 @@ const app = {
     const currentLocale = dateLocale.find((item, index) => {
       return item.lang === _this.bookingInform.locale;
     });
+
     let data = {
       departDate: {
         text: currentLocale.departText,
@@ -233,7 +272,8 @@ const app = {
       .daterangepicker(
         {
           autoApply: true,
-          singleDatePicker: false,
+          singleDatePicker:
+            _this.bookingInform.tripType === constants.ONEWAY ? true : false,
           minDate: new Date(),
         },
         function (start, end, label) {
@@ -246,12 +286,107 @@ const app = {
         }
       )
       .on("show.daterangepicker", function (ev, picker) {
+        $(".drp-calendar.right").show();
         console.log(ev);
       });
   },
   onSelectPassenger() {
+    const _this = this;
+    const locale = _this.bookingInform.locale;
     tripPassenger.on("click", function (e) {
       $(this).parent(".booking__form--passenger--inner").toggleClass("open");
+    });
+
+    _this.renderPaxHtml(
+      {
+        adult: _this.bookingInform.passenngers.adult,
+        children: _this.bookingInform.passenngers.children,
+        infant: _this.bookingInform.passenngers.infant,
+      },
+      locale
+    );
+
+    quantityControl.click(function (e) {
+      const parentQuantity = $(this).context.parentNode.parentNode;
+      const passengerType = $(parentQuantity).data("type");
+      const actionType = $(this).data("type");
+      const quantityValue = $(parentQuantity).find(".booking__quantity--value");
+      let paxNumber = Number($(quantityValue).text());
+
+      if (actionType === constants.INCREATE) {
+        paxNumber++;
+      } else {
+        paxNumber--;
+      }
+
+      // .context.parentNode("div.booking__quantity")
+
+      switch (passengerType) {
+        case constants.ADULT: {
+          if (
+            (actionType === constants.INCREATE &&
+              paxNumber >
+                config.PAXLIMIT - _this.bookingInform.passenngers.children) ||
+            (actionType === constants.DECREATE &&
+              _this.bookingInform.passenngers.adult === config.ADULT_MINIMUN)
+          ) {
+            return;
+          }
+          if (
+            actionType === constants.DECREATE &&
+            _this.bookingInform.passenngers.adult ===
+              _this.bookingInform.passenngers.infant
+          ) {
+            _this.bookingInform.passenngers.infant = paxNumber;
+            $("#infantInput").find(".booking__quantity--value").text(paxNumber);
+          }
+          _this.bookingInform.passenngers.adult = paxNumber;
+
+          break;
+        }
+        case constants.CHILDREN: {
+          if (
+            (actionType === constants.INCREATE &&
+              paxNumber >
+                config.PAXLIMIT - _this.bookingInform.passenngers.adult) ||
+            (actionType === constants.DECREATE &&
+              _this.bookingInform.passenngers.children ===
+                config.CHILDREN_MINIMUN)
+          ) {
+            return;
+          }
+          _this.bookingInform.passenngers.children = paxNumber;
+
+          break;
+        }
+        case constants.INFANT: {
+          if (
+            (actionType === constants.INCREATE &&
+              paxNumber > _this.bookingInform.passenngers.adult) ||
+            (actionType === constants.DECREATE &&
+              _this.bookingInform.passenngers.infant === config.INFANT_MINIMUN)
+          ) {
+            return;
+          }
+          _this.bookingInform.passenngers.infant = paxNumber;
+
+          break;
+        }
+        default: {
+          return null;
+        }
+      }
+
+      $(quantityValue).text(paxNumber);
+
+      _this.renderPaxHtml(
+        {
+          adult: _this.bookingInform.passenngers.adult,
+          children: _this.bookingInform.passenngers.children,
+          infant: _this.bookingInform.passenngers.infant,
+        },
+        locale
+      );
     });
   },
   customTemplateResult(data) {
@@ -264,7 +399,7 @@ const app = {
       }">
         ${
           data.isParent
-            ? `<p class="citypare__name citypare__name--group"><i class="bi bi-building"></i>${data.name}</p>`
+            ? `<p class="citypare__name citypare__name--group"><i class="bi bi-building"></i>${data.name} <span class="count">(${data.total})</span></p>`
             : `<p class="citypare__name citypare__name--item"><span class="province--name">${data.provinceName}</span><span class="citypare--name">${data.name}</span></p><span class="citypare__code">${data.code}</span>`
         }
       </div>`
@@ -272,10 +407,8 @@ const app = {
     return htmlTemplate;
   },
   customTemplateSelection(data, options) {
-    const _this = this;
-    const currentLocale = _this.bookingInform.locale;
     const formText = bookingFormText.find((item) => {
-      return item.lang === currentLocale;
+      return item.lang === options.locale;
     });
 
     if (!data.name) {
@@ -298,7 +431,7 @@ const app = {
     );
     return htmlTemplate;
   },
-  onProcessResults: (data, params) => {
+  onProcessResults: (data, params, locale) => {
     let airports = [];
     let filterAirport = [];
 
@@ -307,8 +440,11 @@ const app = {
       group.airports.forEach((item, itemInd) => {
         airport.push({
           id: item.code,
-          name: item.name,
-          provinceName: item.province.provinceName,
+          name: locale === constants.LOCALE_VI ? item.name : item.engName,
+          provinceName:
+            locale === constants.LOCALE_VI
+              ? item.province.provinceName
+              : item.province.provinceEngName,
           provinceEngName: item.province.provinceEngName,
           code: item.code,
           engName: item.engName,
@@ -331,9 +467,10 @@ const app = {
       }
 
       airports[groupInd] = {
-        name: group.name,
+        name: locale === constants.LOCALE_VI ? group.name : group.engName,
         children: airport,
         isParent: true,
+        total: group.total,
       };
     });
     if (filterAirport.length > 0) {
@@ -385,6 +522,15 @@ const app = {
 
     $("#trip__date").html(html);
   },
+  renderPaxHtml(data, locale) {
+    const localText = bookingFormText.find((item) => item.lang === locale);
+
+    let paxHtml = `${data.adult} ${localText.adults}, ${data.children} ${localText.children}, ${data.infant} ${localText.infant}`;
+    $(".passenger--value").text(paxHtml);
+    $("#adultInput").find("input").val(data.adult);
+    $("#childrenInput").find("input").val(data.children);
+    $("#infantInput").find("input").val(data.infant);
+  },
 };
 
-app.init();
+app.init({ locale: constants.LOCALE_VI });
