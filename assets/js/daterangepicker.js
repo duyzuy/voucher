@@ -915,7 +915,6 @@
         }
       },
       show: function (t) {
-        console.log(t);
         this.isShowing ||
           ((this._outsideClickProxy = e.proxy(function (t) {
             this.outsideClick(t);

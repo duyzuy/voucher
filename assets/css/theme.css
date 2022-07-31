@@ -1401,9 +1401,9 @@ button:focus:not(:focus-visible){
     width: 100%;
     flex-basis: 100%;
 }
-.row--date--passenger{
+/* .row--date--passenger{
     display: none;
-}
+} */
 .expanded .row--date--passenger{
     display: block;
 }
@@ -1835,27 +1835,77 @@ border-bottom-left-radius: 0 !important;
 .booking__form--triptype input:checked ~ label{
     opacity: 1;
 }
-.daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
+.daterangepicker .calendar-table th:not(.month){
+    color: #ee0810 !important
 }
-.in-range.available:not(.end-date), 
+.daterangepicker{
+    border-width: 0;
+    border-radius: 5px;
+    box-shadow: 0px 6px 8px -4px #0000007a;
+}
+.daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
+
+    height: 45px;
+    font-size: 14px;
+    min-width: 45px;
+}
+.daterangepicker .calendar-table table{
+    border-collapse: inherit;
+}
+.daterangepicker .drp-calendar.left{
+    padding: 15px 0 15px 15px
+}
+.daterangepicker .drp-calendar.right{
+    padding: 15px
+}
+.daterangepicker .drp-selected{
+    display:none;
+}
+.daterangepicker .drp-calendar{
+    max-width: 100%;
+}
+
+/* .in-range.available:not(.end-date), 
 .in-range.available:not(.active){
     border-radius: 0 !important;
-}
+} */
 .daterangepicker td.start-date.end-date{
-    border-radius: 50%;
+    border-radius: 5px;
 }
-.daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date{
+.daterangepicker td.off, .daterangepicker td.off.in-range, 
+.daterangepicker td.off.start-date, 
+.daterangepicker td.off.end-date{
     text-decoration: inherit;
     opacity: .5;
+    pointer-events: none;
 }
-.daterangepicker td.active, .daterangepicker td.active:hover{
-    background-color: #ee0810
+.daterangepicker td.active:not(.start-date), .daterangepicker td.active:not(.start-date):hover{
+    background-color: transparent;
+    border-color: #ee0810;
+    color: inherit;
 }
 .daterangepicker .calendar-table th.month{
+    font-size: 20px;
+}
+.daterangepicker td.start-date{
+    border-radius: 10px 0 0 10px;
+    background-color: #ee0810 !important;
+    color: #fff !important
+}
+
+.daterangepicker td.end-date{
+    border-radius: 0 10px 10px 0;
+    background-color: #ee0810 !important;
+    color: #fff !important
+}
+.daterangepicker .drp-buttons .btn{
+    font-family: Jambono;
+    height: 50px;
+    min-width: 180px;
     font-size: 16px;
+}
+.daterangepicker .drp-buttons{
+    padding: 15px 20px;
 }
 /* .start-date.active.available{
     border-top-right-radius: 0 ;

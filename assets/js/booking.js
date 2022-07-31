@@ -3,15 +3,17 @@ const languageId = {
   vi: "a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
   en: "2f321ebe-16dc-4c72-ac60-08f8a4e1f4f1",
 };
-
+console.log(window);
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
+const tripDateDepart = $("#trip__date--depart");
+const tripDatereturn = $("#trip__date--return");
 const tripType = $("#trip__type--oneway, #trip__type--return");
 const tripPassenger = $("#trip__passenger");
 const bookingForm = $("#booking__form");
 const quantityControl = $(".booking__quantity--control");
-
+const searchFlightBtn = $("#booking__searchflight");
 const config = {
   PAXLIMIT: 9,
   ADULT_MINIMUN: 1,
@@ -23,7 +25,7 @@ const constants = {
   RETURN_LOCATION: "returnLocation",
   ONEWAY: "oneway",
   RETURN: "return",
-  DATE_FORMAT: "YYYY-MM-DD",
+  DATE_FORMAT: "MM-DD-YYYY",
   LOCALE_EN: "en",
   LOCALE_VI: "vi",
   ADULT: "adult",
@@ -38,7 +40,7 @@ const dateLocale = [
     departText: "Depart date",
     returnText: "Return date",
     locale: {
-      format: "MM-DD-YYYY",
+      format: "MM/DD/YYYY",
       separator: "-",
       applyLabel: "Apply",
       cancelLabel: "Cancel",
@@ -69,7 +71,7 @@ const dateLocale = [
     departText: "Ngày đi",
     returnText: "Ngày về",
     locale: {
-      format: "DD-MM-YYYY",
+      format: "MMMM, DD YYYY",
       separator: "-",
       applyLabel: "Xác nhận",
       cancelLabel: "Huỷ bỏ",
@@ -139,6 +141,7 @@ const app = {
     this.onSelectReturn();
     this.onSelectDate();
     this.onSelectPassenger();
+    this.onSearchFlight();
   },
   setLocale(locale) {
     this.bookingInform.locale = locale;
@@ -253,15 +256,16 @@ const app = {
     const currentLocale = dateLocale.find((item, index) => {
       return item.lang === _this.bookingInform.locale;
     });
-
     let data = {
       departDate: {
         text: currentLocale.departText,
         value: _this.bookingInform.departDate,
+        alt: "",
       },
       returnDate: {
         text: currentLocale.returnText,
         value: _this.bookingInform.returnDate,
+        alt: "",
       },
       tripType: _this.bookingInform.tripType,
     };
@@ -271,23 +275,39 @@ const app = {
     tripDate
       .daterangepicker(
         {
-          autoApply: true,
+          // autoApply: true,
           singleDatePicker:
             _this.bookingInform.tripType === constants.ONEWAY ? true : false,
           minDate: new Date(),
+          locale: { ...currentLocale.locale },
         },
         function (start, end, label) {
-          _this.bookingInform.departDate = start.format(constants.DATE_FORMAT);
-          _this.bookingInform.returnDate = end.format(constants.DATE_FORMAT);
+          console.log(start.locale("vi"), end);
+          _this.bookingInform.departDate = start.format(
+            currentLocale.locale.format
+          );
+          _this.bookingInform.returnDate = end.format(
+            currentLocale.locale.format
+          );
 
           data.departDate.value = start.format(constants.DATE_FORMAT);
           data.returnDate.value = end.format(constants.DATE_FORMAT);
+          data.departDate.alt = start.format(
+            "dddd, MM Do YYYY",
+            currentLocale.lang,
+            true
+          );
+          data.returnDate.alt = start.format(
+            "dddd, MM Do YYYY",
+            currentLocale.lang,
+            true
+          );
+
           _this.renderDatePickerTemplate(data);
         }
       )
       .on("show.daterangepicker", function (ev, picker) {
         $(".drp-calendar.right").show();
-        console.log(ev);
       });
   },
   onSelectPassenger() {
@@ -388,6 +408,18 @@ const app = {
         locale
       );
     });
+  },
+  onSearchFlight() {
+    const _this = this;
+    searchFlightBtn.on("click", function (e) {
+      e.preventDefault();
+      const searching = {
+        ..._this.bookingInform,
+      };
+      window.location = "selectflight.html?name=123";
+    });
+
+    const searching = () => {};
   },
   customTemplateResult(data) {
     if (!data.name) {
@@ -500,14 +532,14 @@ const app = {
     html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
     html += `<div class="trip__date--text">`;
     html += `<span class="booking__date--text">${data.departDate.text}</span>`;
-    html += `<span class="booking__date--value">${data.departDate.value}</span>`;
+    html += `<span class="booking__date--value">${data.departDate.alt}</span>`;
     html += `</div><input type="hidden" name="departDate" value="${data.departDate.value}"/></div>`;
     if (data.tripType === constants.RETURN) {
       html += `<div id="trip__date--return" class="${classes("return")}">`;
       html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
       html += `<div class="trip__date--text">`;
       html += `<span class="booking__date--text">${data.returnDate.text}</span>`;
-      html += `<span class="booking__date--value">${data.returnDate.value}</span>`;
+      html += `<span class="booking__date--value">${data.returnDate.alt}</span>`;
       html += `</div><input type="hidden" name="returnDate" value="${data.returnDate.value}"/></div>`;
     }
     if (data.tripType === defaultClass) {
