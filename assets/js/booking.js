@@ -40,7 +40,7 @@ const dateLocale = [
     departText: "Depart date",
     returnText: "Return date",
     locale: {
-      format: "MM/DD/YYYY",
+      format: "dddd, MMM Do YYYY",
       separator: "-",
       applyLabel: "Apply",
       cancelLabel: "Cancel",
@@ -71,7 +71,7 @@ const dateLocale = [
     departText: "Ngày đi",
     returnText: "Ngày về",
     locale: {
-      format: "MMMM, DD YYYY",
+      format: "dddd, Do MMM YYYY",
       separator: "-",
       applyLabel: "Xác nhận",
       cancelLabel: "Huỷ bỏ",
@@ -256,6 +256,7 @@ const app = {
     const currentLocale = dateLocale.find((item, index) => {
       return item.lang === _this.bookingInform.locale;
     });
+    console.log(currentLocale);
     let data = {
       departDate: {
         text: currentLocale.departText,
@@ -280,9 +281,9 @@ const app = {
             _this.bookingInform.tripType === constants.ONEWAY ? true : false,
           minDate: new Date(),
           locale: { ...currentLocale.locale },
+          parentEl: "#trip__date--dropdown",
         },
         function (start, end, label) {
-          console.log(start.locale("vi"), end);
           _this.bookingInform.departDate = start.format(
             currentLocale.locale.format
           );
@@ -292,18 +293,16 @@ const app = {
 
           data.departDate.value = start.format(constants.DATE_FORMAT);
           data.returnDate.value = end.format(constants.DATE_FORMAT);
-          data.departDate.alt = start.format(
-            "dddd, MM Do YYYY",
-            currentLocale.lang,
-            true
-          );
-          data.returnDate.alt = start.format(
-            "dddd, MM Do YYYY",
-            currentLocale.lang,
-            true
-          );
+
+          data.departDate.alt = start
+            .locale(currentLocale.lang)
+            .format(currentLocale.locale.format);
+          data.returnDate.alt = start
+            .locale(currentLocale.lang)
+            .format(currentLocale.locale.format);
 
           _this.renderDatePickerTemplate(data);
+          _this.paxSelectDropdown().open();
         }
       )
       .on("show.daterangepicker", function (ev, picker) {
@@ -313,6 +312,7 @@ const app = {
   onSelectPassenger() {
     const _this = this;
     const locale = _this.bookingInform.locale;
+    _this.paxSelectDropdown().clickOutside();
     tripPassenger.on("click", function (e) {
       $(this).parent(".booking__form--passenger--inner").toggleClass("open");
     });
@@ -515,7 +515,7 @@ const app = {
     };
   },
   renderDatePickerTemplate(data) {
-    const classes = (type) => {
+    const cls = (type) => {
       let classes = `trip__date--wrap trip__date--${type}`;
       let keyObject = "departDate";
       if (type === "return") {
@@ -528,14 +528,14 @@ const app = {
       return classes;
     };
     let defaultClass = "return";
-    let html = `<div id="trip__date--depart" class="${classes("depart")}">`;
+    let html = `<div id="trip__date--depart" class="${cls("depart")}">`;
     html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
     html += `<div class="trip__date--text">`;
     html += `<span class="booking__date--text">${data.departDate.text}</span>`;
     html += `<span class="booking__date--value">${data.departDate.alt}</span>`;
     html += `</div><input type="hidden" name="departDate" value="${data.departDate.value}"/></div>`;
     if (data.tripType === constants.RETURN) {
-      html += `<div id="trip__date--return" class="${classes("return")}">`;
+      html += `<div id="trip__date--return" class="${cls("return")}">`;
       html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
       html += `<div class="trip__date--text">`;
       html += `<span class="booking__date--text">${data.returnDate.text}</span>`;
@@ -562,6 +562,44 @@ const app = {
     $("#adultInput").find("input").val(data.adult);
     $("#childrenInput").find("input").val(data.children);
     $("#infantInput").find("input").val(data.infant);
+  },
+  paxSelectDropdown() {
+    const boxDropdown = tripPassenger.parent(
+      ".booking__form--passenger--inner"
+    );
+
+    const close = () => {
+      if (boxDropdown.hasClass("open")) {
+        boxDropdown.removeClass("open");
+      }
+      return;
+    };
+    const open = () => {
+      if (!boxDropdown.hasClass("open")) {
+        boxDropdown.addClass("open");
+      }
+      return;
+    };
+    const clickOutside = () => {
+      $(window).on("click", function (e) {
+        if (
+          document
+            .getElementById("booking__form--passenger--inner")
+            .contains(e.target)
+        ) {
+          return;
+        } else {
+          if (boxDropdown.hasClass("open")) {
+            boxDropdown.removeClass("open");
+          }
+        }
+      });
+    };
+    return {
+      close,
+      open,
+      clickOutside,
+    };
   },
 };
 

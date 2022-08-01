@@ -1438,6 +1438,7 @@ button:focus:not(:focus-visible){
 }
 .booking__form--date{
     flex-basis: 60%;
+    width: 60%;
     padding-right: 15px;
     margin-bottom: 0;
 }
@@ -1475,6 +1476,9 @@ button:focus:not(:focus-visible){
     width: 30px;
     display: none;
     
+}
+.select2-container--default .select2-results>.select2-results__options{
+    max-height: 300px;
 }
 .booking__form__dropdown .citypare,
 .booking__form .citypare {
@@ -1556,6 +1560,8 @@ button:focus:not(:focus-visible){
     border: 1px solid #fff;
     display: flex;
     align-items: center;
+    flex-basis: 50%;
+    width: 50%;
 
 }
 .booking__form .booking__form--depart .select2-container--default .select2-selection--single,
@@ -1649,10 +1655,17 @@ border-bottom-left-radius: 0 !important;
 .trip__date--wrap.selected .booking__date--text{
     font-size: 13px;
 }
+.trip__date--text{
+    overflow: hidden;
+}
 .trip__date--wrap.selected .booking__date--value{
     font-weight: bold;
     white-space: nowrap;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
+
 .booking__form--col--depart{
     padding-right: 0;
 }
@@ -1691,6 +1704,7 @@ border-bottom-left-radius: 0 !important;
 .booking__form--passenger--control .passenger--text{
     overflow: hidden;
     text-overflow: ellipsis;
+    pointer-events: none;
 }
 .booking__form--passenger--control .passenger--text .passenger--label{
     display: block;
@@ -1698,6 +1712,7 @@ border-bottom-left-radius: 0 !important;
 }
 .booking__form--passenger--control .passenger--icon{
     margin-right: 10px;
+    pointer-events: none;
 }
 .open .booking__form--passenger--control{
     border-bottom-right-radius: 0;
@@ -1732,17 +1747,22 @@ border-bottom-left-radius: 0 !important;
 }
 .booking__form--passenger--dropdown--inner >div{
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     margin-bottom: 15px;
+}
+.booking__form--passenger--dropdown--inner >div:last-of-type{
+    margin-bottom: 0;
 }
 .passenger__input--left{
     display: flex;
 }
-.passenger__input--icon img{
+.passenger__input--icon{
     width: 30px;
+    margin-right: 15px;
 }
 .passenger__input--icon{
-    margin-right: 15px;
+
 }
 .booking__form--adult p, 
 .booking__form--infant p,
@@ -1791,6 +1811,7 @@ border-bottom-left-radius: 0 !important;
 }
 .booking__form--triptype .form-check-inline{
     padding-left: 0;
+    white-space: nowrap;
 }
 .booking__form--triptype .form-check-label:before{
     content: "";
@@ -1835,6 +1856,12 @@ border-bottom-left-radius: 0 !important;
 .booking__form--triptype input:checked ~ label{
     opacity: 1;
 }
+#trip__date--dropdown{
+    position: relative;
+}
+#trip__date--dropdown .daterangepicker{
+    width: 700px;
+}
 .daterangepicker .calendar-table th:not(.month){
     color: #ee0810 !important
 }
@@ -1853,10 +1880,12 @@ border-bottom-left-radius: 0 !important;
     border-collapse: inherit;
 }
 .daterangepicker .drp-calendar.left{
-    padding: 15px 0 15px 15px
+    padding: 15px 0 15px 15px;
+    width: 50%;
 }
 .daterangepicker .drp-calendar.right{
-    padding: 15px
+    padding: 15px;
+    width: 50%;
 }
 .daterangepicker .drp-selected{
     display:none;
@@ -1878,6 +1907,10 @@ border-bottom-left-radius: 0 !important;
     text-decoration: inherit;
     opacity: .5;
     pointer-events: none;
+    background-color: transparent !important;
+    border-color: transparent !important;
+    color: #999 !important;
+
 }
 .daterangepicker td.active:not(.start-date), .daterangepicker td.active:not(.start-date):hover{
     background-color: transparent;
@@ -1903,6 +1936,7 @@ border-bottom-left-radius: 0 !important;
     height: 50px;
     min-width: 180px;
     font-size: 16px;
+    border-radius: 5px;
 }
 .daterangepicker .drp-buttons{
     padding: 15px 20px;
@@ -2052,6 +2086,21 @@ border-bottom-left-radius: 0 !important;
     .row--date--passenger{
         display: block !important;
     }
+    .booking__form--date,
+    .booking__form--passenger{
+        width: 100%;
+        flex-basis: 100%;
+    }
+    .booking__form--date{
+        padding-right: 0;
+    }
+    #trip__date--dropdown .daterangepicker{
+        width: 100%;
+    }
+    .daterangepicker .calendar-table th, .daterangepicker .calendar-table td{
+        min-width: auto;
+
+    }
 }
 @media screen and (max-width: 767.98px) {
     .form__group{
@@ -2083,13 +2132,13 @@ border-bottom-left-radius: 0 !important;
     .account__information .table-inform{
         padding: 10px;
     }
-    .booking__form--date,
-    .booking__form--passenger{
+    .daterangepicker .drp-calendar.left
+    {
         width: 100%;
-        flex-basis: 100%;
     }
-    .booking__form--date{
-        padding-right: 0;
+    .daterangepicker .drp-calendar.right
+    {
+        width: 100%;
     }
 }
 @media screen and (max-width: 575.98px){
