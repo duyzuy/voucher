@@ -3,7 +3,7 @@ const languageId = {
   vi: "a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
   en: "2f321ebe-16dc-4c72-ac60-08f8a4e1f4f1",
 };
-console.log(window);
+
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
@@ -142,6 +142,8 @@ const app = {
     this.onSelectDate();
     this.onSelectPassenger();
     this.onSearchFlight();
+    this.popupShowing();
+    this.paxSelectDropdown();
   },
   setLocale(locale) {
     this.bookingInform.locale = locale;
@@ -247,6 +249,7 @@ const app = {
         if (_this.bookingInform.departLocation !== "") {
           setTimeout(() => {
             bookingForm.addClass("expanded");
+            tripDate.data("daterangepicker").show();
           }, 200);
         }
       });
@@ -256,7 +259,7 @@ const app = {
     const currentLocale = dateLocale.find((item, index) => {
       return item.lang === _this.bookingInform.locale;
     });
-    console.log(currentLocale);
+
     let data = {
       departDate: {
         text: currentLocale.departText,
@@ -312,9 +315,9 @@ const app = {
   onSelectPassenger() {
     const _this = this;
     const locale = _this.bookingInform.locale;
-    _this.paxSelectDropdown().clickOutside();
+
     tripPassenger.on("click", function (e) {
-      $(this).parent(".booking__form--passenger--inner").toggleClass("open");
+      $("#booking__form--passenger--inner").toggleClass("open");
     });
 
     _this.renderPaxHtml(
@@ -416,7 +419,32 @@ const app = {
       const searching = {
         ..._this.bookingInform,
       };
-      window.location = "selectflight.html?name=123";
+
+      if (
+        _this.bookingInform.departDate === "" ||
+        _this.bookingInform.departDate === "" ||
+        _this.bookingInform.departLocation === ""
+      ) {
+        _this.popupShowing().showPopup({
+          type: "error",
+          title: "Tìm chuyến bay",
+          content: "Vui lòng điền đầy đủ thông tin trước khi đặt vé",
+        });
+        return;
+      } else {
+        if (_this.bookingInform.tripType === constants.RETURN) {
+          if (_this.bookingInform.returnDate === "") {
+            _this.popupShowing().showPopup({
+              type: "error",
+              title: "Tìm chuyến bay",
+              content: "Vui lòng điền đầy đủ thông tin trước khi đặt vé",
+            });
+            return;
+          }
+        }
+      }
+
+      // window.location = "selectflight.html?name=123";
     });
 
     const searching = () => {};
@@ -585,7 +613,11 @@ const app = {
         if (
           document
             .getElementById("booking__form--passenger--inner")
-            .contains(e.target)
+            .contains(e.target) ||
+          e.target.contains(
+            document.getElementById("trip__date--dropdown").childNodes[0]
+              .childNodes[3].childNodes[2]
+          )
         ) {
           return;
         } else {
@@ -595,10 +627,51 @@ const app = {
         }
       });
     };
+
+    clickOutside();
     return {
       close,
       open,
-      clickOutside,
+    };
+  },
+  popupShowing() {
+    const _this = this;
+
+    $(".popup__overlay").on("click", function (e) {
+      if ($(e.target).hasClass("popup__overlay")) {
+        $("#booking__popup").remove();
+      }
+    });
+
+    function closePopup() {
+      $("#booking__popup").remove();
+    }
+
+    const renderHtml = ({ type, title, content }) => {
+      return `<div id="booking__popup" class="booking__popup">
+      <div class="popup__overlay"></div>
+      <div class="popup__container">
+        <div class="popup__content">
+        ${
+          type === "error"
+            ? `<p class="icon error"><i class="bi bi-exclamation-circle-fill"></i></p>`
+            : `<p class="icon success"><i class="bi bi-check-circle-fill"></i></p>`
+        }
+            ${title ? `<p class="label">${title}</p>` : ""}
+            ${content ? `<p class="content">${content}</p>` : ""}
+        </div>
+      </div>
+    </div>`;
+    };
+
+    const showPopup = ({ type, title, content }) => {
+      $("body").append(renderHtml({ type, title, content }));
+      _this.popupShowing();
+    };
+
+    return {
+      showPopup,
+      closePopup,
     };
   },
 };
