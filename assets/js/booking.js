@@ -1,8 +1,6 @@
-const baseURL = "https://vietjetcms-api.vietjetair.com/api/v1/airport";
-const languageId = {
-  vi: "a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14",
-  en: "2f321ebe-16dc-4c72-ac60-08f8a4e1f4f1",
-};
+import { constants } from "./constant.js";
+import config, { baseURL, languageId } from "./config.js";
+import { bookingFormText, dateLocale } from "./translate.js";
 
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
@@ -14,110 +12,6 @@ const tripPassenger = $("#trip__passenger");
 const bookingForm = $("#booking__form");
 const quantityControl = $(".booking__quantity--control");
 const searchFlightBtn = $("#booking__searchflight");
-const config = {
-  PAXLIMIT: 9,
-  ADULT_MINIMUN: 1,
-  CHILDREN_MINIMUN: 0,
-  INFANT_MINIMUN: 0,
-};
-const constants = {
-  DEPART_LOCATION: "departLocation",
-  RETURN_LOCATION: "returnLocation",
-  ONEWAY: "oneway",
-  RETURN: "return",
-  DATE_FORMAT: "MM-DD-YYYY",
-  LOCALE_EN: "en",
-  LOCALE_VI: "vi",
-  ADULT: "adult",
-  CHILDREN: "children",
-  INFANT: "infant",
-  INCREATE: "increate",
-  DECREATE: "decreate",
-};
-const dateLocale = [
-  {
-    lang: "en",
-    departText: "Depart date",
-    returnText: "Return date",
-    locale: {
-      format: "dddd, MMM Do YYYY",
-      separator: "-",
-      applyLabel: "Apply",
-      cancelLabel: "Cancel",
-      fromLabel: "From",
-      toLabel: "To",
-      customRangeLabel: "Custom",
-      weekLabel: "W",
-      daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
-      monthNames: [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-      ],
-      firstDay: 1,
-    },
-  },
-  {
-    lang: "vi",
-    departText: "Ngày đi",
-    returnText: "Ngày về",
-    locale: {
-      format: "dddd, Do MMM YYYY",
-      separator: "-",
-      applyLabel: "Xác nhận",
-      cancelLabel: "Huỷ bỏ",
-      fromLabel: "Từ",
-      toLabel: "Đến",
-      customRangeLabel: "Custom",
-      weekLabel: "Tuần",
-      daysOfWeek: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
-      monthNames: [
-        "Tháng 1",
-        "Tháng 2",
-        "Tháng 3",
-        "Tháng 4",
-        "Tháng 5",
-        "Tháng 6",
-        "Tháng 7",
-        "Tháng 8",
-        "Tháng 9",
-        "Tháng 10",
-        "Tháng 11",
-        "Tháng 12",
-      ],
-      firstDay: 1,
-    },
-  },
-];
-const bookingFormText = [
-  {
-    lang: "en",
-    departure: "Departure",
-    return: "Return",
-    searchFlight: "Search",
-    adults: "Adults",
-    children: "Children",
-    infant: "Infant",
-  },
-  {
-    lang: "vi",
-    departure: "Điểm Khởi hành",
-    return: "Điểm đến",
-    searchFlight: "Tìm chuyến bay",
-    adults: "Người lớn",
-    children: "Trẻ em",
-    infant: "Em bé",
-  },
-];
 
 const app = {
   bookingInform: {
@@ -135,7 +29,9 @@ const app = {
     locale: "",
   },
   init({ locale }) {
+    //set locale for booking form
     this.setLocale(locale);
+    //
     this.onSelectTripType();
     this.onSelectDeparture();
     this.onSelectReturn();
@@ -145,17 +41,17 @@ const app = {
     this.popupShowing();
     this.paxSelectDropdown();
   },
-  setLocale(locale) {
+  setLocale: function (locale) {
     this.bookingInform.locale = locale;
   },
-  onSelectTripType() {
+  onSelectTripType: function () {
     const _this = this;
     tripType.on("change", (e) => {
       _this.bookingInform.tripType = e.target.value;
       _this.onSelectDate();
     });
   },
-  onSelectDeparture() {
+  onSelectDeparture: function () {
     const _this = this;
     tripDeparture.val(_this.bookingInform.departDate).trigger("change");
 
@@ -200,7 +96,7 @@ const app = {
         tripReturn.select2("open");
       });
   },
-  onSelectReturn() {
+  onSelectReturn: function () {
     const _this = this;
 
     tripReturn
@@ -254,7 +150,7 @@ const app = {
         }
       });
   },
-  onSelectDate() {
+  onSelectDate: function () {
     const _this = this;
     const currentLocale = dateLocale.find((item, index) => {
       return item.lang === _this.bookingInform.locale;
@@ -312,7 +208,7 @@ const app = {
         $(".drp-calendar.right").show();
       });
   },
-  onSelectPassenger() {
+  onSelectPassenger: function () {
     const _this = this;
     const locale = _this.bookingInform.locale;
 
@@ -412,7 +308,7 @@ const app = {
       );
     });
   },
-  onSearchFlight() {
+  onSearchFlight: function () {
     const _this = this;
     searchFlightBtn.on("click", function (e) {
       e.preventDefault();
@@ -449,7 +345,7 @@ const app = {
 
     const searching = () => {};
   },
-  customTemplateResult(data) {
+  customTemplateResult: function (data) {
     if (!data.name) {
       return null;
     }
@@ -466,7 +362,7 @@ const app = {
     );
     return htmlTemplate;
   },
-  customTemplateSelection(data, options) {
+  customTemplateSelection: function (data, options) {
     const formText = bookingFormText.find((item) => {
       return item.lang === options.locale;
     });
@@ -491,7 +387,7 @@ const app = {
     );
     return htmlTemplate;
   },
-  onProcessResults: (data, params, locale) => {
+  onProcessResults: function (data, params, locale) {
     let airports = [];
     let filterAirport = [];
 
@@ -542,7 +438,7 @@ const app = {
       results: airports,
     };
   },
-  renderDatePickerTemplate(data) {
+  renderDatePickerTemplate: function (data) {
     const cls = (type) => {
       let classes = `trip__date--wrap trip__date--${type}`;
       let keyObject = "departDate";
@@ -582,7 +478,7 @@ const app = {
 
     $("#trip__date").html(html);
   },
-  renderPaxHtml(data, locale) {
+  renderPaxHtml: function (data, locale) {
     const localText = bookingFormText.find((item) => item.lang === locale);
 
     let paxHtml = `${data.adult} ${localText.adults}, ${data.children} ${localText.children}, ${data.infant} ${localText.infant}`;
@@ -591,7 +487,7 @@ const app = {
     $("#childrenInput").find("input").val(data.children);
     $("#infantInput").find("input").val(data.infant);
   },
-  paxSelectDropdown() {
+  paxSelectDropdown: function () {
     const boxDropdown = tripPassenger.parent(
       ".booking__form--passenger--inner"
     );
@@ -634,7 +530,7 @@ const app = {
       open,
     };
   },
-  popupShowing() {
+  popupShowing: function () {
     const _this = this;
 
     $(".popup__overlay").on("click", function (e) {
