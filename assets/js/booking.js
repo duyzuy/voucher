@@ -18,8 +18,14 @@ const app = {
     tripType: constants.RETURN,
     departLocation: "",
     returnLocation: "",
-    departDate: "",
-    returnDate: "",
+    departDate: {
+      value: "",
+      alt: "",
+    },
+    returnDate: {
+      value: "",
+      alt: "",
+    },
     passenngers: {
       adult: 1,
       children: 0,
@@ -31,58 +37,49 @@ const app = {
   init({ locale }) {
     //set locale for booking form
     this.setLocale(locale);
-    //
-    this.onSelectTripType();
-    this.onSelectDeparture();
-    this.onSelectReturn();
-    this.onSelectDate();
-    this.onSelectPassenger();
-    this.onSearchFlight();
+    //handle all event for booking flow
+    this.handleEvents();
+    // this.onSelectTripType();
+
     this.popupShowing();
     this.paxSelectDropdown();
   },
   setLocale: function (locale) {
     this.bookingInform.locale = locale;
   },
+  handleEvents: function () {
+    this.onSelectTripType();
+    this.onSelectDeparture();
+    this.onSelectReturn();
+    this.onSelectDate();
+    this.onSelectPassenger();
+    this.onSearchFlight();
+  },
   onSelectTripType: function () {
     const _this = this;
+
     tripType.on("change", (e) => {
       _this.bookingInform.tripType = e.target.value;
-      _this.onSelectDate();
+
+      _this.updateDateSelecting({
+        departDate: _this.bookingInform.departDate,
+        returnDate: _this.bookingInform.returnDate,
+        tripType: _this.bookingInform.tripType,
+      });
+      tripDate.data("daterangepicker").setSingleDate(e.target.value);
     });
   },
   onSelectDeparture: function () {
     const _this = this;
-    tripDeparture.val(_this.bookingInform.departDate).trigger("change");
+    // tripDeparture.val(_this.bookingInform.departDate).trigger("change");
 
     tripDeparture
       .select2({
-        ajax: {
-          url: () => {
-            const ajaxURL =
-              baseURL + "?languageId=" + languageId[_this.bookingInform.locale];
-            return ajaxURL;
-          },
-          dataType: "json",
-          data: function (params) {
-            return {
-              q: params.term,
-            };
-          },
-          processResults: (data, params) => {
-            return _this.onProcessResults(
-              data,
-              params,
-              _this.bookingInform.locale
-            );
-          },
-          cache: true,
-        },
-
+        ajax: _this.ajaxAirportData(constants.DEPART_LOCATION),
         placeholder: "Departure",
-        templateResult: _this.customTemplateResult,
+        templateResult: _this.renderCityAirportResult,
         templateSelection: (data) =>
-          _this.customTemplateSelection(data, {
+          _this.renderCityAirportSelection(data, {
             type: constants.DEPART_LOCATION,
             locale: _this.bookingInform.locale,
           }),
@@ -101,37 +98,11 @@ const app = {
 
     tripReturn
       .select2({
-        ajax: {
-          url: () => {
-            let departLocation = _this.bookingInform.departLocation;
-
-            const ajaxURL =
-              baseURL +
-              (departLocation !== ""
-                ? "?departureCode=" + departLocation + "&languageId="
-                : "?languageId=") +
-              languageId[_this.bookingInform.locale];
-            return ajaxURL;
-          },
-          dataType: "json",
-          data: function (params) {
-            return {
-              q: params.term, // search term
-            };
-          },
-          processResults: (data, params) => {
-            return _this.onProcessResults(
-              data,
-              params,
-              _this.bookingInform.locale
-            );
-          },
-          cache: true,
-        },
+        ajax: _this.ajaxAirportData(constants.RETURN_LOCATION),
         placeholder: "Return",
-        templateResult: _this.customTemplateResult,
+        templateResult: _this.renderCityAirportResult,
         templateSelection: (data) =>
-          _this.customTemplateSelection(data, {
+          _this.renderCityAirportSelection(data, {
             type: constants.RETURN_LOCATION,
             locale: _this.bookingInform.locale,
           }),
@@ -156,58 +127,85 @@ const app = {
       return item.lang === _this.bookingInform.locale;
     });
 
-    let data = {
-      departDate: {
-        text: currentLocale.departText,
-        value: _this.bookingInform.departDate,
-        alt: "",
-      },
-      returnDate: {
-        text: currentLocale.returnText,
-        value: _this.bookingInform.returnDate,
-        alt: "",
-      },
-      tripType: _this.bookingInform.tripType,
-    };
-
-    _this.renderDatePickerTemplate(data);
-
     tripDate
-      .daterangepicker(
-        {
-          // autoApply: true,
-          singleDatePicker:
-            _this.bookingInform.tripType === constants.ONEWAY ? true : false,
-          minDate: new Date(),
-          locale: { ...currentLocale.locale },
-          parentEl: "#trip__date--dropdown",
-        },
-        function (start, end, label) {
-          _this.bookingInform.departDate = start.format(
-            currentLocale.locale.format
-          );
-          _this.bookingInform.returnDate = end.format(
-            currentLocale.locale.format
-          );
-
-          data.departDate.value = start.format(constants.DATE_FORMAT);
-          data.returnDate.value = end.format(constants.DATE_FORMAT);
-
-          data.departDate.alt = start
-            .locale(currentLocale.lang)
-            .format(currentLocale.locale.format);
-          data.returnDate.alt = start
-            .locale(currentLocale.lang)
-            .format(currentLocale.locale.format);
-
-          _this.renderDatePickerTemplate(data);
-          _this.paxSelectDropdown().open();
-        }
-      )
+      .daterangepicker({
+        // autoApply: true,
+        autoApplyByStep: true,
+        singleDatePicker:
+          _this.bookingInform.tripType === constants.ONEWAY ? true : false,
+        minDate: new Date(),
+        locale: { ...currentLocale.locale },
+        parentEl: "#trip__date--dropdown",
+      })
       .on("show.daterangepicker", function (ev, picker) {
         $(".drp-calendar.right").show();
+        if (picker.currentStep === "start") {
+          tripDateDepart.addClass("selecting");
+        }
+        if (picker.doneSelect) {
+          tripDateDepart.addClass("selecting");
+        }
+      })
+      .on("hide.daterangepicker", function (ev, picker) {
+        if (picker.doneSelect) {
+          if (picker.currentStep === "start") {
+            const startDateAlt = picker.startDate
+              .locale(currentLocale.lang)
+              .format(currentLocale.locale.format);
+            const starDateValue = picker.startDate.format(
+              constants.DATE_FORMAT
+            );
+
+            _this.bookingInform.departDate.value = starDateValue;
+            _this.bookingInform.departDate.alt = startDateAlt;
+
+            tripda.addClass("selected");
+          }
+          _this.updateDateSelecting({
+            departDate: _this.bookingInform.departDate,
+            returnDate: _this.bookingInform.returnDate,
+            tripType: _this.bookingInform.tripType,
+          });
+        }
+
+        tripDateDepart.removeClass("selecting");
+        tripDatereturn.removeClass("selecting");
+      })
+      .on("apply.daterangepicker", function (ev, picker) {
+        if (picker.currentStep === "start") {
+          const startDateAlt = picker.startDate
+            .locale(currentLocale.lang)
+            .format(currentLocale.locale.format);
+          const starDateValue = picker.startDate.format(constants.DATE_FORMAT);
+
+          _this.bookingInform.departDate.value = starDateValue;
+          _this.bookingInform.departDate.alt = startDateAlt;
+
+          tripDateDepart.addClass("selected");
+          tripDateDepart.removeClass("selecting");
+          tripDatereturn.addClass("selecting");
+        }
+        if (picker.currentStep === "end") {
+          const endDateAlt = picker.endDate
+            .locale(currentLocale.lang)
+            .format(currentLocale.locale.format);
+          const endDateValue = picker.endDate.format(constants.DATE_FORMAT);
+
+          _this.bookingInform.returnDate.value = endDateValue;
+          _this.bookingInform.returnDate.alt = endDateAlt;
+
+          tripDatereturn.removeClass("selecting");
+          tripDatereturn.addClass("selected");
+          // _this.paxSelectDropdown().open();
+        }
+        _this.updateDateSelecting({
+          departDate: _this.bookingInform.departDate,
+          returnDate: _this.bookingInform.returnDate,
+          tripType: _this.bookingInform.tripType,
+        });
       });
   },
+
   onSelectPassenger: function () {
     const _this = this;
     const locale = _this.bookingInform.locale;
@@ -345,7 +343,7 @@ const app = {
 
     const searching = () => {};
   },
-  customTemplateResult: function (data) {
+  renderCityAirportResult: function (data) {
     if (!data.name) {
       return null;
     }
@@ -362,7 +360,7 @@ const app = {
     );
     return htmlTemplate;
   },
-  customTemplateSelection: function (data, options) {
+  renderCityAirportSelection: function (data, options) {
     const formText = bookingFormText.find((item) => {
       return item.lang === options.locale;
     });
@@ -387,96 +385,103 @@ const app = {
     );
     return htmlTemplate;
   },
-  onProcessResults: function (data, params, locale) {
-    let airports = [];
-    let filterAirport = [];
+  ajaxAirportData: function (type) {
+    const _this = this;
+    const processAirportData = (data, params, locale) => {
+      let airports = [];
+      let filterAirport = [];
 
-    data.airportGroups.forEach((group, groupInd) => {
-      let airport = [];
-      group.airports.forEach((item, itemInd) => {
-        airport.push({
-          id: item.code,
-          name: locale === constants.LOCALE_VI ? item.name : item.engName,
-          provinceName:
-            locale === constants.LOCALE_VI
-              ? item.province.provinceName
-              : item.province.provinceEngName,
-          provinceEngName: item.province.provinceEngName,
-          code: item.code,
-          engName: item.engName,
+      data.airportGroups.forEach((group, groupInd) => {
+        let airport = [];
+        group.airports.forEach((item, itemInd) => {
+          airport.push({
+            id: item.code,
+            name: locale === constants.LOCALE_VI ? item.name : item.engName,
+            provinceName:
+              locale === constants.LOCALE_VI
+                ? item.province.provinceName
+                : item.province.provinceEngName,
+            provinceEngName: item.province.provinceEngName,
+            code: item.code,
+            engName: item.engName,
+          });
         });
+
+        if (params.term) {
+          $.each(airport, function (idx, child) {
+            if (
+              child.provinceEngName
+                .toUpperCase()
+                .indexOf(params.term.toUpperCase()) == 0 ||
+              child.engName.toUpperCase().indexOf(params.term.toUpperCase()) ==
+                0 ||
+              child.code.toUpperCase().indexOf(params.term.toUpperCase()) == 0
+            ) {
+              filterAirport.push(child);
+            }
+          });
+        }
+
+        airports[groupInd] = {
+          name: locale === constants.LOCALE_VI ? group.name : group.engName,
+          children: airport,
+          isParent: true,
+          total: group.total,
+        };
       });
-
-      if (params.term) {
-        $.each(airport, function (idx, child) {
-          if (
-            child.provinceEngName
-              .toUpperCase()
-              .indexOf(params.term.toUpperCase()) == 0 ||
-            child.engName.toUpperCase().indexOf(params.term.toUpperCase()) ==
-              0 ||
-            child.code.toUpperCase().indexOf(params.term.toUpperCase()) == 0
-          ) {
-            filterAirport.push(child);
-          }
-        });
+      if (filterAirport.length > 0) {
+        return {
+          results: filterAirport,
+        };
       }
-
-      airports[groupInd] = {
-        name: locale === constants.LOCALE_VI ? group.name : group.engName,
-        children: airport,
-        isParent: true,
-        total: group.total,
-      };
-    });
-    if (filterAirport.length > 0) {
       return {
-        results: filterAirport,
+        results: airports,
       };
-    }
+    };
     return {
-      results: airports,
+      url: () => {
+        let ajaxURL;
+        if (type === constants.RETURN_LOCATION) {
+          let departLocation = _this.bookingInform.departLocation;
+          ajaxURL =
+            baseURL +
+            (departLocation !== ""
+              ? "?departureCode=" + departLocation + "&languageId="
+              : "?languageId=") +
+            languageId[_this.bookingInform.locale];
+        } else {
+          ajaxURL =
+            baseURL + "?languageId=" + languageId[_this.bookingInform.locale];
+        }
+
+        return ajaxURL;
+      },
+      dataType: "json",
+      data: function (params) {
+        return {
+          q: params.term, // search term
+        };
+      },
+      processResults: (data, params) => {
+        return processAirportData(data, params, _this.bookingInform.locale);
+      },
+      cache: true,
     };
   },
-  renderDatePickerTemplate: function (data) {
-    const cls = (type) => {
-      let classes = `trip__date--wrap trip__date--${type}`;
-      let keyObject = "departDate";
-      if (type === "return") {
-        keyObject = "returnDate";
-      }
-      if (data[keyObject].value !== "") {
-        // classes.concat(" ", "selected");
-        classes += " selected";
-      }
-      return classes;
-    };
-    let defaultClass = "return";
-    let html = `<div id="trip__date--depart" class="${cls("depart")}">`;
-    html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
-    html += `<div class="trip__date--text">`;
-    html += `<span class="booking__date--text">${data.departDate.text}</span>`;
-    html += `<span class="booking__date--value">${data.departDate.alt}</span>`;
-    html += `</div><input type="hidden" name="departDate" value="${data.departDate.value}"/></div>`;
+  updateDateSelecting: function (data) {
     if (data.tripType === constants.RETURN) {
-      html += `<div id="trip__date--return" class="${cls("return")}">`;
-      html += `<div class="trip__date--icon"><i class="bi bi-calendar2-week-fill"></i></div>`;
-      html += `<div class="trip__date--text">`;
-      html += `<span class="booking__date--text">${data.returnDate.text}</span>`;
-      html += `<span class="booking__date--value">${data.returnDate.alt}</span>`;
-      html += `</div><input type="hidden" name="returnDate" value="${data.returnDate.value}"/></div>`;
-    }
-    if (data.tripType === defaultClass) {
-      $("#trip__date").addClass(defaultClass);
-      $("#trip__date").removeClass("oneway");
+      tripDate.addClass("return");
+      tripDate.removeClass("oneway");
     } else {
-      $("#trip__date").removeClass(defaultClass);
-      $("#trip__date").addClass(data.tripType);
+      tripDate.removeClass("return");
+      tripDate.addClass("oneway");
     }
 
-    defaultClass = data.tripType;
+    tripDateDepart.find(".booking__date--value").text(data.departDate.alt);
+    tripDateDepart.find('input[name="departDate"]').val(data.departDate.value);
 
-    $("#trip__date").html(html);
+    tripDatereturn.find(".booking__date--value").text(data.returnDate.alt);
+    tripDatereturn.find('input[name="returnDate"]').val(data.returnDate.value);
   },
   renderPaxHtml: function (data, locale) {
     const localText = bookingFormText.find((item) => item.lang === locale);
@@ -504,27 +509,27 @@ const app = {
       }
       return;
     };
-    const clickOutside = () => {
-      $(window).on("click", function (e) {
-        if (
-          document
-            .getElementById("booking__form--passenger--inner")
-            .contains(e.target) ||
-          e.target.contains(
-            document.getElementById("trip__date--dropdown").childNodes[0]
-              .childNodes[3].childNodes[2]
-          )
-        ) {
-          return;
-        } else {
-          if (boxDropdown.hasClass("open")) {
-            boxDropdown.removeClass("open");
-          }
-        }
-      });
-    };
+    // const clickOutside = () => {
+    //   $(window).on("click", function (e) {
+    //     if (
+    //       document
+    //         .getElementById("booking__form--passenger--inner")
+    //         .contains(e.target) ||
+    //       e.target.contains(
+    //         document.getElementById("trip__date--dropdown").childNodes[0]
+    //           .childNodes[3].childNodes[2]
+    //       )
+    //     ) {
+    //       return;
+    //     } else {
+    //       if (boxDropdown.hasClass("open")) {
+    //         boxDropdown.removeClass("open");
+    //       }
+    //     }
+    //   });
+    // };
 
-    clickOutside();
+    // clickOutside();
     return {
       close,
       open,

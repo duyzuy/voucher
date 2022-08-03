@@ -1580,6 +1580,10 @@ button:focus:not(:focus-visible){
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
 }
+.trip__date.oneway .trip__date--return{
+    display: none;
+    pointer-events: none;
+}
 .select2-search--dropdown .select2-search__field:focus-visible{
     outline: none !important;
 }
@@ -1651,17 +1655,30 @@ border-bottom-left-radius: 0 !important;
 .trip__date--wrap{
     flex: 1;
     background-color: #fff;
+
+}
+
+.trip__date--wrap .booking__date--text{
+    width: 100%;
+
+
+}
+.trip__date--wrap.selecting .bi-calendar2-week-fill::before{
+  color: #ee0610;
+
 }
 .trip__date--wrap.selected .booking__date--text{
     font-size: 13px;
+  
 }
 .trip__date--text{
+    
     overflow: hidden;
+  
 }
 .trip__date--wrap.selected .booking__date--value{
     font-weight: bold;
     white-space: nowrap;
-
     overflow: hidden;
     text-overflow: ellipsis;
 }
@@ -1940,6 +1957,19 @@ border-bottom-left-radius: 0 !important;
 }
 .daterangepicker .drp-buttons{
     padding: 15px 20px;
+}
+.daterangepicker.start.opensright:after{
+    content: none;
+    right: 10px;
+    left: auto;
+}
+.daterangepicker.start.opensright:before{
+    content: none;
+    right: 10px;
+    left: auto;
+}
+.daterangepicker.auto-apply-bystep .drp-buttons{
+    display: none;
 }
 /* .start-date.active.available{
     border-top-right-radius: 0 ;

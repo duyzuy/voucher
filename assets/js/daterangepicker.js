@@ -35,6 +35,9 @@
       (this.maxDate = !1),
       (this.maxSpan = !1),
       (this.autoApply = !1),
+      (this.autoApplyByStep = !1),
+      (this.currentStep = "start"),
+      (this.doneSelect = false),
       (this.singleDatePicker = !1),
       (this.showDropdowns = !1),
       (this.minYear = t().subtract(100, "year").format("YYYY")),
@@ -164,6 +167,9 @@
       "boolean" == typeof i.timePicker24Hour &&
         (this.timePicker24Hour = i.timePicker24Hour),
       "boolean" == typeof i.autoApply && (this.autoApply = i.autoApply),
+      "boolean" == typeof i.autoApplyByStep &&
+        (this.autoApplyByStep = i.autoApplyByStep),
+      "boolean" == typeof i.doneSelect && (this.doneSelect = i.doneSelect),
       "boolean" == typeof i.autoUpdateInput &&
         (this.autoUpdateInput = i.autoUpdateInput),
       "boolean" == typeof i.linkedCalendars &&
@@ -247,6 +253,7 @@
         this.container.find(".calendar-time").hide()),
       this.timePicker && this.autoApply && (this.autoApply = !1),
       this.autoApply && this.container.addClass("auto-apply"),
+      this.autoApplyByStep && this.container.addClass("auto-apply-bystep"),
       "object" == typeof i.ranges && this.container.addClass("show-ranges"),
       this.singleDatePicker &&
         (this.container.addClass("single"),
@@ -255,7 +262,8 @@
         this.container.find(".drp-calendar.right").hide(),
         !this.timePicker &&
           this.autoApply &&
-          this.container.addClass("auto-apply")),
+          this.container.addClass("auto-apply"),
+        this.autoApplyByStep && this.container.addClass("auto-apply-bystep")),
       ((void 0 === i.ranges && !this.singleDatePicker) ||
         this.alwaysShowCalendars) &&
         this.container.addClass("show-calendar"),
@@ -387,6 +395,15 @@
             ),
           this.isShowing || this.updateElement(),
           this.updateMonthsInView();
+      },
+      setSingleDate: function (type) {
+        if (type === "oneway") {
+          this.singleDatePicker = true;
+          this.setEndDate(this.startDate), this.updateView();
+        } else {
+          this.singleDatePicker = false;
+          this.updateView();
+        }
       },
       isInvalidDate: function () {
         return !1;
@@ -1072,10 +1089,19 @@
                 : 0;
               n = n.clone().hour(r).minute(o).second(h);
             }
-            (this.endDate = null), this.setStartDate(n.clone());
-          } else if (!this.endDate && n.isBefore(this.startDate))
+            if (this.autoApplyByStep) {
+              (this.endDate = null),
+                (this.currentStep = "start"),
+                this.setStartDate(n.clone()),
+                this.calculateChosenLabel(),
+                this.applyByStep("start");
+            } else {
+              (this.endDate = null),
+                this.setStartDate(n.clone(), this.clickApply());
+            }
+          } else if (!this.endDate && n.isBefore(this.startDate)) {
             this.setEndDate(this.startDate.clone());
-          else {
+          } else {
             if (this.timePicker) {
               var l;
               r = parseInt(this.container.find(".right .hourselect").val(), 10);
@@ -1102,15 +1128,25 @@
                 : 0;
               n = n.clone().hour(r).minute(o).second(h);
             }
-            this.setEndDate(n.clone()),
-              this.autoApply &&
-                (this.calculateChosenLabel(), this.clickApply());
+            if (this.autoApplyByStep) {
+              this.setEndDate(n.clone()),
+                (this.currentStep = "end"),
+                (this.calculateChosenLabel(), this.applyByStep("end"));
+            } else {
+              this.setEndDate(n.clone()),
+                this.autoApply &&
+                  (this.calculateChosenLabel(), this.clickApply());
+            }
           }
           this.singleDatePicker &&
             (this.setEndDate(this.startDate),
             !this.timePicker && this.autoApply && this.clickApply()),
             this.updateView(),
             t.stopPropagation();
+
+          if (this.singleDatePicker && this.autoApplyByStep) {
+            this.hide();
+          }
         }
       },
       calculateChosenLabel: function () {
@@ -1155,6 +1191,18 @@
                 .attr("data-range-key"))
             : (this.chosenLabel = null),
           this.showCalendars());
+      },
+      applyByStep: function (step) {
+        if (step === "start") {
+          this.element.trigger("apply.daterangepicker", this);
+          this.container.addClass(step);
+          this.container.removeClass("end");
+        } else {
+          this.hide(), this.element.trigger("apply.daterangepicker", this);
+          this.doneSelect = true;
+          this.container.removeClass("start");
+          this.container.addClass(step);
+        }
       },
       clickApply: function (t) {
         this.hide(), this.element.trigger("apply.daterangepicker", this);
