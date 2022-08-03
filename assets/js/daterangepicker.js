@@ -396,6 +396,10 @@
           this.isShowing || this.updateElement(),
           this.updateMonthsInView();
       },
+      setMinDate: function (date) {
+        this.minDate = t(date, this.locale.format);
+        this.updateView();
+      },
       setSingleDate: function (type) {
         if (type === "oneway") {
           this.singleDatePicker = true;

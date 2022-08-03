@@ -126,14 +126,14 @@ const app = {
     const currentLocale = dateLocale.find((item) => {
       return item.lang === _this.bookingInform.locale;
     });
-
+    const currentDate = new Date();
     tripDate
       .daterangepicker({
         // autoApply: true,
         autoApplyByStep: true,
         singleDatePicker:
           _this.bookingInform.tripType === constants.ONEWAY ? true : false,
-        minDate: new Date(),
+        minDate: currentDate,
         locale: { ...currentLocale.locale },
         parentEl: "#trip__date--dropdown",
       })
@@ -141,6 +141,7 @@ const app = {
         $(".drp-calendar.right").show();
         if (picker.currentStep === "start" || picker.doneSelect) {
           tripDateDepart.addClass("selecting");
+          tripDate.data("daterangepicker").setMinDate(currentDate);
         }
 
         _this.bookingInform.currentSelect = "departDate";
@@ -183,13 +184,15 @@ const app = {
               alt: startDateAlt,
             },
           };
-          // tripDate.data("daterangepicker")
+
           tripDateDepart.addClass("selected");
           tripDateDepart.removeClass("selecting");
           tripDatereturn.addClass("selecting");
 
           _this.bookingInform.tripType === constants.ONEWAY &&
             _this.paxSelectDropdown().open();
+          _this.bookingInform.tripType === constants.RETURN &&
+            tripDate.data("daterangepicker").setMinDate(picker.startDate);
         }
         if (picker.currentStep === "end") {
           const endDateAlt = picker.endDate

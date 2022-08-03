@@ -1782,8 +1782,8 @@ border-bottom-left-radius: 0 !important;
     width: 30px;
     margin-right: 15px;
 }
-.passenger__input--icon{
-
+.passenger__input--icon img{
+    width: 100%;
 }
 .booking__form--adult p, 
 .booking__form--infant p,
