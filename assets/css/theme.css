@@ -1542,6 +1542,10 @@ button:focus:not(:focus-visible){
 .trip__date--text .booking__date--text,
 .trip__date--text .booking__date--value{
     display: block;
+
+}
+.trip__date--text .booking__date--value{
+    text-transform: capitalize;
 }
 .citypare--selection .citypare__name{
     text-overflow: ellipsis;
@@ -1878,6 +1882,7 @@ border-bottom-left-radius: 0 !important;
 }
 #trip__date--dropdown .daterangepicker{
     width: 700px;
+    margin-top: 1px;
 }
 .daterangepicker .calendar-table th:not(.month){
     color: #ee0810 !important
@@ -1971,14 +1976,11 @@ border-bottom-left-radius: 0 !important;
 .daterangepicker.auto-apply-bystep .drp-buttons{
     display: none;
 }
-/* .start-date.active.available{
-    border-top-right-radius: 0 ;
-    border-bottom-right-radius: 0 ;
+
+.daterangepicker.opensright:after,
+.daterangepicker.opensright:before{
+    content: none
 }
-.end-date.active.available{
-    border-top-left-radius: 0 !important;
-    border-bottom-left-radius: 0 !important;
-} */
 .booking__popup{
     position: fixed;
     z-index: 999;
@@ -2008,6 +2010,8 @@ border-bottom-left-radius: 0 !important;
     position: absolute;
     top: 0;
     left: 0;
+    padding-left: 15px;
+    padding-right: 15px;
 
 }
 .booking__popup .popup__content{

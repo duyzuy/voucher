@@ -39,10 +39,8 @@ const app = {
     this.setLocale(locale);
     //handle all event for booking flow
     this.handleEvents();
-    // this.onSelectTripType();
 
-    this.popupShowing();
-    this.paxSelectDropdown();
+    this.renderAlert();
   },
   setLocale: function (locale) {
     this.bookingInform.locale = locale;
@@ -54,6 +52,8 @@ const app = {
     this.onSelectDate();
     this.onSelectPassenger();
     this.onSearchFlight();
+
+    this.paxSelectDropdown();
   },
   onSelectTripType: function () {
     const _this = this;
@@ -123,7 +123,7 @@ const app = {
   },
   onSelectDate: function () {
     const _this = this;
-    const currentLocale = dateLocale.find((item, index) => {
+    const currentLocale = dateLocale.find((item) => {
       return item.lang === _this.bookingInform.locale;
     });
 
@@ -139,12 +139,11 @@ const app = {
       })
       .on("show.daterangepicker", function (ev, picker) {
         $(".drp-calendar.right").show();
-        if (picker.currentStep === "start") {
+        if (picker.currentStep === "start" || picker.doneSelect) {
           tripDateDepart.addClass("selecting");
         }
-        if (picker.doneSelect) {
-          tripDateDepart.addClass("selecting");
-        }
+
+        _this.bookingInform.currentSelect = "departDate";
       })
       .on("hide.daterangepicker", function (ev, picker) {
         if (picker.doneSelect) {
@@ -158,8 +157,6 @@ const app = {
 
             _this.bookingInform.departDate.value = starDateValue;
             _this.bookingInform.departDate.alt = startDateAlt;
-
-            tripda.addClass("selected");
           }
           _this.updateDateSelecting({
             departDate: _this.bookingInform.departDate,
@@ -167,7 +164,7 @@ const app = {
             tripType: _this.bookingInform.tripType,
           });
         }
-
+        _this.bookingInform.currentSelect = "";
         tripDateDepart.removeClass("selecting");
         tripDatereturn.removeClass("selecting");
       })
@@ -178,12 +175,21 @@ const app = {
             .format(currentLocale.locale.format);
           const starDateValue = picker.startDate.format(constants.DATE_FORMAT);
 
-          _this.bookingInform.departDate.value = starDateValue;
-          _this.bookingInform.departDate.alt = startDateAlt;
-
+          _this.bookingInform = {
+            ..._this.bookingInform,
+            currentSelect: "departDate",
+            departDate: {
+              value: starDateValue,
+              alt: startDateAlt,
+            },
+          };
+          // tripDate.data("daterangepicker")
           tripDateDepart.addClass("selected");
           tripDateDepart.removeClass("selecting");
           tripDatereturn.addClass("selecting");
+
+          _this.bookingInform.tripType === constants.ONEWAY &&
+            _this.paxSelectDropdown().open();
         }
         if (picker.currentStep === "end") {
           const endDateAlt = picker.endDate
@@ -191,12 +197,18 @@ const app = {
             .format(currentLocale.locale.format);
           const endDateValue = picker.endDate.format(constants.DATE_FORMAT);
 
-          _this.bookingInform.returnDate.value = endDateValue;
-          _this.bookingInform.returnDate.alt = endDateAlt;
+          _this.bookingInform = {
+            ..._this.bookingInform,
+            currentSelect: "returnDate",
+            returnDate: {
+              value: endDateValue,
+              alt: endDateAlt,
+            },
+          };
 
           tripDatereturn.removeClass("selecting");
           tripDatereturn.addClass("selected");
-          // _this.paxSelectDropdown().open();
+          _this.paxSelectDropdown().open();
         }
         _this.updateDateSelecting({
           departDate: _this.bookingInform.departDate,
@@ -319,7 +331,7 @@ const app = {
         _this.bookingInform.departDate === "" ||
         _this.bookingInform.departLocation === ""
       ) {
-        _this.popupShowing().showPopup({
+        _this.renderAlert().showPopup({
           type: "error",
           title: "Tìm chuyến bay",
           content: "Vui lòng điền đầy đủ thông tin trước khi đặt vé",
@@ -328,7 +340,7 @@ const app = {
       } else {
         if (_this.bookingInform.tripType === constants.RETURN) {
           if (_this.bookingInform.returnDate === "") {
-            _this.popupShowing().showPopup({
+            _this.renderAlert().showPopup({
               type: "error",
               title: "Tìm chuyến bay",
               content: "Vui lòng điền đầy đủ thông tin trước khi đặt vé",
@@ -509,38 +521,34 @@ const app = {
       }
       return;
     };
-    // const clickOutside = () => {
-    //   $(window).on("click", function (e) {
-    //     if (
-    //       document
-    //         .getElementById("booking__form--passenger--inner")
-    //         .contains(e.target) ||
-    //       e.target.contains(
-    //         document.getElementById("trip__date--dropdown").childNodes[0]
-    //           .childNodes[3].childNodes[2]
-    //       )
-    //     ) {
-    //       return;
-    //     } else {
-    //       if (boxDropdown.hasClass("open")) {
-    //         boxDropdown.removeClass("open");
-    //       }
-    //     }
-    //   });
-    // };
+    const clickOutside = () => {
+      $(window).on("click", function (e) {
+        if (
+          document
+            .getElementById("booking__form--passenger--inner")
+            .contains(e.target)
+        ) {
+          return;
+        } else {
+          if (boxDropdown.hasClass("open")) {
+            boxDropdown.removeClass("open");
+          }
+        }
+      });
+    };
 
-    // clickOutside();
+    clickOutside();
     return {
       close,
       open,
     };
   },
-  popupShowing: function () {
-    const _this = this;
-
-    $(".popup__overlay").on("click", function (e) {
+  renderAlert: function () {
+    $(window).on("click", function (e) {
       if ($(e.target).hasClass("popup__overlay")) {
-        $("#booking__popup").remove();
+        if ($("#booking__popup")) {
+          $("#booking__popup").remove();
+        }
       }
     });
 
@@ -567,7 +575,6 @@ const app = {
 
     const showPopup = ({ type, title, content }) => {
       $("body").append(renderHtml({ type, title, content }));
-      _this.popupShowing();
     };
 
     return {
