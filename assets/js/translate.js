@@ -25,7 +25,8 @@ const dateLocale = [
     departText: "Depart date",
     returnText: "Return date",
     locale: {
-      format: "dddd, MMM Do YYYY",
+      format: "DD-MM-YYYY",
+      formatText: "dddd, MMM Do YYYY",
       separator: "-",
       applyLabel: "Apply",
       cancelLabel: "Cancel",
@@ -56,7 +57,8 @@ const dateLocale = [
     departText: "Ngày đi",
     returnText: "Ngày về",
     locale: {
-      format: "dddd, Do MMM YYYY",
+      format: "DD-MM-YYYY",
+      formatText: "dddd, Do MMM YYYY",
       separator: "-",
       applyLabel: "Xác nhận",
       cancelLabel: "Huỷ bỏ",

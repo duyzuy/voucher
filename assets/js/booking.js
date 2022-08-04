@@ -151,9 +151,9 @@ const app = {
           if (picker.currentStep === "start") {
             const startDateAlt = picker.startDate
               .locale(currentLocale.lang)
-              .format(currentLocale.locale.format);
+              .format(currentLocale.locale.formatText);
             const starDateValue = picker.startDate.format(
-              constants.DATE_FORMAT
+              currentLocale.locale.format
             );
 
             _this.bookingInform.departDate.value = starDateValue;
@@ -173,8 +173,10 @@ const app = {
         if (picker.currentStep === "start") {
           const startDateAlt = picker.startDate
             .locale(currentLocale.lang)
-            .format(currentLocale.locale.format);
-          const starDateValue = picker.startDate.format(constants.DATE_FORMAT);
+            .format(currentLocale.locale.formatText);
+          const starDateValue = picker.startDate.format(
+            currentLocale.locale.format
+          );
 
           _this.bookingInform = {
             ..._this.bookingInform,
@@ -197,8 +199,10 @@ const app = {
         if (picker.currentStep === "end") {
           const endDateAlt = picker.endDate
             .locale(currentLocale.lang)
-            .format(currentLocale.locale.format);
-          const endDateValue = picker.endDate.format(constants.DATE_FORMAT);
+            .format(currentLocale.locale.formatText);
+          const endDateValue = picker.endDate.format(
+            currentLocale.locale.format
+          );
 
           _this.bookingInform = {
             ..._this.bookingInform,
@@ -220,7 +224,6 @@ const app = {
         });
       });
   },
-
   onSelectPassenger: function () {
     const _this = this;
     const locale = _this.bookingInform.locale;
@@ -328,7 +331,7 @@ const app = {
       const searching = {
         ..._this.bookingInform,
       };
-
+      console.log(searching);
       if (
         _this.bookingInform.departDate === "" ||
         _this.bookingInform.departDate === "" ||

@@ -1132,14 +1132,13 @@
                 : 0;
               n = n.clone().hour(r).minute(o).second(h);
             }
+            this.setEndDate(n.clone());
             if (this.autoApplyByStep) {
-              this.setEndDate(n.clone()),
-                (this.currentStep = "end"),
+              (this.currentStep = "end"),
                 (this.calculateChosenLabel(), this.applyByStep("end"));
             } else {
-              this.setEndDate(n.clone()),
-                this.autoApply &&
-                  (this.calculateChosenLabel(), this.clickApply());
+              this.autoApply &&
+                (this.calculateChosenLabel(), this.clickApply());
             }
           }
           this.singleDatePicker &&

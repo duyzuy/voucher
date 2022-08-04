@@ -1898,6 +1898,9 @@ border-bottom-left-radius: 0 !important;
     font-size: 14px;
     min-width: 45px;
 }
+.daterangepicker .calendar-table td.today{
+    border-color: #ee0810;
+}
 .daterangepicker .calendar-table table{
     border-collapse: inherit;
 }
