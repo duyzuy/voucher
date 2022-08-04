@@ -2195,7 +2195,11 @@ border-bottom-left-radius: 0 !important;
 
 }
 .icon-stop{
-
+width: 10px;
+height: 10px;
+display: block;
+border-radius: 10px;
+background-color: red;
 }
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
