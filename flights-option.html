@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/bootstrap-icons.css" />
+    <link rel="stylesheet" href="./assets/css/slick.css" />
+    <link rel="stylesheet" href="./assets/css/slick-theme.css" />
+    <link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/select.css" />
+    <link rel="stylesheet" href="./assets/css/theme.css" />
+    <title>Flight options</title>
+  </head>
+
+  <body class="datepicker">
+    <div class="wrapper">
+      <div class="mobile__menu">
+        <div class="overlay"></div>
+        <div class="navbar mobile-navbar">
+          <div class="navbar-user">
+            <svg
+              width="28"
+              height="28"
+              viewBox="0 0 28 28"
+              fill="#000"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M14 7C13.1347 7 12.2888 7.25659 11.5694 7.73732C10.8499 8.21805 10.2892 8.90133 9.95803 9.70076C9.6269 10.5002 9.54026 11.3799 9.70907 12.2285C9.87788 13.0772 10.2946 13.8567 10.9064 14.4686C11.5183 15.0804 12.2978 15.4971 13.1465 15.6659C13.9951 15.8347 14.8748 15.7481 15.6742 15.417C16.4737 15.0858 17.157 14.5251 17.6377 13.8056C18.1184 13.0862 18.375 12.2403 18.375 11.375C18.375 10.2147 17.9141 9.10188 17.0936 8.28141C16.2731 7.46094 15.1603 7 14 7Z"
+                fill="#3c3c3c"
+              />
+              <path
+                d="M14 1.75C11.5772 1.75 9.20877 2.46845 7.19427 3.8145C5.17977 5.16054 3.60965 7.07373 2.68248 9.31213C1.75531 11.5505 1.51272 14.0136 1.98539 16.3899C2.45805 18.7661 3.62475 20.9489 5.33795 22.6621C7.05114 24.3752 9.23388 25.542 11.6101 26.0146C13.9864 26.4873 16.4495 26.2447 18.6879 25.3175C20.9263 24.3904 22.8395 22.8202 24.1855 20.8057C25.5316 18.7912 26.25 16.4228 26.25 14C26.2463 10.7522 24.9545 7.63855 22.658 5.34203C20.3615 3.04552 17.2478 1.75371 14 1.75ZM20.993 21.8103C20.9756 20.6625 20.508 19.5676 19.6909 18.7614C18.8739 17.9552 17.7728 17.5022 16.625 17.5H11.375C10.2272 17.5022 9.12611 17.9552 8.30908 18.7614C7.49205 19.5676 7.02444 20.6625 7.00701 21.8103C5.42025 20.3934 4.30127 18.528 3.79824 16.4611C3.2952 14.3941 3.43184 12.2232 4.19006 10.2356C4.94829 8.24808 6.29232 6.53771 8.04421 5.331C9.79609 4.12428 11.8732 3.47815 14.0004 3.47815C16.1277 3.47815 18.2048 4.12428 19.9567 5.331C21.7086 6.53771 23.0526 8.24808 23.8108 10.2356C24.569 12.2232 24.7057 14.3941 24.2027 16.4611C23.6996 18.528 22.5806 20.3934 20.9939 21.8103H20.993Z"
+                fill="#3c3c3c"
+              />
+            </svg>
+            <div class="mb__user__link">
+              <a href="./register.html" class="btn btn-link">Đăng ký</a> |
+              <a href="" class="btn btn-link">Đăng nhập</a>
+            </div>
+          </div>
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#"
+                >Điều kiện điều khoản</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Nhận voucher</a>
+            </li>
+            <li class="nav-item has-sub">
+              <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+              <ul class="submenu">
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Nhận voucher</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"
+                    >Câu hỏi thường gặp Câu hỏi thường gặp</a
+                  >
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Câu hỏi thường gặp</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Sử dụng voucher</a>
+            </li>
+            <li class="nav-item dropdown nav-lang">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                id="mbnavbarLanguage"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <img src="./images/flag-vn.jpg" alt="" />
+                Tiếng Việt
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="mbnavbarLanguage">
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <img src="./images/flag-vn.jpg" alt="Tiếng Việt" />Tiếng
+                    Việt</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <img src="./images/flag-en.jpg" alt="" />English</a
+                  >
+                </li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <!-----------------header----------------->
+      <div class="wrapper__header">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-red">
+          <div class="container">
+            <a
+              class="navbar-brand d-flex align-items-center justify-content-center"
+              href="./index.html"
+            >
+              <img
+                src="./images/vj-logo-white.svg"
+                alt="Logo Vietjet"
+                class="mr-2"
+              />
+            </a>
+
+            <div class="collapse navbar-collapse">
+              <div class="navbar__top">
+                <div class="navbar-user">
+                  <img src="images/user.svg" alt="user" />
+                  <div class="user__link">
+                    <a href="./register.html" class="btn btn-link">Đăng ký</a> |
+                    <a href="./sing-in.html" class="btn btn-link">Đăng nhập</a>
+                  </div>
+                </div>
+                <div class="navbar-language">
+                  <div class="nav-item dropdown nav-lang">
+                    <a
+                      class="nav-link dropdown-toggle"
+                      href="#"
+                      id="navbarLanguage"
+                      role="button"
+                      data-bs-toggle="dropdown"
+                      aria-expanded="false"
+                    >
+                      <img src="./images/flag-vn.jpg" alt="" />
+                      Tiếng Việt
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarLanguage">
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <img
+                            src="./images/flag-vn.jpg"
+                            alt="Tiếng Việt"
+                          />Tiếng Việt</a
+                        >
+                      </li>
+                      <li>
+                        <a class="dropdown-item" href="#">
+                          <img src="./images/flag-en.jpg" alt="" />English</a
+                        >
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="navbar__bottom">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a
+                      class="nav-link active"
+                      aria-current="page"
+                      href="./page_detail.html"
+                      >Điều kiện điều khoản</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="./get-voucher-op1.html"
+                      >Nhận voucher</a
+                    >
+                  </li>
+                  <li class="nav-item has-sub">
+                    <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+                    <ul class="submenu">
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Nhận voucher</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="#"
+                          >Câu hỏi thường gặp Câu hỏi thường gặp</a
+                        >
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Câu hỏi thường gặp</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="#">Sử dụng voucher</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <button class="navbar-toggler ml-2" type="button">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </div>
+        </nav>
+      </div>
+      <!-----------------main page----------------->
+      <div class="wrapper__main booking__layout">
+        <div class="booking__layout--header">
+          <div class="container">
+            <div class="row">
+              <div
+                class="col-12 col-lg-7 col-left booking__layout--header--infor"
+              >
+                <div class="header--infor">
+                  <p class="destinations">
+                    Hà nội
+                    <span class="icon"
+                      ><img src="./images/booking/ic-return.svg"
+                    /></span>
+                    Tp Hồ Chí Minh
+                  </p>
+                  <p class="triptype-passengers">
+                    <span class="status-triptype">Khứ hồi</span
+                    ><span class="status-passenger"
+                      >1 Người lớn, 1 Trẻ em, 1 Em bé</span
+                    >
+                  </p>
+                </div>
+                <div class="header--btns">
+                  <button class="btn btn-outline-dark btn-sm">
+                    <i class="bi bi-pencil-fill"></i> Sửa
+                  </button>
+                </div>
+              </div>
+              <div
+                class="col-12 col-lg-5 col-right booking__layout--header--status"
+              >
+                <ul class="status__inner">
+                  <li class="step status-search current">
+                    <span
+                      ><svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                        />
+                      </svg>
+                    </span>
+                  </li>
+                  <li class="step status-user">
+                    <span
+                      ><svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M7.5 6.5C7.5 8.981 9.519 11 12 11C14.481 11 16.5 8.981 16.5 6.5C16.5 4.019 14.481 2 12 2C9.519 2 7.5 4.019 7.5 6.5ZM20 21H21V20C21 16.141 17.859 13 14 13H10C6.14 13 3 16.141 3 20V21H20Z"
+                        />
+                      </svg>
+                    </span>
+                  </li>
+                  <li class="step status-pay">
+                    <span
+                      ><svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M4.93206 4.28613C4.07958 4.28613 3.26201 4.62478 2.65922 5.22758C2.05642 5.83037 1.71777 6.64794 1.71777 7.50042V8.14328H22.2858V7.50042C22.2858 6.64794 21.9471 5.83037 21.3443 5.22758C20.7415 4.62478 19.924 4.28613 19.0715 4.28613H4.93292H4.93206ZM1.71777 16.5004V9.42899H22.2858V16.5004C22.2858 17.3529 21.9471 18.1705 21.3443 18.7733C20.7415 19.3761 19.924 19.7147 19.0715 19.7147H4.93292C4.08043 19.7147 3.26287 19.3761 2.66007 18.7733C2.05728 18.1705 1.71863 17.3529 1.71863 16.5004H1.71777ZM15.6429 14.1433C15.4724 14.1433 15.3089 14.211 15.1883 14.3316C15.0678 14.4521 15.0001 14.6156 15.0001 14.7861C15.0001 14.9566 15.0678 15.1201 15.1883 15.2407C15.3089 15.3613 15.4724 15.429 15.6429 15.429H18.6429C18.8134 15.429 18.9769 15.3613 19.0975 15.2407C19.218 15.1201 19.2858 14.9566 19.2858 14.7861C19.2858 14.6156 19.218 14.4521 19.0975 14.3316C18.9769 14.211 18.8134 14.1433 18.6429 14.1433H15.6429Z"
+                        />
+                      </svg>
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="booking__layout--container">
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-lg-8">
+                <div class="booking__layout--departflights flight--depart">
+                  <div class="booking__layout--date"></div>
+                  <div class="booking__layout--flights">
+                    <div class="flight-option-item direct">
+                      <div class="flight-option-top">
+                        <div class="flight-option-left">
+                          <span class="flight-option-time">10:00</span>
+                          <span class="flight-option-city">Hà Nội</span>
+                        </div>
+                        <div class="flight-option-middle">
+                          <div class="flight-option-middle-inner">
+                            <div class="flight-option-icon icon-flight">
+                              <span class="flight-code">VJ142</span>
+                              <span class="icon"
+                                ><svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                    fill="#3C3C3C"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                            <div class="icon-stop">
+                              <span class="ic-circle"></span>
+                            </div>
+                            <div class="flight-option-icon icon-flight">
+                              <span class="flight-code">VJ142</span>
+                              <span class="icon-flight"
+                                ><svg
+                                  width="24"
+                                  height="24"
+                                  viewBox="0 0 24 24"
+                                  fill="none"
+                                  xmlns="http://www.w3.org/2000/svg"
+                                >
+                                  <path
+                                    d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                    fill="#3C3C3C"
+                                  />
+                                </svg>
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flight-option-right">
+                          <span class="flight-option-time">12:00</span>
+                          <span class="flight-option-city">Tp Hồ Chí Minh</span>
+                        </div>
+                      </div>
+                      <div class="flight-option-detail">
+                        <p>Số hiệu chuyến bay: VJ491</p>
+
+                        <p>Khởi hành: 06:50, 17/08/2022 (Giờ địa phương)</p>
+                        <p>Hà Nội - Sân bay Nội Bài</p>
+                        <p>Đến: 08:35, 17/08/2022 (Giờ địa phương)</p>
+                        <p>Buôn Ma Thuột - Sây bay Buôn Ma Thuột</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- return flight if two way -->
+                <div class="booking__layout--returnflights flight--return">
+                  <div class="booking__layout--date"></div>
+                </div>
+              </div>
+              <div class="col-12 col-lg-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-----------------Footer----------------->
+      <div class="wrapper__footer">
+        <div class="container">
+          <div class="footer__one">
+            <div class="row">
+              <div class="col-ft col-12 col-md-3">
+                <h4 class="footer__title">Liên kết với Vietjet qua các kênh</h4>
+                <div class="footer__content">
+                  <ul class="social__follow">
+                    <li>
+                      <a href=""><img src="images/fb.png" alt="" /></a>
+                    </li>
+                    <li>
+                      <a href=""><img src="images/ins.png" alt="" /></a>
+                    </li>
+                    <li>
+                      <a href=""><img src="images/tw.png" alt="" /></a>
+                    </li>
+                    <li>
+                      <a href=""><img src="images/line.png" alt="" /></a>
+                    </li>
+                    <li>
+                      <a href=""><img src="images/wec.png" alt="" /></a>
+                    </li>
+                    <li>
+                      <a href=""><img src="images/zl.png" alt="" /></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-ft col-12 col-md-3">
+                <h4 class="footer__title">Tải ứng dụng di động Vietjet Air</h4>
+                <div class="footer__content">
+                  <ul class="stores">
+                    <li>
+                      <a href=""><img src="images/googleplay.png" alt="" /></a>
+                    </li>
+                    <li>
+                      <a href=""><img src="images/applestore.png" alt="" /></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="col-ft col-12 col-md-6">
+                <div class="footer__content">
+                  <p class="text-uppercase bold">
+                    Công ty Cổ phần hàng không Vietjet
+                  </p>
+                  <p>
+                    302/3 Phố Kim Mã, Phường Ngọc Khánh, Quận Ba Đình, TP. Hà
+                    Nội
+                  </p>
+                  <p>Tổng đài bán vé: (+84) 19001886</p>
+                  <p>Email: 19001886@vietjetair.com</p>
+                  <p>
+                    <a href=""><img src="images/bct.png" alt="" /></a>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+      integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script src="./assets/js/daterangepicker.js"></script>
+    <script src="./assets/js/select.js"></script>
+    <script src="./assets/js/theme.js"></script>
+    <script type="module" src="./assets/js/booking.js"></script>
+  </body>
+</html>

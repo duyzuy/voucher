@@ -193,8 +193,8 @@ const app = {
 
           _this.bookingInform.tripType === constants.ONEWAY &&
             _this.paxSelectDropdown().open();
-          _this.bookingInform.tripType === constants.RETURN &&
-            tripDate.data("daterangepicker").setMinDate(picker.startDate);
+          // _this.bookingInform.tripType === constants.RETURN &&
+          //   tripDate.data("daterangepicker").setMinDate(picker.startDate);
         }
         if (picker.currentStep === "end") {
           const endDateAlt = picker.endDate
@@ -356,7 +356,7 @@ const app = {
         }
       }
 
-      // window.location = "selectflight.html?name=123";
+      window.location = "flights-option.html";
     });
 
     const searching = () => {};
