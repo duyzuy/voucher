@@ -2041,6 +2041,162 @@ border-bottom-left-radius: 0 !important;
 
     text-align: center;
 }
+
+/*==== flight option=====*/
+.booking__layout--header{
+    background: linear-gradient(21.74deg, #F9A51A 2.28%, #FBB612 27.93%, #FFDD00 86.9%);
+}
+.booking__layout--header--status{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+.status__inner{
+    display: flex;
+    align-items: center;
+    margin: 0;
+    list-style-type: none;
+    padding: 0;
+
+    justify-content: flex-end;
+  
+}
+.status__inner .step{
+    color: #fff;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    position: relative;
+    margin-right: 20px;
+
+}
+.status__inner .step:last-of-type{
+    margin-right: 0px;
+}
+.status__inner .step:after{
+    content: "";
+    width: 20px;
+    height: 1px;
+    background-color: #fff;
+    right: -20px;
+    position: absolute;
+}
+.status__inner .step:last-of-type:after{
+    content: none
+}
+.status__inner svg, .status__inner path{
+    fill: #ffdb04;
+    width: 18px;
+}
+.status__inner li{
+    width: 36px;
+    height: 36px;
+    /* border: 1px solid #fff; */
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.status__inner .step.current{
+    background: linear-gradient(72.74deg, #459B02 -15.27%, #AAFA6B 113.22%);
+}
+.status__inner .step.current svg, 
+.status__inner .step.current path{
+    fill: #fff;
+}
+.booking__layout--header--infor{
+    display: flex;
+    align-items: center;
+    padding: 20px 0
+}
+.booking__layout--header--infor p{
+    margin-bottom: 0;
+}
+.booking__layout--header--infor .header--infor{
+    margin-right: 20px;
+}
+.header--infor .destinations{
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #c30c13;
+
+}
+.header--infor .destinations .icon{
+    margin: 0 5px;
+}
+.header--infor .triptype-passengers{
+    font-size: 14px;
+}
+.triptype-passengers span{
+    display: inline-block;
+}
+.triptype-passengers .status-triptype{
+    margin-right: 8px;
+    padding-right: 8px;
+    position: relative;
+    
+}
+.triptype-passengers .status-triptype:after{
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    width: 1px;
+    height: 10px;
+    background-color: black;
+    top: calc(50% - 5px)
+}
+.flight-option-item{
+
+}
+.flight-option-top{
+    display: flex;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px 20px;
+    border-radius: 5px;
+}
+.flight-option-middle-inner{
+    display: flex;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+.flight-option-middle-inner .flight-option-icon{
+    position: relative;
+}
+.flight-option-middle-inner .flight-option-icon .flight-code{
+    position: absolute;
+    top: -15px;
+    font-size: 12px;
+}
+.flight-option-top .flight-option-time{
+    font-size: 36px;
+    font-weight: 300;
+    display: block;
+    line-height: 1;
+}
+.flight-option-top .flight-option-city{
+    font-size: 14px;
+    color: #3e3e3e
+}
+
+.flight-option-top{
+    display: flex;
+    align-items: center;
+
+}
+.flight-option-left,
+.flight-option-right{
+    text-align: center;
+}
+.flight-option-icon{
+
+}
+.icon-stop{
+
+}
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
         padding: 60px 30px 60px
