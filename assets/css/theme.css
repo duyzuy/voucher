@@ -2390,6 +2390,12 @@ del .currency-symbol{
     font-weight: bold;
 
 }
+#bk__calendar--slider{
+    position: relative;
+}
+.bk__calendar--container{
+    overflow: hidden;
+}
 .day-format{
     font-size: 12px;
 }
@@ -2398,6 +2404,33 @@ del .currency-symbol{
 }
 .bk__calendar-item{
     cursor: pointer;
+}
+.bk__calendar-btn i{
+    pointer-events: none;
+}
+.bk__calendar-btn{
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    line-height: 30px;
+    text-align: center;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    border-radius: 50%;
+}
+.booking__layout--title h3{
+    display: flex;
+    align-items: center;
+    line-height: 1.5;
+    font-weight: bold;
+}
+.booking__layout--title .title--icon{
+    display: inline-block;
+    line-height: 0;
+    margin: 0 10px;
+}
+.booking__layout--title .title--icon svg{
+    width: 14px;
 }
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{

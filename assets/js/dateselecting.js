@@ -4,7 +4,7 @@ import { bookingFormText, dateLocale } from "./translate.js";
 const calendarContainer = $("#bk__calendar");
 const Bkcalendar = {
   calendar: {
-    selected: "08-16-2022",
+    selected: "08-14-2022",
     today: "",
     viewRange: 7,
     days: [],
@@ -17,7 +17,9 @@ const Bkcalendar = {
     const currentLocale = dateLocale.find((lc) => lc.lang === locale);
     this.calendar.currentLocale = currentLocale;
 
-    this.calendar.today = moment().locale(locale).format(constants.format);
+    this.calendar.today = moment()
+      .locale(locale)
+      .format(this.calendar.currentLocale.format);
 
     //define properties
     this.defineProperties();
@@ -60,6 +62,7 @@ const Bkcalendar = {
   render: function () {
     const _this = this;
 
+    console.log(this.calendar.today);
     //get midView of number view;
     const midView = Math.floor(_this.calendar.viewRange / 2);
 
@@ -76,7 +79,7 @@ const Bkcalendar = {
     );
 
     const rangeDay = [...startArrayDay, selectedDay, ...endArrayDay];
-    let html = `<ul id="bk__calendar-items" class="bk__calendar-items">`;
+    let html = `<div id="bk__calendar--slider"><span class="bk__calendar-btn bk__calendar-prev"><i class="bi bi-arrow-left-short"></i></span><span class="bk__calendar-btn bk__calendar-next"><i class="bi bi-arrow-right-short"></i></span><div id="bk__calendar--container" class="bk__calendar--container"><ul id="bk__calendar-items" class="bk__calendar-items">`;
     for (const day of rangeDay) {
       const value = moment(`${selectedMonth}-${day}-${selectedyear}`)
         .locale(_this.calendar.currentLocale.lang)
@@ -105,15 +108,17 @@ const Bkcalendar = {
         day,
         selectedMonth,
         selectedyear,
-        active ? " active" : ""
+        active ? " active" : "",
+        value
       );
     }
-    html += "</ul>";
-    const template = calendarContainer.append(html);
+    html += "</ul></div></div>";
+
+    calendarContainer.append(html);
   },
 
-  template: function (dayName, dayformat, day, month, year, active) {
-    return `<li class="bk__calendar-item calendar-date${active}" data-day="${day}" data-month="${month}" data-year="${year}"><div class="date-inner"><p class="name-of-day">${dayName}</p><p class="day-format">${dayformat}</p></div></li>`;
+  template: function (dayName, dayformat, day, month, year, active, value) {
+    return `<li class="bk__calendar-item calendar-date${active}" data-day="${day}" data-value="${value}" data-month="${month}" data-year="${year}"><div class="date-inner"><p class="name-of-day">${dayName}</p><p class="day-format">${dayformat}</p></div></li>`;
   },
   addDayByOne: function () {},
   addDayByNumber: function (dayNumber) {
@@ -135,20 +140,14 @@ const Bkcalendar = {
     return Array.from({ length: end - start }, (_, i) => start + i);
   },
   handleEvents: function () {
+    const _this = this;
     calendarContainer.on("click", function (e) {
-      calendarContainer.closest(".bk__calendar-item");
-      console.log(e.target);
+      let item = $(e.target);
+      _this.calendar.selected = item.data("value");
+      if (calendarContainer.closest(".bk__calendar-item") === e.target) {
+        console.log("1");
+      }
     });
   },
 };
 Bkcalendar.init(constants.LOCALE_VI);
-
-// Object.prototype.dateCalendar = function () {
-//   console.log(this);
-
-//   const getCurrentDate = function () {
-//     return new moment();
-//   };
-// };
-
-// document.getElementById("bk__calendar").dateCalendar();
