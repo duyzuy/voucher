@@ -27,6 +27,7 @@ const dateLocale = [
     locale: {
       format: "DD-MM-YYYY",
       formatText: "dddd, MMM Do YYYY",
+      formatTextShort: "MMM Do YYYY",
       separator: "-",
       applyLabel: "Apply",
       cancelLabel: "Cancel",
@@ -59,6 +60,7 @@ const dateLocale = [
     locale: {
       format: "DD-MM-YYYY",
       formatText: "dddd, Do MMM YYYY",
+      formatTextShort: "Do MMM YYYY",
       separator: "-",
       applyLabel: "Xác nhận",
       cancelLabel: "Huỷ bỏ",
@@ -67,6 +69,15 @@ const dateLocale = [
       customRangeLabel: "Custom",
       weekLabel: "Tuần",
       daysOfWeek: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"],
+      daysOfWeekLongname: [
+        "Chủ nhật",
+        "Thứ 2",
+        "Thứ 3",
+        "Thứ 4",
+        "Thứ 5",
+        "Thứ 6",
+        "Thứ 7",
+      ],
       monthNames: [
         "Tháng 1",
         "Tháng 2",

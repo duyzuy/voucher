@@ -530,6 +530,7 @@ const app = {
     const clickOutside = () => {
       $(window).on("click", function (e) {
         if (
+          document.getElementById("booking__form--passenger--inner") &&
           document
             .getElementById("booking__form--passenger--inner")
             .contains(e.target)
