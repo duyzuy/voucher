@@ -58,7 +58,7 @@ const dateLocale = [
     departText: "Ngày đi",
     returnText: "Ngày về",
     locale: {
-      format: "MM-DD-YYYY",
+      format: "DD-MM-YYYY",
       formatText: "dddd, Do MMM YYYY",
       formatTextShort: "Do MMM YYYY",
       separator: "-",

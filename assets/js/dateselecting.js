@@ -1,31 +1,32 @@
 import { constants } from "./constant.js";
 import config, { baseURL, languageId } from "./config.js";
 import { bookingFormText, dateLocale } from "./translate.js";
+
 const calendarContainer = $("#bk__calendar");
 const Bkcalendar = {
   calendar: {
-    selected: "08-14-2022",
+    selected: "10-08-2022",
     today: "",
-    viewRange: 7,
     days: [],
     currentLocale: {},
   },
-
+  viewRange: 5,
+  currentIndex: 0,
+  activeIndex: 3,
   init: function (locale) {
     //set current day
 
     const currentLocale = dateLocale.find((lc) => lc.lang === locale);
+
     this.calendar.currentLocale = currentLocale;
 
-    this.calendar.today = moment()
-      .locale(locale)
-      .format(this.calendar.currentLocale.format);
+    this.calendar.today = moment().format(currentLocale.locale.format);
 
     //define properties
     this.defineProperties();
-
+    this.updateArrayDay();
     //render template
-    this.render();
+    this.renderSlider();
 
     this.handleEvents();
   },
@@ -58,67 +59,157 @@ const Bkcalendar = {
       },
     });
   },
-
-  render: function () {
+  updateArrayDay: function () {
     const _this = this;
 
-    console.log(this.calendar.today);
     //get midView of number view;
-    const midView = Math.floor(_this.calendar.viewRange / 2);
+    const midView = Math.floor(_this.viewRange / 2);
 
-    //get selected mont, day, year;
-    const selectedDay = moment(_this.calendar.selected).get("date");
-    const selectedMonth = moment(_this.calendar.selected).get("month") + 1;
-    const selectedyear = moment(_this.calendar.selected).get("year");
+    let startDayOfRange = moment(
+      _this.calendar.selected,
+      _this.calendar.currentLocale.locale.format
+    ).add(-midView, "days");
 
-    //create array range by view of days;
-    const startArrayDay = _this.createArray(selectedDay - midView, selectedDay);
-    const endArrayDay = _this.createArray(
-      selectedDay + 1,
-      selectedDay + midView + 1
+    let endDayOfRange = moment(
+      _this.calendar.selected,
+      _this.calendar.currentLocale.locale.format
+    ).add(midView, "days");
+
+    for (let i = 0; i < _this.viewRange; i++) {
+      if (i === 0) {
+        _this.calendar.days[i] = _this.keysOfDay(
+          startDayOfRange,
+          _this.calendar.currentLocale
+        );
+      } else {
+        const nextDay = startDayOfRange.add(1, "days");
+        _this.calendar.days[i] = _this.keysOfDay(
+          nextDay,
+          _this.calendar.currentLocale
+        );
+      }
+    }
+  },
+  keysOfDay: function (date, locale) {
+    const _this = this;
+    let selectedDate = moment(
+      _this.calendar.selected,
+      _this.calendar.currentLocale.locale.format
+    );
+    let today = moment(
+      _this.calendar.today,
+      _this.calendar.currentLocale.locale.format
+    );
+    return {
+      dayName: locale.locale.daysOfWeekLongname[date.get("date") % 7],
+      altDate: date.locale(locale.lang).format(locale.locale.formatTextShort),
+      day: date.get("date"),
+      month: date.get("month") + 1,
+      year: date.get("year"),
+      value: date.format(locale.locale.format),
+      moment: date,
+      selectedDay: date.isSame(selectedDate) ? true : false,
+      today: date.isSame(today) ? true : false,
+      inRange:
+        date.isBefore(selectedDate.add(3, "days")) &&
+        date.isAfter(selectedDate.add(-3, "days"))
+          ? false
+          : true,
+    };
+  },
+  updateView(action) {
+    const _this = this;
+    const locale = _this.calendar.currentLocale;
+    //update array day by next/prev or day
+    const days = _this.calendar.days;
+    let selectedDate = moment(
+      _this.calendar.selected,
+      _this.calendar.currentLocale.locale.format
     );
 
-    const rangeDay = [...startArrayDay, selectedDay, ...endArrayDay];
-    let html = `<div id="bk__calendar--slider"><span class="bk__calendar-btn bk__calendar-prev"><i class="bi bi-arrow-left-short"></i></span><span class="bk__calendar-btn bk__calendar-next"><i class="bi bi-arrow-right-short"></i></span><div id="bk__calendar--container" class="bk__calendar--container"><ul id="bk__calendar-items" class="bk__calendar-items">`;
-    for (const day of rangeDay) {
-      const value = moment(`${selectedMonth}-${day}-${selectedyear}`)
-        .locale(_this.calendar.currentLocale.lang)
-        .format(_this.calendar.currentLocale.locale.format);
+    const lastOfRange = _this.calendar.days[_this.calendar.days.length - 1];
+    const startOfRange = _this.calendar.days[0];
+    if (action === "addOne") {
+      _this.calendar.selected = selectedDate
+        .add(1, "days")
+        .format(locale.locale.format);
+      const newDay = _this.keysOfDay(lastOfRange.moment.add(1, "days"), locale);
 
-      const altDate = moment(`${selectedMonth}-${day}-${selectedyear}`)
-        .locale(_this.calendar.currentLocale.lang)
-        .format(_this.calendar.currentLocale.locale.formatTextShort);
+      // _this.calendar.days.push(newDay);
+      // _this.calendar.days = [
+      //   ..._this.calendar.days.slice(1, _this.viewRange),
+      //   newDay,
+      // ];
+      const restOfrange = _this.calendar.days.slice(1, _this.viewRange);
 
-      const dayName =
-        _this.calendar.currentLocale.locale.daysOfWeekLongname[day % 7];
-
-      const active = day === selectedDay ? true : false;
-      _this.calendar.days.push({
-        dayName,
-        day,
-        month: selectedMonth,
-        year: selectedyear,
-        value,
-        altDate,
-      });
-
-      html += _this.template(
-        dayName,
-        altDate,
-        day,
-        selectedMonth,
-        selectedyear,
-        active ? " active" : "",
-        value
-      );
+      _this.calendar.days = [...restOfrange, newDay];
     }
-    html += "</ul></div></div>";
 
-    calendarContainer.append(html);
+    if (action === "removeOne") {
+      _this.calendar.selected = selectedDate
+        .add(-1, "days")
+        .format(locale.locale.format);
+      // const newDay = _this.keysOfDay(lastOfRange.moment.add(1, "days"), locale);
+      // _this.calendar.days.push(newDay);
+    }
+    _this.updateArrayDay();
+    console.log(_this.calendar.days);
+    _this.items(_this.calendar.days);
   },
+  renderSlider: function () {
+    //render calendar
+    const _this = this;
 
-  template: function (dayName, dayformat, day, month, year, active, value) {
-    return `<li class="bk__calendar-item calendar-date${active}" data-day="${day}" data-value="${value}" data-month="${month}" data-year="${year}"><div class="date-inner"><p class="name-of-day">${dayName}</p><p class="day-format">${dayformat}</p></div></li>`;
+    calendarContainer.append(_this.template());
+
+    //apend items to the slide day
+    const item = calendarContainer.find(".bk__calendar-item");
+
+    const widthItem = 50 / _this.viewRange;
+
+    //remder item to slider.
+    _this.items(_this.calendar.days);
+    item.css({
+      width: widthItem + "%",
+    });
+  },
+  items: function (dates, className, id) {
+    calendarContainer.find(".bk__calendar-items").html("");
+    let items = "";
+    const _this = this;
+    const itemWidth =
+      Math.floor((calendarContainer.width() * 100) / _this.viewRange) / 100;
+    calendarContainer.find("#bk__calendar-items").css({
+      width: calendarContainer.width() * 2 + "px",
+    });
+    dates.forEach((date, indx) => {
+      let classes = "bk__calendar-item calendar-date";
+
+      date.inRange && (classes = classes.concat(" ", "in-range"));
+      date.selectedDay && (classes = classes.concat(" ", "selected"));
+      date.today && (classes = classes.concat(" ", "today"));
+
+      items += `
+          <li data-index="${indx}" style="width: ${itemWidth}px;" class="${classes}"
+          data-day="${date.day}" data-value="${date.value}" data-month="${date.month}"
+          data-year="${date.year}">
+          <div class="date-inner">
+          <p class="name-of-day">${date.dayName}</p>
+          <p class="day-format">${date.altDate}</p></div>
+          </li>`;
+    });
+
+    calendarContainer.find("#bk__calendar-items").append(items);
+
+    // return items;
+  },
+  template: function () {
+    let html = `<div id="bk__calendar--container" class="bk__calendar--container">
+    <span class="bk__calendar-btn bk__calendar-prev"><i class="bi bi-arrow-left-short"></i></span>
+    <span class="bk__calendar-btn bk__calendar-next"><i class="bi bi-arrow-right-short"></i></span>
+    <div id="bk__calendar--slider" class="bk__calendar--slider">
+    <ul id="bk__calendar-items" class="bk__calendar-items"></ul></div></div>`;
+    return html;
   },
   addDayByOne: function () {},
   addDayByNumber: function (dayNumber) {
@@ -141,12 +232,63 @@ const Bkcalendar = {
   },
   handleEvents: function () {
     const _this = this;
-    calendarContainer.on("click", function (e) {
-      let item = $(e.target);
-      _this.calendar.selected = item.data("value");
-      if (calendarContainer.closest(".bk__calendar-item") === e.target) {
-        console.log("1");
+    const today = moment(
+      _this.calendar.today,
+      _this.calendar.currentLocale.locale.format
+    );
+    const daySelected = moment(
+      _this.calendar.selected,
+      _this.calendar.currentLocale.locale.format
+    );
+    let sliding = false;
+    const containerWidth = calendarContainer.width();
+
+    const itemWidth = Math.floor(containerWidth / _this.viewRange);
+    const wrapItems = calendarContainer.find(".bk__calendar-items");
+    // const item = calendarContainer.find(".bk__calendar-item");
+
+    wrapItems.css({ transform: `translate3d(0, 0, 0)` });
+
+    //handle Next slider
+    calendarContainer.on("click", ".bk__calendar-next", function (e) {
+      if (sliding) {
+        return;
       }
+      sliding = true;
+      setTimeout(() => {
+        sliding = false;
+      }, 480);
+      _this.currentIndex = _this.currentIndex + 1;
+      wrapItems.css({
+        transform: `translate3d(-${itemWidth * _this.currentIndex}px,0,0)`,
+      });
+      _this.updateView("addOne");
+    });
+    //prev date
+
+    calendarContainer.on("click", ".bk__calendar-prev", function (e) {
+      if (sliding) {
+        return;
+      }
+      sliding = true;
+      setTimeout(() => {
+        sliding = false;
+      }, 480);
+
+      if (daySelected.isBefore(today) || _this.currentIndex === 0) {
+        return;
+      } else {
+        _this.currentIndex = _this.currentIndex - 1;
+        wrapItems.css({
+          transform: `translate3d(-${itemWidth * _this.currentIndex}px,0,0)`,
+        });
+        _this.updateView("removeOne");
+      }
+    });
+
+    calendarContainer.on("click", ".bk__calendar-item", function (e) {
+      const itemIndex = $(e.target).data("index");
+      console.log(itemIndex);
     });
   },
 };
