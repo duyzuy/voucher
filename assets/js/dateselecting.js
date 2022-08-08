@@ -5,7 +5,7 @@ import { bookingFormText, dateLocale } from "./translate.js";
 const calendarContainer = $("#bk__calendar");
 const Bkcalendar = {
   calendar: {
-    selected: "15-08-2022",
+    selected: "10-08-2022",
     today: "",
     days: [],
     currentLocale: {},
@@ -58,43 +58,66 @@ const Bkcalendar = {
         return moment().endOf("month");
       },
     });
+    Object.defineProperty(this, "today", {
+      get: function () {
+        return moment(
+          this.calendar.today,
+          this.calendar.currentLocale.locale.format
+        );
+      },
+    });
+    Object.defineProperty(this, "currentSelect", {
+      get: function () {
+        return moment(
+          this.calendar.selected,
+          this.calendar.currentLocale.locale.format
+        );
+      },
+    });
+    Object.defineProperty(this, "currentLocale", {
+      get: function () {
+        return this.calendar.currentLocale;
+      },
+    });
   },
   updateArrayDay: function () {
     const _this = this;
-
     //get midView of number view;
     const midView = Math.floor(_this.viewRange / 2);
 
     let startDayOfRange = moment(
       _this.calendar.selected,
-      _this.calendar.currentLocale.locale.format
+      _this.currentLocale.locale.format
     ).add(-midView, "days");
-
-    for (let i = 0; i < _this.viewRange; i++) {
-      if (i === 0) {
-        _this.calendar.days[i] = _this.keysOfDay(
-          startDayOfRange,
-          _this.calendar.currentLocale
-        );
-      } else {
-        const nextDay = startDayOfRange.add(1, "days");
-        _this.calendar.days[i] = _this.keysOfDay(
-          nextDay,
-          _this.calendar.currentLocale
-        );
-      }
-    }
-  },
-  keysOfDay: function (date, locale) {
-    const _this = this;
+    ß;
     let selectedDate = moment(
       _this.calendar.selected,
-      _this.calendar.currentLocale.locale.format
+      _this.currentLocale.locale.format
     );
-    let today = moment(
-      _this.calendar.today,
-      _this.calendar.currentLocale.locale.format
-    );
+    let days = [];
+    for (let i = 0; i < _this.viewRange; i++) {
+      if (i === 0) {
+        days[i] = _this.keysOfDay({
+          date: startDayOfRange,
+          locale: _this.currentLocale,
+          selectedDate,
+          today: _this.today,
+        });
+      } else {
+        const nextDay = startDayOfRange.add(1, "days");
+        days[i] = _this.keysOfDay({
+          date: nextDay,
+          locale: _this.currentLocale,
+          selectedDate,
+          today: _this.today,
+        });
+      }
+    }
+    _this.calendar.days = days;
+    return days;
+  },
+  keysOfDay: function ({ date, locale, selectedDate, today }) {
+    console.log(selectedDate);
     return {
       dayName: locale.locale.daysOfWeekLongname[date.get("date") % 7],
       altDate: date.locale(locale.lang).format(locale.locale.formatTextShort),
@@ -105,38 +128,42 @@ const Bkcalendar = {
       moment: date,
       selectedDay: date.isSame(selectedDate) ? true : false,
       today: date.isSame(today) ? true : false,
-      inRange:
-        date.isBefore(selectedDate.add(3, "days")) &&
-        date.isAfter(selectedDate.add(-3, "days"))
-          ? false
-          : true,
+      // inRange: date.isAfter(selectedDate.add(-3, "days")) ? false : true,
     };
   },
   updateView(action, dateSelect, indexSelect) {
     const _this = this;
     const locale = _this.calendar.currentLocale;
     //update array day by next/prev or day
-    const days = _this.calendar.days;
-    let selectedDate = moment(
-      _this.calendar.selected,
-      _this.calendar.currentLocale.locale.format
-    );
+
+    let currentSelect = _this.currentSelect;
 
     const lastOfRange = _this.calendar.days[_this.calendar.days.length - 1];
     const startOfRange = _this.calendar.days[0];
     if (action === "addOne") {
-      _this.calendar.selected = selectedDate
-        .add(1, "days")
-        .format(locale.locale.format);
+      const newSelected = currentSelect.add(1, "days");
+      _this.calendar.selected = newSelected.format(locale.locale.format);
 
-      const nextDay = _this.keysOfDay(
-        lastOfRange.moment.add(1, "days"),
-        locale
-      );
+      const nextDate = _this.keysOfDay({
+        date: lastOfRange.moment.add(1, "days"),
+        locale,
+        selectedDate: newSelected,
+        today: _this.today,
+      });
+      const days = _this.updateArrayDay();
+      _this.calendar.days = [..._this.calendar.days, nextDate];
+
+      _this.items({
+        dates: _this.calendar.days,
+        viewRange: _this.viewRange,
+      });
+      // _this.calendar.days = _this.calendar.days.splice(1, _this.viewRange);
+
+      return;
     }
 
     if (action === "removeOne") {
-      _this.calendar.selected = selectedDate
+      _this.calendar.selected = selected
         .add(-1, "days")
         .format(locale.locale.format);
 
@@ -149,43 +176,43 @@ const Bkcalendar = {
     if (action === "changeByDate") {
       _this.calendar.selected = dateSelect;
     }
-    console.log(_this.calendar.selected);
-
     //update days array;
-    _this.updateArrayDay();
 
     //update view UI
-    _this.items(_this.calendar.days);
+    _this.items({
+      dates: _this.calendar.days,
+      viewRange: _this.viewRange,
+    });
   },
   renderSlider: function () {
     //render calendar
     const _this = this;
-
     calendarContainer.append(_this.template());
 
-    //apend items to the slide day
-    const item = calendarContainer.find(".bk__calendar-item");
+    const reloadCalendar = function (e) {
+      const calendarWidth = calendarContainer.width();
+      calendarContainer.find("#bk__calendar-items").css({
+        width: calendarWidth * 2 + "px",
+      });
+      if (calendarWidth < 1140) {
+        _this.calendar.viewRange = 5;
+      }
 
-    const widthItem = 50 / _this.viewRange;
-
-    //remder item to slider.
-    _this.items(_this.calendar.days);
-    item.css({
-      width: widthItem + "%",
-    });
+      _this.updateView();
+    };
+    $(window).on("resize", reloadCalendar);
+    $(window).on("load", reloadCalendar);
   },
-  items: function (dates, className, id) {
-    calendarContainer.find(".bk__calendar-items").html("");
-    let items = "";
+  items: function ({ dates, viewRange }) {
     const _this = this;
-    const itemWidth = Math.floor((50 * 100) / _this.viewRange) / 100;
-    calendarContainer.find("#bk__calendar-items").css({
-      width: calendarContainer.width() * 2 + "px",
-    });
-    const midView = Math.floor(_this.viewRange / 2);
-    dates.forEach((date, indx) => {
-      let classes = "bk__calendar-item calendar-date";
+    calendarContainer.find(".bk__calendar-items").html("");
+    let items = "",
+      itemWidth = Math.floor((50 * 100) / viewRange) / 100,
+      midView = Math.floor(viewRange / 2),
+      classes;
 
+    dates.forEach((date, indx) => {
+      classes = "bk__calendar-item calendar-date";
       date.inRange && (classes = classes.concat(" ", "in-range"));
       date.selectedDay && (classes = classes.concat(" ", "selected"));
       date.today && (classes = classes.concat(" ", "today"));
@@ -259,19 +286,22 @@ const Bkcalendar = {
       sliding = true;
 
       _this.currentIndex = _this.currentIndex + 1;
+      _this.updateView("addOne");
 
       wrapItems.addClass("animating");
       wrapItems.css({
         transform: `translate3d(${-itemWidth * _this.currentIndex}%,0,0)`,
       });
+      const itemLists = wrapItems.find(".bk__calendar-item");
       setTimeout(() => {
         sliding = false;
         wrapItems.removeClass("animating");
         wrapItems.css({
           transform: `translate3d(0,0,0)`,
         });
+        $(itemLists[0]).remove();
+        console.log(itemLists);
         _this.currentIndex = 0;
-        _this.updateView("addOne");
       }, 480);
     });
     //prev date
@@ -291,7 +321,7 @@ const Bkcalendar = {
 
       sliding = true;
       _this.currentIndex = _this.currentIndex - 1;
-
+      _this.updateView("removeOne");
       wrapItems.addClass("animating");
       wrapItems.css({
         transform: `translate3d(${-itemWidth * _this.currentIndex}%,0,0)`,
@@ -304,7 +334,6 @@ const Bkcalendar = {
         wrapItems.css({
           transform: `translate3d(0,0,0)`,
         });
-        _this.updateView("removeOne");
       }, 480);
     });
 
