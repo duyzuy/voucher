@@ -5,7 +5,7 @@ import { bookingFormText, dateLocale } from "./translate.js";
 const calendarContainer = $("#bk__calendar");
 const Bkcalendar = {
   calendar: {
-    selected: "10-08-2022",
+    selected: "15-08-2022",
     today: "",
     days: [],
     currentLocale: {},
@@ -89,7 +89,7 @@ const Bkcalendar = {
       _this.calendar.selected,
       _this.currentLocale.locale.format
     ).add(-midView, "days");
-    ß;
+
     let selectedDate = moment(
       _this.calendar.selected,
       _this.currentLocale.locale.format
@@ -144,33 +144,28 @@ const Bkcalendar = {
       const newSelected = currentSelect.add(1, "days");
       _this.calendar.selected = newSelected.format(locale.locale.format);
 
-      const nextDate = _this.keysOfDay({
-        date: lastOfRange.moment.add(1, "days"),
-        locale,
-        selectedDate: newSelected,
-        today: _this.today,
-      });
+      const dayRemove = _this.calendar.days[0];
       const days = _this.updateArrayDay();
-      _this.calendar.days = [..._this.calendar.days, nextDate];
 
       _this.items({
-        dates: _this.calendar.days,
+        dates: [dayRemove, ...days],
         viewRange: _this.viewRange,
       });
-      // _this.calendar.days = _this.calendar.days.splice(1, _this.viewRange);
-
       return;
     }
 
     if (action === "removeOne") {
-      _this.calendar.selected = selected
-        .add(-1, "days")
-        .format(locale.locale.format);
+      const newSelected = currentSelect.add(-1, "days");
+      _this.calendar.selected = newSelected.format(locale.locale.format);
 
-      const prevDay = _this.keysOfDay(
-        startOfRange.moment.add(-1, "days"),
-        locale
-      );
+      const dayRemove = _this.calendar.days[_this.calendar.days.length - 1];
+      const days = _this.updateArrayDay();
+
+      _this.items({
+        dates: [...days, dayRemove],
+        viewRange: _this.viewRange,
+      });
+      return;
     }
 
     if (action === "changeByDate") {
@@ -287,7 +282,6 @@ const Bkcalendar = {
 
       _this.currentIndex = _this.currentIndex + 1;
       _this.updateView("addOne");
-
       wrapItems.addClass("animating");
       wrapItems.css({
         transform: `translate3d(${-itemWidth * _this.currentIndex}%,0,0)`,
@@ -300,7 +294,6 @@ const Bkcalendar = {
           transform: `translate3d(0,0,0)`,
         });
         $(itemLists[0]).remove();
-        console.log(itemLists);
         _this.currentIndex = 0;
       }, 480);
     });
@@ -326,6 +319,7 @@ const Bkcalendar = {
       wrapItems.css({
         transform: `translate3d(${-itemWidth * _this.currentIndex}%,0,0)`,
       });
+      const itemLists = wrapItems.find(".bk__calendar-item");
 
       setTimeout(() => {
         sliding = false;
@@ -334,6 +328,7 @@ const Bkcalendar = {
         wrapItems.css({
           transform: `translate3d(0,0,0)`,
         });
+        $(itemLists[itemLists.length - 1]).remove();
       }, 480);
     });
 
