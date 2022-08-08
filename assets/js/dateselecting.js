@@ -10,7 +10,7 @@ const Bkcalendar = {
     days: [],
     currentLocale: {},
   },
-  viewRange: 5,
+  viewRange: 7,
   currentIndex: 0,
   activeIndex: 3,
   init: function (locale) {
@@ -135,14 +135,11 @@ const Bkcalendar = {
         .format(locale.locale.format);
       const newDay = _this.keysOfDay(lastOfRange.moment.add(1, "days"), locale);
 
-      // _this.calendar.days.push(newDay);
-      // _this.calendar.days = [
-      //   ..._this.calendar.days.slice(1, _this.viewRange),
-      //   newDay,
-      // ];
-      const restOfrange = _this.calendar.days.slice(1, _this.viewRange);
+      _this.calendar.days.push(newDay);
 
-      _this.calendar.days = [...restOfrange, newDay];
+      // const restOfrange = _this.calendar.days.slice(1, _this.viewRange);
+
+      // _this.calendar.days = [...restOfrange, newDay];
     }
 
     if (action === "removeOne") {
