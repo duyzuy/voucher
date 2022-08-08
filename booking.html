@@ -197,157 +197,166 @@
             </div>
             <form id="booking__form" class="booking__form">
               <div class="booking__form--inner">
-                <div class="booking__form--input">
-                  <div class="booking__form--row row--triptype">
-                    <div class="booking__form--col booking__form--triptype">
-                      <div class="form-check form-check-inline booking__form--return">
-                        <input class="form-check-input" type="radio" name="triptype" id="trip__type--return"
-                          value="return" checked />
-                        <label class="form-check-label" for="trip__type--return">Khứ hồi</label>
-                      </div>
-                      <div class="form-check form-check-inline booking__form--oneway">
-                        <input class="form-check-input" type="radio" name="triptype" id="trip__type--oneway"
-                          value="oneway" />
-                        <label class="form-check-label" for="trip__type--oneway">Một chiều</label>
-                      </div>
+                <div class="booking__form--row row--triptype">
+                  <div class="booking__form--col booking__form--triptype">
+                    <div class="form-check form-check-inline booking__form--return">
+                      <input class="form-check-input" type="radio" name="triptype" id="trip__type--return"
+                        value="return" checked />
+                      <label class="form-check-label" for="trip__type--return">Khứ hồi</label>
                     </div>
-                  </div>
-                  <div class="booking__form--row row--destination">
-                    <div class="booking__form--col booking__form--destination">
-                      <div class="booking__form--depart">
-                        <select id="trip__departure" class="form-control inline-search" name="depature"></select>
-                        <div id="dropdown__citypare--departure" class="dropdown__citypare"></div>
-                      </div>
-                      <div class="booking__flight--icon">
-                        <img src="./images/booking/icon_flight-grey.svg" />
-                      </div>
-                      <div class="booking__form--return">
-                        <select id="trip__return" class="form-control inline-search" name="return"></select>
-                        <div id="dropdown__citypare--return" class="dropdown__citypare"></div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div class="row--date--passenger">
-                    <div class="booking__form--row">
-                      <div class="booking__form--col booking__form--date">
-                        <div id="trip__date" class="trip__date">
-                          <div id="trip__date--depart" class="trip__date--wrap trip__date--depart">
-                            <div class="trip__date--icon">
-                              <i class="bi bi-calendar2-week-fill"></i>
-                            </div>
-                            <div class="trip__date--text">
-                              <span class="booking__date--text">Ngày đi</span>
-                              <span class="booking__date--value"></span>
-                            </div>
-                            <input type="hidden" name="departDate" value="" />
-                          </div>
-                          <div id="trip__date--return" class="trip__date--wrap trip__date--return">
-                            <div class="trip__date--icon">
-                              <i class="bi bi-calendar2-week-fill"></i>
-                            </div>
-                            <div class="trip__date--text">
-                              <span class="booking__date--text">Ngày về</span>
-                              <span class="booking__date--value"></span>
-                            </div>
-                            <input type="hidden" name="returnDate" value="" />
-                          </div>
-                        </div>
-                        <div id="trip__date--dropdown"></div>
-                      </div>
-                      <div class="booking__form--col booking__form--passenger">
-                        <div id="booking__form--passenger--inner" class="booking__form--passenger--inner">
-                          <div id="trip__passenger" class="booking__form--passenger--control">
-                            <div class="passenger--icon">
-                              <i class="bi bi-person-fill"></i>
-                            </div>
-                            <div class="passenger--text">
-                              <span class="passenger--label">Hành Khách
-                              </span>
-                              <span class="passenger--value">1 người lớn, 1 trẻ em, 1 em bé
-                              </span>
-                            </div>
-                          </div>
-
-                          <div class="booking__form--passenger--dropdown">
-                            <div class="booking__form--passenger--dropdown--inner">
-                              <div class="booking__form--adult">
-                                <div class="passenger__input--left">
-                                  <div class="passenger__input--icon">
-                                    <img src="./images/booking/icon-adult.svg" />
-                                  </div>
-                                  <div class="passenger__input--text">
-                                    <p>Người lớn</p>
-                                    <p class="small">12 tuổi trở lên</p>
-                                  </div>
-
-                                </div>
-                                <div id="adultInput" class="passenger__input--right" data-type="adult">
-                                  <div class="booking__quantity">
-                                    <span data-type="decreate"
-                                      class="booking__quantity--control booking__quantity--down">-</span>
-                                    <span class="booking__quantity--value">1</span>
-                                    <span data-type="increate"
-                                      class="booking__quantity--control booking__quantity--up">+</span>
-                                  </div>
-                                  <input type="hidden" name="adult" />
-                                </div>
-                              </div>
-                              <div class="booking__form--children">
-                                <div class="passenger__input--left">
-                                  <div class="passenger__input--icon">
-                                    <img src="./images/booking/icon-child.svg" />
-                                  </div>
-                                  <div class="passenger__input--text">
-                                    <p>Trẻ em</p>
-                                    <p class="small">Từ 2 đến 11 tuổi</p>
-                                  </div>
-
-                                </div>
-                                <div id="childrenInput" class="passenger__input--right" data-type="children">
-                                  <div class="booking__quantity">
-                                    <span data-type="decreate"
-                                      class="booking__quantity--control booking__quantity--down">-</span>
-                                    <span class="booking__quantity--value">0</span>
-                                    <span data-type="increate"
-                                      class="booking__quantity--control booking__quantity--up">+</span>
-                                  </div>
-                                  <input type="hidden" name="children" />
-                                </div>
-                              </div>
-                              <div class="booking__form--infant">
-                                <div class="passenger__input--left">
-                                  <div class="passenger__input--icon">
-                                    <img src="./images/booking/icon-infant.svg" />
-                                  </div>
-                                  <div class="passenger__input--text">
-                                    <p>Em bé</p>
-                                    <p class="small">Dưới 2 tuổi</p>
-                                  </div>
-
-                                </div>
-                                <div id="infantInput" class="passenger__input--right" data-type="infant">
-                                  <div class="booking__quantity">
-                                    <span data-type="decreate"
-                                      class="booking__quantity--control booking__quantity--down">-</span>
-                                    <span class="booking__quantity--value">0</span>
-                                    <span data-type="increate"
-                                      class="booking__quantity--control booking__quantity--up">+</span>
-                                  </div>
-                                  <input type="hidden" name="infant" />
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                    <div class="form-check form-check-inline booking__form--oneway">
+                      <input class="form-check-input" type="radio" name="triptype" id="trip__type--oneway"
+                        value="oneway" />
+                      <label class="form-check-label" for="trip__type--oneway">Một chiều</label>
                     </div>
                   </div>
                 </div>
-                <div class="booking__form--buttons">
-                  <button id="booking__searchflight" class="btn btn-primary btn-booking" type="button">
-                    Tìm chuyến bay
-                  </button>
+                <div class="booking__form--row row--destination-date">
+                  <div class="booking__form--col booking__form--destination">
+                    <div class="booking__form--depart">
+                      <select id="trip__departure" class="form-control inline-search" name="depature"></select>
+                      <div id="dropdown__citypare--departure" class="dropdown__citypare"></div>
+                    </div>
+                    <div class="booking__flight--icon">
+                      <img src="./images/booking/icon_flight-grey.svg" />
+                    </div>
+                    <div class="booking__form--return">
+                      <select id="trip__return" class="form-control inline-search" name="return"></select>
+                      <div id="dropdown__citypare--return" class="dropdown__citypare"></div>
+                    </div>
+                  </div>
+                  <div class="booking__form--col booking__form--date">
+                    <div id="trip__date" class="trip__date">
+                      <div id="trip__date--depart" class="trip__date--wrap trip__date--depart">
+                        <div class="trip__date--icon">
+                          <i class="bi bi-calendar2-week-fill"></i>
+                        </div>
+                        <div class="trip__date--text">
+                          <span class="booking__date--text">Ngày đi</span>
+                          <span class="booking__date--value"></span>
+                        </div>
+                        <input type="hidden" name="departDate" value="" />
+                      </div>
+                      <div id="trip__date--return" class="trip__date--wrap trip__date--return">
+                        <div class="trip__date--icon">
+                          <i class="bi bi-calendar2-week-fill"></i>
+                        </div>
+                        <div class="trip__date--text">
+                          <span class="booking__date--text">Ngày về</span>
+                          <span class="booking__date--value"></span>
+                        </div>
+                        <input type="hidden" name="returnDate" value="" />
+                      </div>
+                    </div>
+                    <div id="trip__date--dropdown"></div>
+                  </div>
+                </div>
+
+                <div class="booking__form--row row--promo--passenger">
+                  <div class="booking__form--col booking__form--passenger">
+                    <div id="booking__form--passenger--inner" class="booking__form--passenger--inner">
+                      <div id="trip__passenger" class="booking__form--passenger--control">
+                        <div class="passenger--icon">
+                          <i class="bi bi-person-fill"></i>
+                        </div>
+                        <div class="passenger--text">
+                          <span class="passenger--label">Hành Khách </span>
+                          <span class="passenger--value">1 người lớn, 1 trẻ em, 1 em bé
+                          </span>
+                        </div>
+                      </div>
+
+                      <div class="booking__form--passenger--dropdown">
+                        <div class="booking__form--passenger--dropdown--inner">
+                          <div class="booking__form--adult">
+                            <div class="passenger__input--left">
+                              <div class="passenger__input--icon">
+                                <img src="./images/booking/icon-adult.svg" />
+                              </div>
+                              <div class="passenger__input--text">
+                                <p>Người lớn</p>
+                                <p class="small">12 tuổi trở lên</p>
+                              </div>
+                            </div>
+                            <div id="adultInput" class="passenger__input--right" data-type="adult">
+                              <div class="booking__quantity">
+                                <span data-type="decreate"
+                                  class="booking__quantity--control booking__quantity--down">-</span>
+                                <span class="booking__quantity--value">1</span>
+                                <span data-type="increate"
+                                  class="booking__quantity--control booking__quantity--up">+</span>
+                              </div>
+                              <input type="hidden" name="adult" />
+                            </div>
+                          </div>
+                          <div class="booking__form--children">
+                            <div class="passenger__input--left">
+                              <div class="passenger__input--icon">
+                                <img src="./images/booking/icon-child.svg" />
+                              </div>
+                              <div class="passenger__input--text">
+                                <p>Trẻ em</p>
+                                <p class="small">Từ 2 đến 11 tuổi</p>
+                              </div>
+                            </div>
+                            <div id="childrenInput" class="passenger__input--right" data-type="children">
+                              <div class="booking__quantity">
+                                <span data-type="decreate"
+                                  class="booking__quantity--control booking__quantity--down">-</span>
+                                <span class="booking__quantity--value">0</span>
+                                <span data-type="increate"
+                                  class="booking__quantity--control booking__quantity--up">+</span>
+                              </div>
+                              <input type="hidden" name="children" />
+                            </div>
+                          </div>
+                          <div class="booking__form--infant">
+                            <div class="passenger__input--left">
+                              <div class="passenger__input--icon">
+                                <img src="./images/booking/icon-infant.svg" />
+                              </div>
+                              <div class="passenger__input--text">
+                                <p>Em bé</p>
+                                <p class="small">Dưới 2 tuổi</p>
+                              </div>
+                            </div>
+                            <div id="infantInput" class="passenger__input--right" data-type="infant">
+                              <div class="booking__quantity">
+                                <span data-type="decreate"
+                                  class="booking__quantity--control booking__quantity--down">-</span>
+                                <span class="booking__quantity--value">0</span>
+                                <span data-type="increate"
+                                  class="booking__quantity--control booking__quantity--up">+</span>
+                              </div>
+                              <input type="hidden" name="infant" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="booking__form--col booking__form--promo">
+                    <div id="booking__form--promo--inner" class="booking__form--promo--inner">
+                      <div class="booking__form--control">
+                        <div class="promo-icon">
+                          <svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                              d="M21 6H3C2.73478 6 2.48043 6.10037 2.29289 6.27903C2.10536 6.45769 2 6.7 2 6.95266V10.7633H2.893C3.889 10.7633 4.813 11.4121 4.973 12.3485C5.02174 12.622 5.00726 12.9023 4.93056 13.1699C4.85387 13.4374 4.71681 13.6858 4.52894 13.8977C4.34108 14.1096 4.10694 14.2799 3.84287 14.3967C3.57879 14.5135 3.29115 14.574 3 14.574H2V18.3846C2 18.6373 2.10536 18.8796 2.29289 19.0582C2.48043 19.2369 2.73478 19.3373 3 19.3373H21C21.2652 19.3373 21.5196 19.2369 21.7071 19.0582C21.8946 18.8796 22 18.6373 22 18.3846V14.574H21C20.7089 14.574 20.4212 14.5135 20.1571 14.3967C19.8931 14.2799 19.6589 14.1096 19.4711 13.8977C19.2832 13.6858 19.1461 13.4374 19.0694 13.1699C18.9927 12.9023 18.9783 12.622 19.027 12.3485C19.187 11.4121 20.111 10.7633 21.107 10.7633H22V6.95266C22 6.7 21.8946 6.45769 21.7071 6.27903C21.5196 6.10037 21.2652 6 21 6ZM9 9.81065C9.26522 9.81065 9.51957 9.91102 9.70711 10.0897C9.89464 10.2683 10 10.5107 10 10.7633C10 11.016 9.89464 11.2583 9.70711 11.4369C9.51957 11.6156 9.26522 11.716 9 11.716C8.73478 11.716 8.48043 11.6156 8.29289 11.4369C8.10536 11.2583 8 11.016 8 10.7633C8 10.5107 8.10536 10.2683 8.29289 10.0897C8.48043 9.91102 8.73478 9.81065 9 9.81065ZM8.2 15.9077L14.2 8.28639L15.8 9.42959L9.8 17.0509L8.2 15.9077ZM15 15.5266C14.7348 15.5266 14.4804 15.4263 14.2929 15.2476C14.1054 15.0689 14 14.8266 14 14.574C14 14.3213 14.1054 14.079 14.2929 13.9003C14.4804 13.7217 14.7348 13.6213 15 13.6213C15.2652 13.6213 15.5196 13.7217 15.7071 13.9003C15.8946 14.079 16 14.3213 16 14.574C16 14.8266 15.8946 15.0689 15.7071 15.2476C15.5196 15.4263 15.2652 15.5266 15 15.5266Z" />
+                          </svg>
+                        </div>
+                        <div class="booking__form--control--input">
+                          <input id="tripPromoCode" placeholder="Mã Khuyến mại" class="form-control" name="promocode" />
+                          <label for="tripPromoCode" class="form-label sr-only">Mã Khuyến mại</label>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="booking__form--col booking__form--buttons">
+                    <button id="booking__searchflight" class="btn btn-primary btn-booking" type="button">
+                      Tìm chuyến bay
+                    </button>
+                  </div>
                 </div>
               </div>
             </form>
