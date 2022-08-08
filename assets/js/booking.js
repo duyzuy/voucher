@@ -33,6 +33,7 @@ const app = {
     },
     currentSelect: "",
     locale: "",
+    promoCode: "",
   },
   init({ locale }) {
     //set locale for booking form
@@ -51,6 +52,7 @@ const app = {
     this.onSelectReturn();
     this.onSelectDate();
     this.onSelectPassenger();
+    this.onChangePromoCode();
     this.onSearchFlight();
 
     this.paxSelectDropdown();
@@ -134,6 +136,7 @@ const app = {
         singleDatePicker:
           _this.bookingInform.tripType === constants.ONEWAY ? true : false,
         minDate: currentDate,
+        opens: "left",
         locale: { ...currentLocale.locale },
         parentEl: "#trip__date--dropdown",
       })
@@ -322,6 +325,15 @@ const app = {
         },
         locale
       );
+    });
+  },
+  onChangePromoCode: function () {
+    const promoCode = bookingForm.find(`input[name="promocode"]`);
+
+    const _this = this;
+    promoCode.on("input", function (e) {
+      _this.bookingInform.promoCode = e.target.value;
+      console.log(_this.bookingInform);
     });
   },
   onSearchFlight: function () {
