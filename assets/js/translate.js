@@ -36,6 +36,15 @@ const dateLocale = [
       customRangeLabel: "Custom",
       weekLabel: "W",
       daysOfWeek: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"],
+      daysOfWeekLongname: [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ],
       monthNames: [
         "January",
         "February",
