@@ -3,6 +3,7 @@ import config, { baseURL, languageId } from "./config.js";
 import { bookingFormText, dateLocale } from "./translate.js";
 
 const calendarContainer = $("#bk__calendar");
+const flightItem = $(".flight-option-item");
 const Bkcalendar = {
   calendar: {
     selected: "15-08-2022",
@@ -20,6 +21,8 @@ const Bkcalendar = {
 
     //define properties
     this.defineProperties();
+
+    //update days on calendar
     this.updateArrayDay();
     //render template
     this.renderSlider();
@@ -80,6 +83,16 @@ const Bkcalendar = {
         return this.calendar.currentLocale;
       },
     });
+    Object.defineProperty(this, "startOfRangeDay", {
+      get: function () {
+        return this.calendar.days[0];
+      },
+    });
+    Object.defineProperty(this, "lastOfRangeDay", {
+      get: function () {
+        return this.calendar.days[this.calendar.days.length - 1];
+      },
+    });
   },
   updateArrayDay: function () {
     const _this = this;
@@ -87,11 +100,10 @@ const Bkcalendar = {
     const midView = Math.floor(_this.viewRange / 2);
 
     const startDayOfRange = _this.currentSelect.add(-midView, "days");
-
-    let selectedDate = moment(
-      _this.calendar.selected,
+    const dayValueOfstartDayOfRange = startDayOfRange.format(
       _this.currentLocale.locale.format
     );
+    let selectedDate = _this.currentSelect;
     let days = [];
     for (let i = 0; i < _this.viewRange; i++) {
       if (i === 0) {
@@ -101,64 +113,68 @@ const Bkcalendar = {
           selectedDate,
           today: _this.today,
           moment: moment(
-            `${startDayOfRange.get("date")}-${
-              startDayOfRange.get("month") + 1
-            }-${startDayOfRange.get("year")}`,
+            dayValueOfstartDayOfRange,
             _this.currentLocale.locale.format
           ),
         });
       } else {
         let nextDay = startDayOfRange.add(1, "days");
+        let nextDayValue = nextDay.format(_this.currentLocale.locale.format);
         days[i] = _this.keysOfDay({
           date: nextDay,
           locale: _this.currentLocale,
           selectedDate,
           today: _this.today,
-          moment: moment(
-            `${nextDay.get("date")}-${nextDay.get("month") + 1}-${nextDay.get(
-              "year"
-            )}`,
-            _this.currentLocale.locale.format
-          ),
+          moment: moment(nextDayValue, _this.currentLocale.locale.format),
         });
       }
     }
     _this.calendar.days = days;
     return days;
   },
-  getArrayDayByNumber: function (day, num, locale, selectedDate, today) {
-    if (typeof day === "string") throw new Error("just only moment");
-    if (typeof num === "string") throw new Error("just a number");
-
+  UpdateDaysAndGetNewDays: function ({ action, numberOfDay }) {
+    if (typeof numberOfDay === "string") throw new Error("just a number");
+    const _this = this;
+    const locale = _this.calendar.currentLocale;
+    const currentSelect = _this.currentSelect;
     const days = [];
-    let newDay;
-    for (let i = 0; i < Math.abs(Number(num)); i++) {
-      if (Number(num) < 0) {
-        newDay = day.moment.add(-1, "days");
-      } else {
-        newDay = day.moment.add(1, "days");
-      }
-      days.push({
-        dayName: locale.locale.daysOfWeekLongname[newDay.get("day") % 7],
-        altDate: newDay
-          .locale(locale.lang)
-          .format(locale.locale.formatTextShort),
-        day: newDay.get("date"),
-        month: newDay.get("month") + 1,
-        year: newDay.get("year"),
-        value: newDay.format(locale.locale.format),
-        moment: moment(
-          `${newDay.get("date")}-${newDay.get("month") + 1}-${newDay.get(
-            "year"
-          )}`,
-          locale.locale.format
-        ),
-        selectedDay: newDay.isSame(selectedDate) ? true : false,
-        today: newDay.isSame(today) ? true : false,
-        notAvaiable: newDay.isBefore(today) ? true : false,
-      });
+    let newDay, newCurrentDate;
+    if (action === "prev") {
+      //update selected Day;
+      newCurrentDate = currentSelect
+        .add(-1, "days")
+        .format(locale.locale.format);
+      _this.calendar.selected = newCurrentDate;
     }
 
+    if (action === "next") {
+      //update selected Day;
+      newCurrentDate = currentSelect
+        .add(1, "days")
+        .format(locale.locale.format);
+      _this.calendar.selected = newCurrentDate;
+    }
+
+    for (let i = 0; i < Math.abs(Number(numberOfDay)); i++) {
+      if (action === "prev") {
+        newDay = _this.calendar.days[0].moment.add(-1, "days");
+      }
+      if (action === "next") {
+        newDay = _this.lastOfRange.moment
+          .add(1, "days")
+          .format(locale.locale.format);
+      }
+      days.push(
+        _this.keysOfDay({
+          date: newDay,
+          locale,
+          selectedDate: moment(newCurrentDate, locale.locale.format),
+          today: _this.calendar.today,
+          moment: newDay,
+        })
+      );
+    }
+    console.log(_this.updateArrayDay());
     return days;
   },
   keysOfDay: function ({ date, locale, selectedDate, today, moment }) {
@@ -273,7 +289,7 @@ const Bkcalendar = {
   handleEvents: function () {
     const _this = this;
     const today = _this.today;
-
+    const locale = _this.calendar.currentLocale;
     let sliding = false;
     const containerWidth = calendarContainer.width();
 
@@ -328,20 +344,19 @@ const Bkcalendar = {
 
     calendarContainer.on("click", ".bk__calendar-prev", function (e) {
       if (sliding === true) return;
-      const daySelected = _this.currentSelect;
-      if (daySelected.isBefore(today) || daySelected.isSame(today)) return;
+      const currentSelect = _this.currentSelect;
+      if (currentSelect.isBefore(today) || currentSelect.isSame(today)) return;
 
       sliding = true;
-      const firstOfRange = _this.calendar.days[0];
-      const itemWidth = Math.floor((50 * 100) / _this.viewRange) / 100;
-      const arrayDays = _this.getArrayDayByNumber(
-        firstOfRange,
-        -1,
-        _this.calendar.currentLocale,
-        daySelected,
-        today
-      );
 
+      const itemWidth = Math.floor((50 * 100) / _this.viewRange) / 100;
+
+      //take array prevDay
+      const arrayDays = _this.UpdateDaysAndGetNewDays({
+        action: "prev",
+        numberOfDay: 1,
+      });
+      console.log(arrayDays);
       const items = _this.items({
         dates: arrayDays,
         viewRange: _this.viewRange,
@@ -359,9 +374,9 @@ const Bkcalendar = {
       });
 
       setTimeout(() => {
-        _this.updateView({
-          action: "removeOne",
-        });
+        // _this.updateView({
+        //   action: "removeOne",
+        // });
 
         wrapItems.removeClass("animating");
         sliding = false;
@@ -451,25 +466,22 @@ const Bkcalendar = {
     );
 
     //handle click detail
-    $(".flight-option-item").on(
-      "click",
-      ".btn-flight-option-detail",
-      function (e) {
-        const item = $(this)
-          .parent()
-          .parent()
-          .parent()
-          .parent()
-          .parent()
-          .parent();
-        $(".flight-option-item").removeClass("expanded");
-        if (item.hasClass("expanded")) {
-          item.removeClass("expanded");
-        } else {
-          item.addClass("expanded");
-        }
+    flightItem.on("click", ".btn-flight-option-detail", function (e) {
+      e.preventDefault();
+
+      const item = $(this).closest(".flight-option-item");
+      const dropdownItem = item.find(".flight-option-dropdown");
+
+      if (item.hasClass("expanded")) {
+        item.removeClass("expanded");
+        $(dropdownItem[0]).removeAttr("style");
+      } else {
+        flightItem.hasClass("expanded") && flightItem.removeClass("expanded");
+        $(flightItem.find(".flight-option-dropdown")).removeAttr("style");
+        item.addClass("expanded");
+        $(dropdownItem[0]).css({ height: dropdownItem[0].scrollHeight });
       }
-    );
+    });
   },
 };
 Bkcalendar.init(constants.LOCALE_VI);

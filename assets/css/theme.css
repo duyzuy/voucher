@@ -2259,11 +2259,11 @@ border-bottom-left-radius: 0 !important;
 .flight-option-price p.price ins{
     text-decoration: none;
     color: red;
-    font-size: 30px;
+    font-size: 28px;
 }
 ins .currency-symbol{
     margin-left: 5px;
-    font-size: 24px;
+    font-size: 20px;
 }
 del .currency-symbol{
     margin-left: 3px;
@@ -2313,7 +2313,7 @@ del .currency-symbol{
     top: auto
 }
 .flight-option-top .flight-option-time{
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 300;
     display: block;
     line-height: 1.5;
@@ -2355,10 +2355,15 @@ del .currency-symbol{
     padding: 5px 10px;
     font-size: 13px;
     border-width: 0;
+  
 }
 .btn-flight-option-detail i{
     font-size: 10px;
     display: inline-block;
+    transition: all linear 480ms;
+}
+.expanded .btn-flight-option-detail i{
+    transform: rotateX(-180deg);
 }
 .flight-option-icon .icon-flight{
     line-height: 1;
@@ -2437,18 +2442,23 @@ del .currency-symbol{
     font-size: 14px;
 }
 .flight-option-dropdown{
-    display: none;
+   
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
+    transition: all linear 320ms;
+    height: 0;
+    pointer-events: none;
+    opacity: 0;
 }
 .flight-option-item.expanded {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
 .flight-option-item.expanded .flight-option-dropdown{
-    display: block;
     overflow: hidden;
-    
+    pointer-events: all;
+    opacity: 1;
+
 }
 .flight-option-dropdown .dropdown-inner{
     padding: 20px;
@@ -2700,9 +2710,7 @@ del .currency-symbol{
 .option-detail-content{
     display: flex;
 }
-.expanded .btn-flight-option-detail i{
-    transform: rotateX(-180deg);
-}
+
 @keyframes cloundShow {
     from{
 
@@ -2722,7 +2730,7 @@ del .currency-symbol{
         font-size: 26px;
     }
     .flight-option-top .flight-option-time{
-        font-size: 30px;
+        font-size: 28px;
     }
     .flight-option-location-time{
         width: 100px;
