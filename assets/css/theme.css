@@ -2131,17 +2131,19 @@ border-bottom-left-radius: 0 !important;
     list-style-type: none;
     padding: 0;
 
-    justify-content: flex-end;
   
 }
 .status__inner .step{
     color: #fff;
     background-color: #fff;
     display: flex;
+    justify-content: center;
     align-items: center;
     position: relative;
     margin-right: 20px;
-
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
 }
 .status__inner .step:last-of-type{
     margin-right: 0px;
@@ -2153,6 +2155,7 @@ border-bottom-left-radius: 0 !important;
     background-color: #fff;
     right: -20px;
     position: absolute;
+    top: calc(50% - 0.5px);
 }
 .status__inner .step:last-of-type:after{
     content: none
@@ -2161,26 +2164,24 @@ border-bottom-left-radius: 0 !important;
     fill: #ffdb04;
     width: 18px;
 }
-.status__inner li{
-    width: 36px;
-    height: 36px;
-    /* border: 1px solid #fff; */
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.status__inner .step.current{
+
+.status__inner .step.current,
+.status__inner .step.done{
     background: linear-gradient(72.74deg, #459B02 -15.27%, #AAFA6B 113.22%);
 }
 .status__inner .step.current svg, 
-.status__inner .step.current path{
+.status__inner .step.current path,
+.status__inner .step.done path,
+.status__inner .step.done svg {
     fill: #fff;
+}
+.booking__layout--header > .container{
+    padding-top: 20px;
+    padding-bottom: 20px
 }
 .booking__layout--header--infor{
     display: flex;
     align-items: center;
-    padding: 20px 0
 }
 .booking__layout--header--infor p{
     margin-bottom: 0;
@@ -2243,7 +2244,8 @@ border-bottom-left-radius: 0 !important;
     flex: 1;
 }
 .flight-option-price{
-    width: 100%;
+    padding: 20px;
+    width: 25%;
 }
 .flight-option-price p{
     margin-bottom: 0;
@@ -2259,7 +2261,7 @@ border-bottom-left-radius: 0 !important;
 .flight-option-price p.price ins{
     text-decoration: none;
     color: red;
-    font-size: 28px;
+    font-size: 26px;
 }
 ins .currency-symbol{
     margin-left: 5px;
@@ -2299,7 +2301,9 @@ del .currency-symbol{
     fill: #c1c1c1
 }
 .flight-option-middle-inner .flight-option-icon .flight-code,
-.flight-aircraft{
+.flight-aircraft,
+.flight-option-icon .text-label,
+.flight-option-stop .text-label{
     position: absolute;
     top: -18px;
     font-size: 12px;
@@ -2312,15 +2316,22 @@ del .currency-symbol{
     bottom: -18px;
     top: auto
 }
+.flight-option-icon .text-label,
+.flight-option-stop .text-label{
+    bottom: -20px;
+    top: auto
+}
 .flight-option-top .flight-option-time{
-    font-size: 32px;
+    font-size: 30px;
     font-weight: 300;
     display: block;
     line-height: 1.5;
 }
 .flight-option-top .flight-option-city,
-.flight-option-top .flight-option-date{
-    font-size: 14px;
+.flight-option-top .flight-option-date,
+.duration-label,
+.duration-time{
+    font-size: 13px;
     color: #3e3e3e
 }
 
@@ -2336,25 +2347,28 @@ del .currency-symbol{
     flex: 1;
 }
 .flight-option-infor{
-    margin-left: 60px;
+    padding-left: 30px;
     font-size: 14px;
 }
 .flight-option-infor ul{
     padding: 0;
     margin: 0;
     list-style-type: none;
+    display: flex;
+    align-items: center;
 }
-.flight-option-infor ul li + li{
-    margin-bottom: 5px;
+.flight-option-infor ul li + li {
+    margin-left: 15px;
 }
+
 .flight-option-infor p{
     margin-bottom: 0;
 }
 .btn-flight-option-detail{
-    background: #f1f1f1;
+    background: #fff;
     padding: 5px 10px;
     font-size: 13px;
-    border-width: 0;
+    border: 1px solid #dcdcdc
   
 }
 .btn-flight-option-detail i{
@@ -2377,6 +2391,7 @@ del .currency-symbol{
     align-items: center;
     justify-content: center;
 }
+
 .flight-option-stop{
     position: relative;
 }
@@ -2386,6 +2401,7 @@ del .currency-symbol{
     left: calc(50% - 25px);
     text-align: center;
     font-weight: bold;
+    top: -25px
 }
 
 .icon-stop{
@@ -2396,6 +2412,8 @@ del .currency-symbol{
     border-radius: 10px;
     border: 1px solid #c1c1c1;
     background-color: #fff;
+    margin: 5px 0;
+    z-index: 2;
 }
 .flight-option-types .icon-stop{
 
@@ -2415,7 +2433,6 @@ del .currency-symbol{
 
 
 }
-
 .ic-circle{
     width: 100%;
     height: 100%;
@@ -2423,16 +2440,11 @@ del .currency-symbol{
     background: #fff;
     border-radius: 50%;
 }
-.flight-option-end{
-    display: flex;
-    align-items: center;
-    padding: 20px;
-    flex-wrap: wrap;
-    width: 30%;
-}
+
 .flight-option-btns{
     text-align: right;
     margin-left: auto;
+    margin-top: 10px;
 }
 .btn-booking-selecting{
     background:linear-gradient(21.74deg, #F9A51A 2.28%, #FBB612 27.93%, #FFDD00 86.9%);
@@ -2504,6 +2516,7 @@ del .currency-symbol{
    
     position: absolute;
     background: url(../../images/booking/clound-bar.svg);
+    /* background: url(../../images/booking/cloud.png); */
     width: 100%;
     height: 100%;
     left: 0;
@@ -2583,6 +2596,9 @@ del .currency-symbol{
 .bk__calendar--container .bk__calendar-btn.bk__calendar-prev{
     left: 10px
 }
+.booking__layout{
+    background-attachment: fixed;
+}
 .booking__layout--title h3{
     display: flex;
     align-items: center;
@@ -2613,7 +2629,7 @@ del .currency-symbol{
     top: 20px
 }
 .flight-option-detail .flight-option-depart.depart-last:after{
-    height: 60%;
+    height: 50%;
 }
 .flight-option-detail .flight-option-depart p{
     margin-bottom: 0;
@@ -2640,10 +2656,11 @@ del .currency-symbol{
     display: flex;
     align-items: center;
     justify-content: center;
-    top: calc(50% - 20px)
+    top: calc(50% - 20px);
+    line-height: 1;
 }
 .flight-option-detail-inner .option-detail-icon.bottom{
-    top: calc(50% - 40px)
+    top: calc(50% - 50px)
 }
 .flight-option-detail-inner ul{
     list-style-type: none;
@@ -2709,6 +2726,7 @@ del .currency-symbol{
 
 .option-detail-content{
     display: flex;
+
 }
 
 @keyframes cloundShow {
@@ -2722,12 +2740,15 @@ del .currency-symbol{
         transform: scale(1);
     }
 }
+@media screen and (max-width: 1399px) {
+
+}
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
         padding: 60px 30px 60px
     }
     .flight-option-price p.price ins{
-        font-size: 26px;
+        font-size: 24px;
     }
     .flight-option-top .flight-option-time{
         font-size: 28px;
@@ -2736,8 +2757,19 @@ del .currency-symbol{
         width: 100px;
     }
 
-    .flight-option-end{
+    .flight-option-price{
         width: 25%;
+        padding-left: 0;
+    }
+    .flight-option-infor{
+        padding-left: 20px;
+    }
+    .flight-option-top .flight-option-city, .flight-option-top .flight-option-date,
+    .duration-label, .duration-time{
+        font-size: 12px;
+    }
+    .flight-option-item{
+        margin-bottom: 20px;
     }
 }
 @media screen and (max-width: 991.98px) {
@@ -2763,9 +2795,6 @@ del .currency-symbol{
     }
     .myaccount__left .navmenu .nav-link{
         white-space: nowrap;
-    }
-    .myaccount__left{
-        
     }
     .text-large{
         font-size: 1.6rem;
@@ -2870,14 +2899,6 @@ del .currency-symbol{
     .row--date--passenger{
         display: block !important;
     }
-    /* .booking__form--date,
-    .booking__form--passenger{
-        width: 100%;
-        flex-basis: 100%;
-    }
-    .booking__form--date{
-        padding-right: 0;
-    } */
     #trip__date--dropdown .daterangepicker{
         width: 100%;
     }
@@ -2893,6 +2914,85 @@ del .currency-symbol{
         padding-right: 0;
         width: 100%;
         flex-basis: 100%;
+    }
+    .flight-option-top{
+        width: 100%;
+        flex-basis: 100%;
+        padding-bottom: 0
+    }
+    .flight-option-price, .flight-option-infor{
+        width: 50%;
+        flex: 1;
+    }
+    .flight-option-infor{
+        padding-left: 20px;
+    }
+    .flight-option-top .flight-option-city, .flight-option-top .flight-option-date,
+    .duration-label, .duration-time{
+        font-size: 12px;
+    }
+    .flight-option-top .flight-option-location-time ~ .flight-option-location-time{
+        text-align: right;
+    }
+    .flight-option-detail-inner > div > div{
+        padding-left: 40px;
+    }   
+    .flight-option-detail-inner .option-detail-icon{
+        width: 30px;
+        height: 30px;
+        top: calc(50% - 15px);
+        left: 5px;
+    }
+    .option-detail-icon .icon-flight svg, .option-detail-icon .icon-flight path{
+        width: 16px;
+        height: 16px;
+    }
+    .option-detail-icon .bi-geo-alt-fill{
+        font-size: 14px;
+    }
+    .flight-option-dropdown .dropdown-inner{
+        padding: 15px
+    }
+    .flight-option-detail .flight-option-depart .option-label{
+        width: 160px;
+    }
+    .option-detail-content,
+    .flight-option-detail .option-value .city, 
+    .flight-option-detail .option-value .time,
+    .option-detail-content p.flight-code{
+        font-size: 14px;
+    }
+    .flight-option-detail .flight-option-depart .option-label{
+        font-size: 14px;
+    }
+    .flight-option-detail .option-value .aircraft p + p{
+        margin-left: 20px;
+    }
+    .name-of-day{
+        font-size: 14px;
+    }
+    .bk__calendar--container ul li{
+        height: 80px;
+    }
+    .bk__calendar--container:after{
+        height: 60px;
+        top: calc(50% - 30px);
+    }
+    .bk__calendar--container .bk__calendar-btn{
+        width: 24px;
+        height: 24px;
+        top: calc(50% - 10px);
+    }
+    .bk__calendar--container .bk__calendar-btn{
+        line-height: 24px;
+    }
+    #bk__calendar--slider{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .flight-option-item,
+    .booking__date--bar{
+        margin-bottom: 15px;
     }
 }
 @media screen and (max-width: 767.98px) {
@@ -2932,6 +3032,99 @@ del .currency-symbol{
     .daterangepicker .drp-calendar.right
     {
         width: 100%;
+    }
+
+    .flight-option-top{
+       padding: 15px 15px 0;
+    }
+    .flight-option-price{
+        padding: 10px 10px 10px 0
+    }
+    .flight-option-infor{
+        padding-left: 15px;
+    }
+    .flight-option-top .flight-option-time{
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .flight-option-price p.price ins{
+        font-size: 18px;
+    }
+    ins .currency-symbol,
+    .flight-option-price p.price del,
+    .btn-booking-selecting{
+        font-size: 12px;
+    }
+    .btn-flight-option-detail{
+        font-size: 11px;
+    }
+
+    .booking__layout--header--infor{
+        margin-bottom: 15px;
+    }
+    .booking__layout--header--status{
+        justify-content: center;
+    }
+    .flight-option-icon .icon-flight{
+        width: 20px;
+        height: 20px;
+    }
+    .flight-option-icon svg, .flight-option-icon path{
+        width: 18px;
+    }
+    .flight-option-types .icon-stop{
+        margin-left: 40px;
+        margin-right: 40px;
+    }
+    .flight-option-middle-inner .flight-option-icon .flight-code, .flight-aircraft, .flight-option-icon .text-label, .flight-option-stop .text-label{
+        font-size: 11px;
+    }
+    .option-detail-content{
+        display: block;
+    }
+    .flight-option-detail .option-value .aircraft p{
+        font-size: 10px;
+    }
+    .flight-option-detail-inner ul{
+        margin-bottom: 10px;
+    }
+    .flight-option-detail-inner .option-detail-icon{
+
+    }
+    .option-detail-flight-code{
+        padding-top: 20px;
+    }
+    .flight-option-detail-inner .option-detail-icon{
+        left: 0;
+    }
+    .flight-option-detail .flight-option-depart:after{
+        left: 15px;
+    }
+    .icon-stop{
+        width: 12px;
+        height: 12px;
+    }
+    .icon-stop:after{
+        width: 6px;
+        height: 6px;
+        left: calc(50% - 3px);
+        top: calc(50% - 3px);
+    }
+    .flight-option-detail .flight-option-depart{
+        padding-top: 0;
+    }
+    .flight-option-detail .option-value .aircraft{
+        margin-top: 10px;
+    }
+    .flight-option-detail-inner .option-detail-icon.bottom{
+        top: calc(50% - 55px);
+    }
+    .flight-option-dropdown .dropdown-inner{
+        padding-left: 10px;
+    }
+    .flight-option-detail .option-value .aircraft p + p{
+        margin-left: 10px;
     }
 }
 @media screen and (max-width: 575.98px){
@@ -2973,6 +3166,58 @@ del .currency-symbol{
     .booking__form .booking__form--return .select2-container--default .select2-selection--single{
         border-top-right-radius: 0px;
         border-bottom-left-radius: 5px;
+    }
+    .bk__calendar--container .day-format{
+
+    }
+    .name-of-day{
+        font-size: 14px;
+    }
+    .header--infor .destinations{
+        font-size: 16px;
+    }
+    .header--btns .btn{
+        font-size: 13px;
+    }
+    .header--btns .btn i{
+        font-size: 10px;
+    }
+    .header--infor .triptype-passengers{
+        font-size: 13px;
+    }
+    .status__inner .step{
+        width: 30px;
+        height: 30px;
+    }
+    .status__inner svg, .status__inner path{
+        width: 14px;
+    }
+    #bk__calendar--slider{
+        margin-left: 15px;
+        margin-right: 15px;
+    }
+    .bk__calendar--container .bk__calendar-btn.bk__calendar-prev{
+        left: -10px;
+    }
+    .bk__calendar--container .bk__calendar-btn.bk__calendar-next{
+        right: -10px;
+    }
+    .bk__calendar--container ul li{
+        height: 80px;
+    }
+    .bk__calendar--container ul li{
+        padding-left: 5px;
+        padding-right: 5px;
+    }
+    .name-stop{
+        font-size: 12px;
+        top: -20px
+    }
+    .flight-option-onstop p{
+        font-size: 13px;
+    }
+    .container{
+        max-width: 420px;
     }
 }
 @media (min-width: 576px){
