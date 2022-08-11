@@ -2510,6 +2510,10 @@ del .currency-symbol{
 .booking__layout{
     background-attachment: fixed;
 }
+.booking__layout--title .title{
+    font-size: 24px;
+    margin-bottom: 0;
+}
 .booking__layout--title h3{
     display: flex;
     align-items: center;

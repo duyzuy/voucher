@@ -12,8 +12,6 @@
     const dateLocale = [
       {
         lang: "en",
-        departText: "Depart date",
-        returnText: "Return date",
         locale: {
           format: "MM-DD-YYYY",
           formatText: "dddd, MMM Do YYYY",
@@ -47,10 +45,8 @@
       },
       {
         lang: "vi",
-        departText: "Ngày đi",
-        returnText: "Ngày về",
         locale: {
-          format: "DD-MM-YYYY",
+          format: "MM-DD-YYYY",
           formatText: "dddd, Do MMM YYYY",
           formatTextShort: "Do MMM YYYY",
           weekLabel: "Tuần",
@@ -86,7 +82,7 @@
       PREV: "prev",
       CLICK_ITEM: "clickItem",
     };
-    const sliderCalendar = {
+    const plug = {
       calendar: {
         selected: "",
         today: "",
@@ -97,7 +93,7 @@
       currentIndex: 0,
       activeIndex: 3,
       loading: false,
-      init: function () {
+      start: function () {
         //set current day
         this.setDefault();
 
@@ -115,17 +111,18 @@
       setDefault: function () {
         //set config
 
-        locale === undefined ? "vi" : locale;
-        selected === undefined ? today : selected;
+        locale = locale ? locale : "vi";
 
         const currentLocale = dateLocale.find((lc) => lc.lang === locale);
         this.calendar.currentLocale = currentLocale;
+
         this.calendar.currentIndex =
           currentIndex === undefined
             ? Math.floor(this.viewRange / 2)
             : currentIndex;
         this.calendar.today = moment().format(currentLocale.locale.format);
-        this.calendar.selected = selected;
+        this.calendar.selected =
+          selected === undefined ? this.calendar.today : selected;
         this.viewRange = range === undefined ? 7 : range;
       },
       defineProperties: function () {
@@ -540,17 +537,6 @@
       },
     };
 
-    sliderCalendar.init();
+    plug.start();
   };
 })(jQuery);
-
-const calendarContainer = $("#bk__calendar__two");
-
-calendarContainer.sliderCalendar({
-  range: 7,
-  currentIndex: 0,
-  activeIndex: 3,
-  locale: "vi",
-  selected: "15-08-2022",
-  format: "DD-MM-YYYY",
-});

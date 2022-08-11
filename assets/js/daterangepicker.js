@@ -1,9 +1,3 @@
-/**
- * Minified by jsDelivr using Terser v3.14.1.
- * Original file: /npm/daterangepicker@3.1.0/daterangepicker.js
- *
- * Do NOT use SRI with dynamically generated files! More information: https://www.jsdelivr.com/using-sri-with-dynamic-files
- */
 !(function (t, e) {
   if ("function" == typeof define && define.amd)
     define(["moment", "jquery"], function (t, a) {
@@ -1332,4 +1326,3 @@
     a
   );
 });
-//# sourceMappingURL=/sm/f07d8d7b2652873f485707eab4f3d300bf1f6f3b42912e189c8933b1b9b3dfde.map
