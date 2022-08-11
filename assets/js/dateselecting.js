@@ -1,11 +1,11 @@
-import { constants } from "./constant.js";
-import config, { baseURL, languageId } from "./config.js";
+import { constants, bookingInformation } from "./constant.js";
 import { bookingFormText, dateLocale } from "./translate.js";
 const actionSlider = {
   NEXT: "next",
   PREV: "prev",
   CLICK_ITEM: "clickItem",
 };
+
 const calendarContainer = $("#bk__calendar");
 const flightItem = $(".flight-option-item");
 const Bkcalendar = {
@@ -141,7 +141,6 @@ const Bkcalendar = {
     if (typeof numberOfDay === "string") throw new Error("just a number");
     const _this = this;
     const locale = _this.calendar.currentLocale;
-    const currentSelect = _this.currentSelect;
     const days = [];
 
     let newDay, newCurrentDate, num;

@@ -18,4 +18,29 @@ const constants = {
   INCREATE: "increate",
   DECREATE: "decreate",
 };
-export { constants, config };
+
+const bookingInformation = {
+  tripType: constants.RETURN,
+  departLocation: "",
+  returnLocation: "",
+  departDate: {
+    value: "",
+    alt: "",
+  },
+  returnDate: {
+    value: "",
+    alt: "",
+  },
+  passenngers: {
+    adult: 1,
+    children: 0,
+    infant: 0,
+  },
+  currentSelect: "",
+  locale: "",
+  promoCode: "",
+  flights: [],
+  departure: [],
+  return: [],
+};
+export { constants, bookingInformation, config };

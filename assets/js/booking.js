@@ -1,4 +1,4 @@
-import { constants } from "./constant.js";
+import { constants, bookingInformation } from "./constant.js";
 import config, { baseURL, languageId } from "./config.js";
 import { bookingFormText, dateLocale } from "./translate.js";
 
@@ -14,27 +14,7 @@ const quantityControl = $(".booking__quantity--control");
 const searchFlightBtn = $("#booking__searchflight");
 
 const app = {
-  bookingInform: {
-    tripType: constants.RETURN,
-    departLocation: "",
-    returnLocation: "",
-    departDate: {
-      value: "",
-      alt: "",
-    },
-    returnDate: {
-      value: "",
-      alt: "",
-    },
-    passenngers: {
-      adult: 1,
-      children: 0,
-      infant: 0,
-    },
-    currentSelect: "",
-    locale: "",
-    promoCode: "",
-  },
+  bookingInform: bookingInformation,
   init({ locale }) {
     //set locale for booking form
     this.setLocale(locale);
@@ -340,10 +320,7 @@ const app = {
     const _this = this;
     searchFlightBtn.on("click", function (e) {
       e.preventDefault();
-      const searching = {
-        ..._this.bookingInform,
-      };
-      console.log(searching);
+
       if (
         _this.bookingInform.departDate === "" ||
         _this.bookingInform.departDate === "" ||
@@ -368,10 +345,8 @@ const app = {
         }
       }
 
-      window.location = "flights-option.html";
+      bookingForm.submit();
     });
-
-    const searching = () => {};
   },
   renderCityAirportResult: function (data) {
     if (!data.name) {
