@@ -1,5 +1,12 @@
+<<<<<<< HEAD:assets/js/dateselecting.js
 import { constants, bookingInformation } from "./constant.js";
 import { bookingFormText, dateLocale } from "./translate.js";
+=======
+import { constants } from "./constant.js";
+
+import { dateLocale } from "./translate.js";
+import { data } from "./data.js";
+>>>>>>> d35df71263d633824e30375239be140dbdf5d756:assets/js/flightSelection.js
 const actionSlider = {
   NEXT: "next",
   PREV: "prev",
@@ -8,6 +15,7 @@ const actionSlider = {
 
 const calendarContainer = $("#bk__calendar");
 const flightItem = $(".flight-option-item");
+
 const Bkcalendar = {
   calendar: {
     selected: "15-08-2022",
@@ -19,6 +27,9 @@ const Bkcalendar = {
   currentIndex: 0,
   activeIndex: 3,
   loading: false,
+  travelOption: {},
+  sessionId: "",
+  sessionExpIn: "",
   init: function (locale) {
     //set current day
 
@@ -323,7 +334,9 @@ const Bkcalendar = {
        *
        */
       const dateValue = selectedDay.format(locale.locale.format);
-
+      $(wrapItems.find(".bk__calendar-item")).each(function (index, itemDom) {
+        $(itemDom).removeClass("selected");
+      });
       setTimeout(() => {
         if (callback && typeof callback === "function") {
           callback();

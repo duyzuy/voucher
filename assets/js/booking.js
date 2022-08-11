@@ -320,7 +320,11 @@ const app = {
     const _this = this;
     searchFlightBtn.on("click", function (e) {
       e.preventDefault();
+<<<<<<< HEAD
 
+=======
+      bookingForm.submit();
+>>>>>>> d35df71263d633824e30375239be140dbdf5d756
       if (
         _this.bookingInform.departDate === "" ||
         _this.bookingInform.departDate === "" ||
@@ -345,7 +349,11 @@ const app = {
         }
       }
 
+<<<<<<< HEAD
       bookingForm.submit();
+=======
+      // window.location = "flights-option.html";
+>>>>>>> d35df71263d633824e30375239be140dbdf5d756
     });
   },
   renderCityAirportResult: function (data) {

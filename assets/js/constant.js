@@ -19,6 +19,7 @@ const constants = {
   DECREATE: "decreate",
 };
 
+<<<<<<< HEAD
 const bookingInformation = {
   tripType: constants.RETURN,
   departLocation: "",
@@ -44,3 +45,6 @@ const bookingInformation = {
   return: [],
 };
 export { constants, bookingInformation, config };
+=======
+export { constants, config };
+>>>>>>> d35df71263d633824e30375239be140dbdf5d756
