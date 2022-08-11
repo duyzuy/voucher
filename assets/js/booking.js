@@ -340,10 +340,7 @@ const app = {
     const _this = this;
     searchFlightBtn.on("click", function (e) {
       e.preventDefault();
-      const searching = {
-        ..._this.bookingInform,
-      };
-      console.log(searching);
+      bookingForm.submit();
       if (
         _this.bookingInform.departDate === "" ||
         _this.bookingInform.departDate === "" ||
@@ -368,7 +365,7 @@ const app = {
         }
       }
 
-      window.location = "flights-option.html";
+      // window.location = "flights-option.html";
     });
 
     const searching = () => {};

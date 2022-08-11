@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="./assets/css/slick-theme.css" />
     <link rel="stylesheet" href="./assets/css/daterangepicker.css" />
     <link rel="stylesheet" type="text/css" href="./assets/css/select.css" />
+    <link rel="stylesheet" href="./assets/css/calendarslider.css" />
     <link rel="stylesheet" href="./assets/css/theme.css" />
     <title>Flight options</title>
   </head>
@@ -205,660 +206,562 @@
       </div>
       <!-----------------main page----------------->
       <div class="wrapper__main booking__layout">
-        <div class="booking__layout--header">
-          <div class="container">
-            <div class="row">
-              <div
-                class="col-12 col-md-7 col-left booking__layout--header--infor"
-              >
-                <div class="header--infor">
-                  <p class="destinations">
-                    Hà nội
-                    <span class="icon"
-                      ><img src="./images/booking/ic-return.svg"
-                    /></span>
-                    Tp Hồ Chí Minh
-                  </p>
-                  <p class="triptype-passengers">
-                    <span class="status-triptype">Khứ hồi</span
-                    ><span class="status-passenger"
-                      >1 Người lớn, 1 Trẻ em, 1 Em bé</span
-                    >
-                  </p>
+        <form id="flightFormOptions" method="POST" action="/passengers.html">
+          <!------------value from form submit------------>
+          <input type="hidden" name="triptype" value="return" />
+          <input type="hidden" name="depature" value="SGN" />
+          <input type="hidden" name="return" value="HAN" />
+          <input type="hidden" name="departDate" value="18-08-2022" />
+          <input type="hidden" name="returnDate" value="27-08-2022" />
+          <input type="hidden" name="adult" value="1" />
+          <input type="hidden" name="children" value="1" />
+          <input type="hidden" name="infant" value="1" />
+          <input type="hidden" name="promocode" />
+          <!------------value from selection flight------------>
+          <input type="hidden" name="flight_sector_one" value="" />
+          <input type="hidden" name="flight_sector_second" value="" />
+          <input type="hidden" name="sessionId" value="" />
+          <input type="hidden" name="travelOption" value="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <input type="hidden" name="" />
+          <div class="booking__layout--header">
+            <div class="container">
+              <div class="row">
+                <div
+                  class="col-12 col-md-7 col-left booking__layout--header--infor"
+                >
+                  <div class="header--infor">
+                    <p class="destinations">
+                      Hà nội
+                      <span class="icon"
+                        ><img src="./images/booking/ic-return.svg"
+                      /></span>
+                      Tp Hồ Chí Minh
+                    </p>
+                    <p class="triptype-passengers">
+                      <span class="status-triptype">Khứ hồi</span
+                      ><span class="status-passenger"
+                        >1 Người lớn, 1 Trẻ em, 1 Em bé</span
+                      >
+                    </p>
+                  </div>
+                  <div class="header--btns">
+                    <button class="btn btn-outline-dark btn-sm">
+                      <i class="bi bi-pencil-fill"></i> Sửa
+                    </button>
+                  </div>
                 </div>
-                <div class="header--btns">
-                  <button class="btn btn-outline-dark btn-sm">
-                    <i class="bi bi-pencil-fill"></i> Sửa
-                  </button>
-                </div>
-              </div>
-              <div
-                class="col-12 col-md-5 col-right booking__layout--header--status"
-              >
-                <ul class="status__inner">
-                  <li class="step status-search current">
-                    <span
-                      ><svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                        />
-                      </svg>
-                    </span>
-                  </li>
-                  <li class="step status-user">
-                    <span
-                      ><svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M7.5 6.5C7.5 8.981 9.519 11 12 11C14.481 11 16.5 8.981 16.5 6.5C16.5 4.019 14.481 2 12 2C9.519 2 7.5 4.019 7.5 6.5ZM20 21H21V20C21 16.141 17.859 13 14 13H10C6.14 13 3 16.141 3 20V21H20Z"
-                        />
-                      </svg>
-                    </span>
-                  </li>
-                  <li class="step status-pay">
-                    <span
-                      ><svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M4.93206 4.28613C4.07958 4.28613 3.26201 4.62478 2.65922 5.22758C2.05642 5.83037 1.71777 6.64794 1.71777 7.50042V8.14328H22.2858V7.50042C22.2858 6.64794 21.9471 5.83037 21.3443 5.22758C20.7415 4.62478 19.924 4.28613 19.0715 4.28613H4.93292H4.93206ZM1.71777 16.5004V9.42899H22.2858V16.5004C22.2858 17.3529 21.9471 18.1705 21.3443 18.7733C20.7415 19.3761 19.924 19.7147 19.0715 19.7147H4.93292C4.08043 19.7147 3.26287 19.3761 2.66007 18.7733C2.05728 18.1705 1.71863 17.3529 1.71863 16.5004H1.71777ZM15.6429 14.1433C15.4724 14.1433 15.3089 14.211 15.1883 14.3316C15.0678 14.4521 15.0001 14.6156 15.0001 14.7861C15.0001 14.9566 15.0678 15.1201 15.1883 15.2407C15.3089 15.3613 15.4724 15.429 15.6429 15.429H18.6429C18.8134 15.429 18.9769 15.3613 19.0975 15.2407C19.218 15.1201 19.2858 14.9566 19.2858 14.7861C19.2858 14.6156 19.218 14.4521 19.0975 14.3316C18.9769 14.211 18.8134 14.1433 18.6429 14.1433H15.6429Z"
-                        />
-                      </svg>
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="booking__layout--container">
-          <div class="container">
-            <div class="row">
-              <div class="col-12">
-                <div class="booking__layout--departflights flight--depart">
-                  <div class="booking__layout--title mb-3">
-                    <h3>
-                      <span class="title-location">Hà Nội</span>
-                      <span class="title--icon"
+                <div
+                  class="col-12 col-md-5 col-right booking__layout--header--status"
+                >
+                  <ul class="status__inner">
+                    <li class="step status-search current">
+                      <span
                         ><svg
                           width="24"
                           height="24"
                           viewBox="0 0 24 24"
+                          fill="none"
                           xmlns="http://www.w3.org/2000/svg"
                         >
                           <path
                             d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                          ></path>
+                          />
                         </svg>
                       </span>
-                      <span class="title-location">Tp Hồ Chí Minh</span>
-                    </h3>
-                  </div>
-                  <!-----------------Calendar start----------------->
-                  <div class="booking__layout--date">
-                    <div class="booking__date--bar">
-                      <div id="bk__calendar" class="bk__calendar"></div>
+                    </li>
+                    <li class="step status-user">
+                      <span
+                        ><svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M7.5 6.5C7.5 8.981 9.519 11 12 11C14.481 11 16.5 8.981 16.5 6.5C16.5 4.019 14.481 2 12 2C9.519 2 7.5 4.019 7.5 6.5ZM20 21H21V20C21 16.141 17.859 13 14 13H10C6.14 13 3 16.141 3 20V21H20Z"
+                          />
+                        </svg>
+                      </span>
+                    </li>
+                    <li class="step status-pay">
+                      <span
+                        ><svg
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M4.93206 4.28613C4.07958 4.28613 3.26201 4.62478 2.65922 5.22758C2.05642 5.83037 1.71777 6.64794 1.71777 7.50042V8.14328H22.2858V7.50042C22.2858 6.64794 21.9471 5.83037 21.3443 5.22758C20.7415 4.62478 19.924 4.28613 19.0715 4.28613H4.93292H4.93206ZM1.71777 16.5004V9.42899H22.2858V16.5004C22.2858 17.3529 21.9471 18.1705 21.3443 18.7733C20.7415 19.3761 19.924 19.7147 19.0715 19.7147H4.93292C4.08043 19.7147 3.26287 19.3761 2.66007 18.7733C2.05728 18.1705 1.71863 17.3529 1.71863 16.5004H1.71777ZM15.6429 14.1433C15.4724 14.1433 15.3089 14.211 15.1883 14.3316C15.0678 14.4521 15.0001 14.6156 15.0001 14.7861C15.0001 14.9566 15.0678 15.1201 15.1883 15.2407C15.3089 15.3613 15.4724 15.429 15.6429 15.429H18.6429C18.8134 15.429 18.9769 15.3613 19.0975 15.2407C19.218 15.1201 19.2858 14.9566 19.2858 14.7861C19.2858 14.6156 19.218 14.4521 19.0975 14.3316C18.9769 14.211 18.8134 14.1433 18.6429 14.1433H15.6429Z"
+                          />
+                        </svg>
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="booking__layout--container">
+            <div class="container">
+              <div class="row">
+                <div class="col-12">
+                  <div class="booking__layout--departflights flight--depart">
+                    <div class="booking__layout--title mb-3">
+                      <h3>
+                        <span class="title-location">Hà Nội</span>
+                        <span class="title--icon"
+                          ><svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                            ></path>
+                          </svg>
+                        </span>
+                        <span class="title-location">Tp Hồ Chí Minh</span>
+                      </h3>
                     </div>
-                  </div>
-                  <!-----------------End Calendar start----------------->
-                  <div class="booking__layout--flights">
-                    <!----------------- start-item ----------------->
-                    <div class="flight-option-item one-stop">
-                      <div class="flight-option-bar">
-                        <div class="flight-option-top">
-                          <div class="flight-option-location-time">
-                            <span class="flight-option-time">10:00</span>
-                            <span class="flight-option-city">Hà Nội</span>
-                            <span class="flight-option-date">15 Thg 08</span>
-                          </div>
-                          <div class="flight-option-types">
-                            <div class="flight-option-middle-inner">
-                              <div class="flight-option-icon icon-flight">
-                                <span class="flight-code">VJ142 | A330</span>
-                                <span class="icon-flight"
-                                  ><svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                    />
-                                  </svg>
-                                </span>
-                              </div>
-                              <div class="flight-option-stop">
-                                <span class="name-stop">DAD</span>
-                                <span class="icon-stop">
-                                  <span class="ic-circle"></span>
-                                </span>
-                                <span class="text-label">1 điểm dừng</span>
-                              </div>
-                              <div class="flight-option-icon icon-flight">
-                                <span class="flight-code">VJ148 | A331</span>
-                                <span class="icon-flight"
-                                  ><svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                    />
-                                  </svg>
-                                </span>
+                    <!-----------------Calendar start----------------->
+                    <div class="booking__layout--date">
+                      <div class="booking__date--bar">
+                        <div id="bk__calendar" class="bk__calendar"></div>
+                      </div>
+                    </div>
+                    <!-----------------Calendar start----------------->
+                    <div class="booking__layout--date">
+                      <div class="booking__date--bar">
+                        <div id="bk__calendar__two" class="bk__calendar"></div>
+                      </div>
+                    </div>
+                    <div class="booking__layout--date">
+                      <div class="booking__date--bar">
+                        <div id="bk__calendar__two" class="bk__calendar"></div>
+                      </div>
+                    </div>
+                    <!-----------------End Calendar start----------------->
+                    <div class="booking__layout--flights">
+                      <!----------------- start-item ----------------->
+                      <div class="flight-option-item one-stop">
+                        <div class="flight-option-bar">
+                          <div class="flight-option-top">
+                            <div class="flight-option-location-time">
+                              <span class="flight-option-time">10:00</span>
+                              <span class="flight-option-city">Hà Nội</span>
+                              <span class="flight-option-date">15 Thg 08</span>
+                            </div>
+                            <div class="flight-option-types">
+                              <div class="flight-option-middle-inner">
+                                <div class="flight-option-icon icon-flight">
+                                  <span class="flight-code">VJ142 | A330</span>
+                                  <span class="icon-flight"
+                                    ><svg
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
+                                <div class="flight-option-stop">
+                                  <span class="name-stop">DAD</span>
+                                  <span class="icon-stop">
+                                    <span class="ic-circle"></span>
+                                  </span>
+                                  <span class="text-label">1 điểm dừng</span>
+                                </div>
+                                <div class="flight-option-icon icon-flight">
+                                  <span class="flight-code">VJ148 | A331</span>
+                                  <span class="icon-flight"
+                                    ><svg
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                      />
+                                    </svg>
+                                  </span>
+                                </div>
                               </div>
                             </div>
+                            <div class="flight-option-location-time">
+                              <span class="flight-option-time">12:00</span>
+                              <span class="flight-option-city"
+                                >Tp Hồ Chí Minh</span
+                              >
+                              <span class="flight-option-date">15 Thg 08</span>
+                            </div>
                           </div>
-                          <div class="flight-option-location-time">
-                            <span class="flight-option-time">12:00</span>
-                            <span class="flight-option-city"
-                              >Tp Hồ Chí Minh</span
-                            >
-                            <span class="flight-option-date">15 Thg 08</span>
+                          <div class="flight-option-infor">
+                            <ul>
+                              <li>
+                                <p class="duration-label">Thời gian bay</p>
+                                <p class="duration-time">2 giờ 15 phút</p>
+                              </li>
+                              <li>
+                                <button class="btn btn-flight-option-detail">
+                                  Chi tiết <i class="bi bi-chevron-down"></i>
+                                </button>
+                              </li>
+                            </ul>
                           </div>
-                        </div>
-                        <div class="flight-option-infor">
-                          <ul>
-                            <li>
-                              <p class="duration-label">Thời gian bay</p>
-                              <p class="duration-time">2 giờ 15 phút</p>
-                            </li>
-                            <li>
-                              <button class="btn btn-flight-option-detail">
-                                Chi tiết <i class="bi bi-chevron-down"></i>
-                              </button>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="flight-option-price">
-                          <div class="flight-option-price--inner">
-                            <!-- <p class="price">
+                          <div class="flight-option-price">
+                            <div class="flight-option-price--inner">
+                              <!-- <p class="price">
                               <del
                                 >1,200,000<span class="currency-symbol"
                                   >VND</span
                                 ></del
                               >
                             </p> -->
-                            <p class="price">
-                              <ins
-                                >850,000<span class="currency-symbol"
-                                  >VND</span
-                                ></ins
-                              >
-                            </p>
-                          </div>
-                          <div class="flight-option-btns">
-                            <button class="btn btn-booking-selecting">
-                              Chọn
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="flight-option-dropdown">
-                        <div class="dropdown-inner">
-                          <div class="flight-option-detail">
-                            <div class="flight-option-detail-inner">
-                              <div class="flight-option-depart">
-                                <div class="option-detail-flight-code">
-                                  <div class="option-detail-icon">
-                                    <span class="icon-flight"
-                                      ><svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                        ></path>
-                                      </svg>
-                                    </span>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      <p>Số hiệu chuyến bay:</p>
-                                    </div>
-                                    <div class="option-value">
-                                      <p class="flight-code">VJ142</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      <p>Khởi hành:</p>
-                                    </div>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Hà Nội (HAN) - Sân bay Nội Bài
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      <p>Đến:</p>
-                                    </div>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Đà Nẵng (DAD) - Sân bay Đà Nẵng
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                        <li class="aircraft">
-                                          <p>Thời gian: 2 giờ 05 phút</p>
-                                          <p>Máy bay: A320</p>
-                                          <p>Hãng khai thác: Vietjet</p>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="flight-option-onstop">
-                                <div class="option-detail-flight-onstop">
-                                  <div class="option-detail-icon">
-                                    <i class="bi bi-clock"></i>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <p>
-                                      Thời gian nối chuyến ở Đà Nẵng (DAD) 1 giờ
-                                      05 phút
-                                    </p>
-                                  </div>
-                                </div>
-                              </div>
-                              <div class="flight-option-depart depart-last">
-                                <div class="option-detail-flight-code">
-                                  <div class="option-detail-icon">
-                                    <span class="icon-flight"
-                                      ><svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                        ></path>
-                                      </svg>
-                                    </span>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      Số hiệu chuyến bay:
-                                    </div>
-                                    <div class="option-value">
-                                      <p class="flight-code">VJ142</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-content">
-                                    <p class="option-label">Khởi hành:</p>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Đà Nẵng (DAD) - Sân bay Đà Nẵng
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-icon bottom">
-                                    <i class="bi bi-geo-alt-fill"></i>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      <p>Đến:</p>
-                                    </div>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
-                                          tế Tân sơn nhất
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                        <li class="aircraft">
-                                          <p>Thời gian: 2 giờ 05 phút</p>
-                                          <p>Máy bay: A320</p>
-                                          <p>Hãng khai thác: Vietjet</p>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
+                              <p class="price">
+                                <ins
+                                  >850,000<span class="currency-symbol"
+                                    >VND</span
+                                  ></ins
+                                >
+                              </p>
                             </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <!----------------- end-item ----------------->
-                    <!----------------- start-item ----------------->
-                    <div class="flight-option-item direct">
-                      <div class="flight-option-bar">
-                        <div class="flight-option-top">
-                          <div class="flight-option-location-time">
-                            <span class="flight-option-time">10:00</span>
-                            <span class="flight-option-city">Hà Nội</span>
-                            <span class="flight-option-date">15 Thg 08</span>
-                          </div>
-                          <div class="flight-option-types">
-                            <div class="flight-option-middle-inner">
-                              <div class="flight-option-icon icon-flight">
-                                <span class="flight-code">VJ142 | A330</span>
-                                <span class="icon-flight"
-                                  ><svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                  >
-                                    <path
-                                      d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                    />
-                                  </svg>
-                                </span>
-                                <span class="text-label">Bay thẳng</span>
-                              </div>
-                            </div>
-                          </div>
-                          <div class="flight-option-location-time">
-                            <span class="flight-option-time">12:00</span>
-                            <span class="flight-option-city"
-                              >Tp Hồ Chí Minh</span
-                            >
-                            <span class="flight-option-date">15 Thg 08</span>
-                          </div>
-                        </div>
-                        <div class="flight-option-infor">
-                          <ul>
-                            <li>
-                              <p class="duration-label">Thời gian bay</p>
-                              <p class="duration-time">2 giờ 15 phút</p>
-                            </li>
-                            <li>
-                              <button class="btn btn-flight-option-detail">
-                                Chi tiết <i class="bi bi-chevron-down"></i>
+                            <div class="flight-option-btns">
+                              <button class="btn btn-booking-selecting">
+                                Chọn
                               </button>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="flight-option-price">
-                          <div class="flight-option-price--inner has-sale">
-                            <p class="price">
-                              <del
-                                >1,200,000<span class="currency-symbol"
-                                  >VND</span
-                                ></del
-                              >
-                            </p>
-                            <p class="price on-sale">
-                              <ins
-                                >850,000<span class="currency-symbol"
-                                  >VND</span
-                                ></ins
-                              >
-                            </p>
-                          </div>
-                          <div class="flight-option-btns">
-                            <button class="btn btn-booking-selecting">
-                              Chọn
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                      <div class="flight-option-dropdown">
-                        <div class="dropdown-inner">
-                          <div class="flight-option-detail">
-                            <div class="flight-option-detail-inner">
-                              <div class="flight-option-depart depart-last">
-                                <div class="option-detail-flight-code">
-                                  <div class="option-detail-icon">
-                                    <span class="icon-flight"
-                                      ><svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                        ></path>
-                                      </svg>
-                                    </span>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      Số hiệu chuyến bay:
-                                    </div>
-                                    <div class="option-value">
-                                      <p class="flight-code">VJ142</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-content">
-                                    <p class="option-label">Khởi hành:</p>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Đà Nẵng (DAD) - Sân bay Đà Nẵng
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-icon bottom">
-                                    <i class="bi bi-geo-alt-fill"></i>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      <p>Đến:</p>
-                                    </div>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
-                                          tế Tân sơn nhất
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                        <li class="aircraft">
-                                          <p>Thời gian: 2 giờ 05 phút</p>
-                                          <p>Máy bay: A320</p>
-                                          <p>Hãng khai thác: Vietjet</p>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                             </div>
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <!-- end-item -->
-                    <!-- start-item -->
-                    <div class="flight-option-item direct sale">
-                      <div class="flight-option-bar">
-                        <div class="flight-option-top">
-                          <div class="flight-option-location-time">
-                            <span class="flight-option-time">10:00</span>
-                            <span class="flight-option-city">Hà Nội</span>
-                            <span class="flight-option-date">15 Thg 08</span>
-                          </div>
-                          <div class="flight-option-types">
-                            <div class="flight-option-middle-inner">
-                              <div class="flight-option-icon icon-flight">
-                                <span class="flight-code">VJ142</span>
-                                <span class="icon-flight"
-                                  ><svg
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    xmlns="http://www.w3.org/2000/svg"
+                        <div class="flight-option-dropdown">
+                          <div class="dropdown-inner">
+                            <div class="flight-option-detail">
+                              <div class="flight-option-detail-inner">
+                                <div class="flight-option-depart">
+                                  <div class="option-detail-flight-code">
+                                    <div class="option-detail-icon">
+                                      <span class="icon-flight"
+                                        ><svg
+                                          width="24"
+                                          height="24"
+                                          viewBox="0 0 24 24"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                          ></path>
+                                        </svg>
+                                      </span>
+                                    </div>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        <p>Số hiệu chuyến bay:</p>
+                                      </div>
+                                      <div class="option-value">
+                                        <p class="flight-code">VJ142</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="option-detail-flight-city-airport"
                                   >
-                                    <path
-                                      d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                    />
-                                  </svg>
-                                </span>
-                                <span class="text-label">Bay thẳng</span>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        <p>Khởi hành:</p>
+                                      </div>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Hà Nội (HAN) - Sân bay Nội Bài
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="option-detail-flight-city-airport"
+                                  >
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        <p>Đến:</p>
+                                      </div>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Đà Nẵng (DAD) - Sân bay Đà Nẵng
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                          <li class="aircraft">
+                                            <p>Thời gian: 2 giờ 05 phút</p>
+                                            <p>Máy bay: A320</p>
+                                            <p>Hãng khai thác: Vietjet</p>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="flight-option-onstop">
+                                  <div class="option-detail-flight-onstop">
+                                    <div class="option-detail-icon">
+                                      <i class="bi bi-clock"></i>
+                                    </div>
+                                    <div class="option-detail-content">
+                                      <p>
+                                        Thời gian nối chuyến ở Đà Nẵng (DAD) 1
+                                        giờ 05 phút
+                                      </p>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div class="flight-option-depart depart-last">
+                                  <div class="option-detail-flight-code">
+                                    <div class="option-detail-icon">
+                                      <span class="icon-flight"
+                                        ><svg
+                                          width="24"
+                                          height="24"
+                                          viewBox="0 0 24 24"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                          ></path>
+                                        </svg>
+                                      </span>
+                                    </div>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        Số hiệu chuyến bay:
+                                      </div>
+                                      <div class="option-value">
+                                        <p class="flight-code">VJ142</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="option-detail-flight-city-airport"
+                                  >
+                                    <div class="option-detail-content">
+                                      <p class="option-label">Khởi hành:</p>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Đà Nẵng (DAD) - Sân bay Đà Nẵng
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="option-detail-flight-city-airport"
+                                  >
+                                    <div class="option-detail-icon bottom">
+                                      <i class="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        <p>Đến:</p>
+                                      </div>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
+                                            tế Tân sơn nhất
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                          <li class="aircraft">
+                                            <p>Thời gian: 2 giờ 05 phút</p>
+                                            <p>Máy bay: A320</p>
+                                            <p>Hãng khai thác: Vietjet</p>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
                               </div>
                             </div>
                           </div>
-                          <div class="flight-option-location-time">
-                            <span class="flight-option-time">12:00</span>
-                            <span class="flight-option-city"
-                              >Tp Hồ Chí Minh</span
-                            >
-                            <span class="flight-option-date">15 Thg 08</span>
-                          </div>
                         </div>
-                        <div class="flight-option-infor">
-                          <ul>
-                            <li>
-                              <p class="duration-label">Thời gian bay</p>
-                              <p class="duration-time">2 giờ 15 phút</p>
-                            </li>
-                            <li>
-                              <button class="btn btn-flight-option-detail">
-                                Chi tiết <i class="bi bi-chevron-down"></i>
+                      </div>
+                      <!----------------- end-item ----------------->
+                      <!----------------- start-item ----------------->
+                      <div class="flight-option-item direct">
+                        <div class="flight-option-bar">
+                          <div class="flight-option-top">
+                            <div class="flight-option-location-time">
+                              <span class="flight-option-time">10:00</span>
+                              <span class="flight-option-city">Hà Nội</span>
+                              <span class="flight-option-date">15 Thg 08</span>
+                            </div>
+                            <div class="flight-option-types">
+                              <div class="flight-option-middle-inner">
+                                <div class="flight-option-icon icon-flight">
+                                  <span class="flight-code">VJ142 | A330</span>
+                                  <span class="icon-flight"
+                                    ><svg
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <span class="text-label">Bay thẳng</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flight-option-location-time">
+                              <span class="flight-option-time">12:00</span>
+                              <span class="flight-option-city"
+                                >Tp Hồ Chí Minh</span
+                              >
+                              <span class="flight-option-date">15 Thg 08</span>
+                            </div>
+                          </div>
+                          <div class="flight-option-infor">
+                            <ul>
+                              <li>
+                                <p class="duration-label">Thời gian bay</p>
+                                <p class="duration-time">2 giờ 15 phút</p>
+                              </li>
+                              <li>
+                                <button class="btn btn-flight-option-detail">
+                                  Chi tiết <i class="bi bi-chevron-down"></i>
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="flight-option-price">
+                            <div class="flight-option-price--inner has-sale">
+                              <p class="price">
+                                <del
+                                  >1,200,000<span class="currency-symbol"
+                                    >VND</span
+                                  ></del
+                                >
+                              </p>
+                              <p class="price on-sale">
+                                <ins
+                                  >850,000<span class="currency-symbol"
+                                    >VND</span
+                                  ></ins
+                                >
+                              </p>
+                            </div>
+                            <div class="flight-option-btns">
+                              <button class="btn btn-booking-selecting">
+                                Chọn
                               </button>
-                            </li>
-                          </ul>
-                        </div>
-                        <div class="flight-option-price">
-                          <div class="flight-option-price--inner has-sale">
-                            <p class="price">
-                              <del
-                                >1,200,000<span class="currency-symbol"
-                                  >VND</span
-                                ></del
-                              >
-                            </p>
-                            <p class="price on-sale">
-                              <ins
-                                >850,000<span class="currency-symbol"
-                                  >VND</span
-                                ></ins
-                              >
-                            </p>
-                          </div>
-                          <div class="flight-option-btns">
-                            <button class="btn btn-booking-selecting">
-                              Chọn
-                            </button>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div class="flight-option-dropdown">
-                        <div class="dropdown-inner">
-                          <div class="flight-option-detail">
-                            <div class="flight-option-detail-inner">
-                              <div class="flight-option-depart depart-last">
-                                <div class="option-detail-flight-code">
-                                  <div class="option-detail-icon">
-                                    <span class="icon-flight"
-                                      ><svg
-                                        width="24"
-                                        height="24"
-                                        viewBox="0 0 24 24"
-                                        xmlns="http://www.w3.org/2000/svg"
-                                      >
-                                        <path
-                                          d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
-                                        ></path>
-                                      </svg>
-                                    </span>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      Số hiệu chuyến bay:
+                        <div class="flight-option-dropdown">
+                          <div class="dropdown-inner">
+                            <div class="flight-option-detail">
+                              <div class="flight-option-detail-inner">
+                                <div class="flight-option-depart depart-last">
+                                  <div class="option-detail-flight-code">
+                                    <div class="option-detail-icon">
+                                      <span class="icon-flight"
+                                        ><svg
+                                          width="24"
+                                          height="24"
+                                          viewBox="0 0 24 24"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                          ></path>
+                                        </svg>
+                                      </span>
                                     </div>
-                                    <div class="option-value">
-                                      <p class="flight-code">VJ142</p>
-                                    </div>
-                                  </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-content">
-                                    <p class="option-label">Khởi hành:</p>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Đà Nẵng (DAD) - Sân bay Đà Nẵng
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                      </ul>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        Số hiệu chuyến bay:
+                                      </div>
+                                      <div class="option-value">
+                                        <p class="flight-code">VJ142</p>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-                                <div class="option-detail-flight-city-airport">
-                                  <div class="option-detail-icon bottom">
-                                    <i class="bi bi-geo-alt-fill"></i>
-                                  </div>
-                                  <div class="option-detail-content">
-                                    <div class="option-label">
-                                      <p>Đến:</p>
+                                  <div
+                                    class="option-detail-flight-city-airport"
+                                  >
+                                    <div class="option-detail-content">
+                                      <p class="option-label">Khởi hành:</p>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Đà Nẵng (DAD) - Sân bay Đà Nẵng
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                        </ul>
+                                      </div>
                                     </div>
-                                    <div class="option-value">
-                                      <ul>
-                                        <li class="city">
-                                          Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
-                                          tế Tân sơn nhất
-                                        </li>
-                                        <li class="time">
-                                          06:50, 17/08/2022 (Giờ địa phương)
-                                        </li>
-                                        <li class="aircraft">
-                                          <p>Thời gian: 2 giờ 05 phút</p>
-                                          <p>Máy bay: A320</p>
-                                          <p>Hãng khai thác: Vietjet</p>
-                                        </li>
-                                      </ul>
+                                  </div>
+                                  <div
+                                    class="option-detail-flight-city-airport"
+                                  >
+                                    <div class="option-detail-icon bottom">
+                                      <i class="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        <p>Đến:</p>
+                                      </div>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
+                                            tế Tân sơn nhất
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                          <li class="aircraft">
+                                            <p>Thời gian: 2 giờ 05 phút</p>
+                                            <p>Máy bay: A320</p>
+                                            <p>Hãng khai thác: Vietjet</p>
+                                          </li>
+                                        </ul>
+                                      </div>
                                     </div>
                                   </div>
                                 </div>
@@ -867,19 +770,174 @@
                           </div>
                         </div>
                       </div>
+                      <!-- end-item -->
+                      <!-- start-item -->
+                      <div class="flight-option-item direct sale">
+                        <div class="flight-option-bar">
+                          <div class="flight-option-top">
+                            <div class="flight-option-location-time">
+                              <span class="flight-option-time">10:00</span>
+                              <span class="flight-option-city">Hà Nội</span>
+                              <span class="flight-option-date">15 Thg 08</span>
+                            </div>
+                            <div class="flight-option-types">
+                              <div class="flight-option-middle-inner">
+                                <div class="flight-option-icon icon-flight">
+                                  <span class="flight-code">VJ142</span>
+                                  <span class="icon-flight"
+                                    ><svg
+                                      width="24"
+                                      height="24"
+                                      viewBox="0 0 24 24"
+                                      xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                      <path
+                                        d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                      />
+                                    </svg>
+                                  </span>
+                                  <span class="text-label">Bay thẳng</span>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flight-option-location-time">
+                              <span class="flight-option-time">12:00</span>
+                              <span class="flight-option-city"
+                                >Tp Hồ Chí Minh</span
+                              >
+                              <span class="flight-option-date">15 Thg 08</span>
+                            </div>
+                          </div>
+                          <div class="flight-option-infor">
+                            <ul>
+                              <li>
+                                <p class="duration-label">Thời gian bay</p>
+                                <p class="duration-time">2 giờ 15 phút</p>
+                              </li>
+                              <li>
+                                <button class="btn btn-flight-option-detail">
+                                  Chi tiết <i class="bi bi-chevron-down"></i>
+                                </button>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="flight-option-price">
+                            <div class="flight-option-price--inner has-sale">
+                              <p class="price">
+                                <del
+                                  >1,200,000<span class="currency-symbol"
+                                    >VND</span
+                                  ></del
+                                >
+                              </p>
+                              <p class="price on-sale">
+                                <ins
+                                  >850,000<span class="currency-symbol"
+                                    >VND</span
+                                  ></ins
+                                >
+                              </p>
+                            </div>
+                            <div class="flight-option-btns">
+                              <button class="btn btn-booking-selecting">
+                                Chọn
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flight-option-dropdown">
+                          <div class="dropdown-inner">
+                            <div class="flight-option-detail">
+                              <div class="flight-option-detail-inner">
+                                <div class="flight-option-depart depart-last">
+                                  <div class="option-detail-flight-code">
+                                    <div class="option-detail-icon">
+                                      <span class="icon-flight"
+                                        ><svg
+                                          width="24"
+                                          height="24"
+                                          viewBox="0 0 24 24"
+                                          xmlns="http://www.w3.org/2000/svg"
+                                        >
+                                          <path
+                                            d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"
+                                          ></path>
+                                        </svg>
+                                      </span>
+                                    </div>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        Số hiệu chuyến bay:
+                                      </div>
+                                      <div class="option-value">
+                                        <p class="flight-code">VJ142</p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="option-detail-flight-city-airport"
+                                  >
+                                    <div class="option-detail-content">
+                                      <p class="option-label">Khởi hành:</p>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Đà Nẵng (DAD) - Sân bay Đà Nẵng
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div
+                                    class="option-detail-flight-city-airport"
+                                  >
+                                    <div class="option-detail-icon bottom">
+                                      <i class="bi bi-geo-alt-fill"></i>
+                                    </div>
+                                    <div class="option-detail-content">
+                                      <div class="option-label">
+                                        <p>Đến:</p>
+                                      </div>
+                                      <div class="option-value">
+                                        <ul>
+                                          <li class="city">
+                                            Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
+                                            tế Tân sơn nhất
+                                          </li>
+                                          <li class="time">
+                                            06:50, 17/08/2022 (Giờ địa phương)
+                                          </li>
+                                          <li class="aircraft">
+                                            <p>Thời gian: 2 giờ 05 phút</p>
+                                            <p>Máy bay: A320</p>
+                                            <p>Hãng khai thác: Vietjet</p>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <!----------------- end-item----------------->
                     </div>
-                    <!----------------- end-item----------------->
+                  </div>
+                  <!----------------- return flight if two way ----------------->
+                  <div class="booking__layout--returnflights flight--return">
+                    <div class="booking__layout--date"></div>
                   </div>
                 </div>
-                <!----------------- return flight if two way ----------------->
-                <div class="booking__layout--returnflights flight--return">
-                  <div class="booking__layout--date"></div>
-                </div>
+                <div class="col-12 col-lg-4"></div>
               </div>
-              <div class="col-12 col-lg-4"></div>
             </div>
           </div>
-        </div>
+        </form>
       </div>
 
       <!-----------------Footer----------------->
@@ -960,6 +1018,7 @@
     <script src="./assets/js/select.js"></script>
     <script src="./assets/js/theme.js"></script>
     <script type="module" src="./assets/js/booking.js"></script>
-    <script type="module" src="./assets/js/dateselecting.js"></script>
+    <script type="module" src="./assets/js/calendarSlider.js"></script>
+    <script type="module" src="./assets/js/flightSelection.js"></script>
   </body>
 </html>
