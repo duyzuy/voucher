@@ -5,8 +5,8 @@ const config = {
   INFANT_MINIMUN: 0,
 };
 const constants = {
-  DEPART_LOCATION: "departLocation",
-  RETURN_LOCATION: "returnLocation",
+  DEPART_CODE: "departCode",
+  RETURN_CODE: "returnCode",
   ONEWAY: "oneway",
   RETURN: "return",
   DATE_FORMAT: "MM-DD-YYYY",
@@ -19,4 +19,29 @@ const constants = {
   DECREATE: "decreate",
 };
 
-export { constants, config };
+const bookingInformation = {
+  tripType: constants.RETURN,
+  departCode: "",
+  returnCode: "",
+  departDate: {
+    value: "",
+    alt: "",
+  },
+  returnDate: {
+    value: "",
+    alt: "",
+  },
+  passenngers: {
+    adult: 1,
+    children: 0,
+    infant: 0,
+  },
+  currentSelect: "",
+  locale: "",
+  promoCode: "",
+  travelOption: [],
+  departure: [],
+  return: [],
+};
+
+export { constants, config, bookingInformation };

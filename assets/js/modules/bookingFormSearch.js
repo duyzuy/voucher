@@ -1,4 +1,4 @@
-import { constants } from "../constants/constant.js";
+import { constants, bookingInformation } from "../constants/constant.js";
 import { bookingFormText, dateLocale } from "../translate.js";
 import config, { baseURL, languageId } from "../config.js";
 
@@ -13,36 +13,11 @@ const bookingForm = $("#booking__form");
 const quantityControl = $(".booking__quantity--control");
 const searchFlightBtn = $("#booking__searchflight");
 
-const initialState = {
-  tripType: constants.RETURN,
-  departLocation: "",
-  returnLocation: "",
-  departDate: {
-    value: "",
-    alt: "",
-  },
-  returnDate: {
-    value: "",
-    alt: "",
-  },
-  passenngers: {
-    adult: 1,
-    children: 0,
-    infant: 0,
-  },
-  currentSelect: "",
-  locale: "",
-  promoCode: "",
-  flights: [],
-  departure: [],
-  return: [],
-};
-
 const bookingFormSearch = {
-  bookingInform: initialState,
+  bookingInform: bookingInformation,
   start({ locale }) {
     //set locale for booking form
-    console.log(locale);
+
     this.setLocale(locale);
     //handle all event for booking flow
     this.handleEvents();
@@ -83,12 +58,12 @@ const bookingFormSearch = {
 
     tripDeparture
       .select2({
-        ajax: _this.ajaxAirportData(constants.DEPART_LOCATION),
+        ajax: _this.ajaxAirportData(constants.DEPART_CODE),
         placeholder: "Departure",
         templateResult: _this.renderCityAirportResult,
         templateSelection: (data) =>
           _this.renderCityAirportSelection(data, {
-            type: constants.DEPART_LOCATION,
+            type: constants.DEPART_CODE,
             locale: _this.bookingInform.locale,
           }),
         dropdownCssClass: "booking__form__dropdown",
@@ -96,7 +71,7 @@ const bookingFormSearch = {
         width: "resolve",
       })
       .on("select2:select", function (e) {
-        _this.bookingInform.departLocation = e.params.data.id;
+        _this.bookingInform.departCode = e.params.data.id;
         tripReturn.val(null).trigger("change");
         tripReturn.select2("open");
       });
@@ -106,12 +81,12 @@ const bookingFormSearch = {
 
     tripReturn
       .select2({
-        ajax: _this.ajaxAirportData(constants.RETURN_LOCATION),
+        ajax: _this.ajaxAirportData(constants.RETURN_CODE),
         placeholder: "Return",
         templateResult: _this.renderCityAirportResult,
         templateSelection: (data) =>
           _this.renderCityAirportSelection(data, {
-            type: constants.RETURN_LOCATION,
+            type: constants.RETURN_CODE,
             locale: _this.bookingInform.locale,
           }),
         dropdownCssClass: "booking__form__dropdown",
@@ -119,9 +94,9 @@ const bookingFormSearch = {
         width: "resolve",
       })
       .on("select2:select", function (e) {
-        _this.bookingInform.returnLocation = e.params.data.id;
-        $(this).val(_this.bookingInform.returnLocation).trigger("change");
-        if (_this.bookingInform.departLocation !== "") {
+        _this.bookingInform.returnCode = e.params.data.id;
+        $(this).val(_this.bookingInform.returnCode).trigger("change");
+        if (_this.bookingInform.departCode !== "") {
           setTimeout(() => {
             bookingForm.addClass("expanded");
             tripDate.data("daterangepicker").show();
@@ -350,7 +325,7 @@ const bookingFormSearch = {
       if (
         _this.bookingInform.departDate === "" ||
         _this.bookingInform.departDate === "" ||
-        _this.bookingInform.departLocation === ""
+        _this.bookingInform.departCode === ""
       ) {
         _this.renderAlert().showPopup({
           type: "error",
@@ -397,13 +372,13 @@ const bookingFormSearch = {
     });
 
     if (!data.name) {
-      return options.type === constants.DEPART_LOCATION
+      return options.type === constants.DEPART_CODE
         ? formText.departure
         : formText.return;
     }
     const htmlTemplate = $(
       `<span class="select2-selection__placeholder selected">${
-        constants.DEPART_LOCATION ? formText.departure : formText.return
+        constants.DEPART_CODE ? formText.departure : formText.return
       }</span><div class="citypare citypare--selection ${
         data.isParent ? "parent" : "children"
       }">
@@ -472,8 +447,8 @@ const bookingFormSearch = {
     return {
       url: () => {
         let ajaxURL;
-        if (type === constants.RETURN_LOCATION) {
-          let departLocation = _this.bookingInform.departLocation;
+        if (type === constants.RETURN_CODE) {
+          let departLocation = _this.bookingInform.departCode;
           ajaxURL =
             baseURL +
             (departLocation !== ""

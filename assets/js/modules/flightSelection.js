@@ -1,39 +1,94 @@
+import { bookingInformation } from "../constants/constant.js";
 import { data } from "../data.js";
-
+import { isExistsInput } from "../utils/helper.js";
 const calendarDepart = $("#bk__calendar--depart");
 const calendarReturn = $("#bk__calendar--return");
 const flightItem = $(".flight-option-item");
-
-// const calendarContainer = $("#bk__calendar__two");
-
-// calendarContainer.sliderCalendar({
-//   range: 7,
-//   currentIndex: 0,
-//   activeIndex: 3,
-//   locale: "vi",
-//   selected: "15-08-2022",
-//   format: "DD-MM-YYYY",
-// });
+const bookingFlightForm = $("#bookingFlightForm");
 
 const flightSelection = {
-  flights: {
-    locale: "",
-  },
+  bookingInformation: bookingInformation,
   start: function (locale) {
-    this.handleEvent();
     this.setDefault(locale);
+    this.defineProperties();
     this.flightOptionSelection();
+
+    this.handleEvent();
   },
-  setDefault: function (locale) {
-    this.flights.locale = locale;
+  setDefault: function ({ locale }) {
+    this.bookingInformation.locale = locale;
+
+    //get data from searchForm
+
+    const departDate = bookingFlightForm.find('input[name="departDate"]');
+    const returnDate = bookingFlightForm.find('input[name="returnDate"]');
+    const tripType = bookingFlightForm.find('input[name="tripType"]');
+    const departCode = bookingFlightForm.find('input[name="depatureCode"]');
+    const returnCode = bookingFlightForm.find('input[name="returnCode"]');
+    const adult = bookingFlightForm.find('input[name="adult"]');
+    const children = bookingFlightForm.find('input[name="children"]');
+    const infant = bookingFlightForm.find('input[name="infant"]');
+    const promoCode = bookingFlightForm.find('input[name="promoCode"]');
+
+    if (departDate)
+      isExistsInput(departDate) &&
+        (this.bookingInformation.departDate.value = departDate.val());
+    isExistsInput(returnDate) &&
+      (this.bookingInformation.returnDate.value = returnDate.val());
+
+    isExistsInput(departCode) &&
+      (this.bookingInformation.departCode = departCode.val());
+    isExistsInput(returnCode) &&
+      (this.bookingInformation.returnCode = returnCode.val());
+
+    isExistsInput(adult) &&
+      (this.bookingInformation.passenngers.adult = adult.val());
+    isExistsInput(children) &&
+      (this.bookingInformation.passenngers.children = children.val());
+    isExistsInput(infant) &&
+      (this.bookingInformation.passenngers.infant = infant.val());
+    isExistsInput(promoCode) &&
+      (this.bookingInformation.promoCode = promoCode.val());
+    isExistsInput(departDate) &&
+      (this.bookingInformation.departDate.value = departDate.val());
+    isExistsInput(departDate) &&
+      (this.bookingInformation.departDate.value = departDate.val());
+
+    console.log(bookingInformation);
+  },
+  defineProperties: function () {
+    Object.defineProperty(this, "bookingDepartDate", {
+      get: function () {
+        return this.bookingInformation.departDate.value;
+      },
+    });
+    Object.defineProperty(this, "bookingreturnDate", {
+      get: function () {
+        return this.bookingInformation.returnDate.value;
+      },
+    });
   },
   flightOptionSelection: function () {
     const _this = this;
-    //handle depart select
-    calendarDepart.sliderCalendar();
 
-    // handle return select
-    calendarReturn.sliderCalendar();
+    //handle depart select flights
+
+    calendarDepart.length > 0 &&
+      console.log(
+        calendarDepart
+          .sliderCalendar({
+            selected: _this.bookingDepartDate,
+            locale: _this.bookingInformation.locale,
+          })
+          .setStartDate("asdf")
+      );
+
+    // handle return select flights
+    calendarReturn.length > 0 &&
+      calendarReturn.sliderCalendar({
+        selected: _this.bookingreturnDate,
+        locale: _this.bookingInformation.locale,
+      });
   },
   handleEvent: function () {
     /*

@@ -46,7 +46,7 @@
       {
         lang: "vi",
         locale: {
-          format: "MM-DD-YYYY",
+          format: "DD-MM-YYYY",
           formatText: "dddd, Do MMM YYYY",
           formatTextShort: "Do MMM YYYY",
           weekLabel: "Tuần",
@@ -106,7 +106,17 @@
         this.renderSlider();
 
         this.handleEvents();
-        console.log(this.calendar);
+
+        const updateData = this.updateData();
+        return updateData;
+      },
+      updateData: function () {
+        return {
+          selected: this.calendar.selected,
+          days: this.calendar.days,
+          currentLocale: this.calendar.currentLocale,
+          today: this.calendar.today,
+        };
       },
       setDefault: function () {
         //set config
@@ -532,11 +542,19 @@
                 });
               },
             });
+            console.log(_this.updateData());
           }
         );
       },
     };
 
-    plug.start();
+    const data = plug.start();
+    console.log(data);
+    return (plug.prototype = {
+      constructor: plug,
+      setStartDate: function (data) {
+        console.log(data);
+      },
+    });
   };
 })(jQuery);

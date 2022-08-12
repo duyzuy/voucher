@@ -162,17 +162,17 @@
 
     <!-----------------main page----------------->
     <div class="wrapper__main booking__layout">
-      <form id="flightFormOptions" method="POST" action="/passengers.html">
+      <form id="bookingFlightForm" method="POST" action="/passengers.html">
         <!------------value from form submit------------>
-        <input type="hidden" name="triptype" value="return" />
-        <input type="hidden" name="depature" value="SGN" />
-        <input type="hidden" name="return" value="HAN" />
+        <input type="hidden" name="tripType" value="return" />
+        <input type="hidden" name="depatureCode" value="SGN" />
+        <input type="hidden" name="returnCode" value="HAN" />
         <input type="hidden" name="departDate" value="18-08-2022" />
         <input type="hidden" name="returnDate" value="27-08-2022" />
         <input type="hidden" name="adult" value="1" />
         <input type="hidden" name="children" value="1" />
         <input type="hidden" name="infant" value="1" />
-        <input type="hidden" name="promocode" />
+        <input type="hidden" name="promoCode" value="VJ888" />
         <!------------value from selection flight------------>
         <input type="hidden" name="flight_sector_one" value="" />
         <input type="hidden" name="flight_sector_second" value="" />
