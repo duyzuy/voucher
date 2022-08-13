@@ -1,10 +1,10 @@
-const config = {
+export const config = {
   PAXLIMIT: 9,
   ADULT_MINIMUN: 1,
   CHILDREN_MINIMUN: 0,
   INFANT_MINIMUN: 0,
 };
-const constants = {
+export const constants = {
   DEPART_CODE: "departCode",
   RETURN_CODE: "returnCode",
   ONEWAY: "oneway",
@@ -18,8 +18,25 @@ const constants = {
   INCREATE: "increate",
   DECREATE: "decreate",
 };
+export const bkInforKey = {
+  TripType: "tripType",
+  DepartCode: "departCode",
+  ReturnCode: "returnCode",
+  DepartDate: "departDate",
+  ReturnDate: "returnDate",
+  Passenngers: "passenngers",
+  CurrentSelect: "currentSelect",
+  Promotion: "promoCode",
+  Locale: "locale",
+  TravelOption: "travelOption",
+  Departure: "departure",
+  return: "return",
+  Adult: "adult",
+  Children: "children",
+  Infant: "infant",
+};
 
-const bookingInformation = {
+export const bookingInformation = {
   tripType: constants.RETURN,
   departCode: "",
   returnCode: "",
@@ -43,5 +60,3 @@ const bookingInformation = {
   departure: [],
   return: [],
 };
-
-export { constants, config, bookingInformation };

@@ -107,17 +107,9 @@
 
         this.handleEvents();
 
-        const updateData = this.updateData();
-        return updateData;
+        return this.calendar;
       },
-      updateData: function () {
-        return {
-          selected: this.calendar.selected,
-          days: this.calendar.days,
-          currentLocale: this.calendar.currentLocale,
-          today: this.calendar.today,
-        };
-      },
+
       setDefault: function () {
         //set config
 
@@ -232,6 +224,12 @@
           }
         }
         _this.calendar.days = days;
+        if (plug.prototype !== undefined) {
+          // plug.prototype.getData((callback) => {
+          //   return callback("asdf");
+          // });
+        }
+
         return days;
       },
       UpdateDaysAndGetNewDays: function ({ numberOfDay, day, selectedDay }) {
@@ -542,19 +540,48 @@
                 });
               },
             });
-            console.log(_this.updateData());
           }
         );
       },
     };
 
     const data = plug.start();
-    console.log(data);
+
     return (plug.prototype = {
       constructor: plug,
-      setStartDate: function (data) {
-        console.log(data);
+      getData: function (callback) {
+        if (typeof callback !== "function")
+          throw new Error("Is not callback function");
+
+        return callback(data);
       },
     });
+    element.on("custom");
   };
 })(jQuery);
+
+// !(function (t, e) {
+//   if ("function" == typeof define && define.amd)
+//     define(["moment", "jquery"], function (t, a) {
+//       return (
+//         a.fn || (a.fn = {}),
+//         "function" != typeof t &&
+//           t.hasOwnProperty("default") &&
+//           (t = t.default),
+//         e(t, a)
+//       );
+//     });
+//   else if ("object" == typeof module && module.exports) {
+//     var a = "undefined" != typeof window ? window.jQuery : void 0;
+//     a || (a = require("jquery")).fn || (a.fn = {});
+//     var i =
+//       "undefined" != typeof window && void 0 !== window.moment
+//         ? window.moment
+//         : require("moment");
+//     module.exports = e(i, a);
+//   } else t.sliderCalendar = e(t.moment, t.jQuery);
+// })(this, function (a, b) {
+//   var plug = function () {};
+
+//   return (plug.prototype = function () {});
+// });
