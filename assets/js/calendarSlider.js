@@ -181,6 +181,7 @@
         }
 
         _this.calendar.days = days;
+        this.element.trigger("select.calendar", this);
         return days;
       },
       updateView: function () {

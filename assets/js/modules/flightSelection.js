@@ -83,10 +83,14 @@ const flightSelection = {
     //handle depart select flights
 
     calendarDepart.length > 0 &&
-      calendarDepart.sliderCalendar({
-        selected: _this.bookingDepartDate,
-        locale: _this.bookingInformation.locale,
-      });
+      calendarDepart
+        .sliderCalendar({
+          selected: _this.bookingDepartDate,
+          locale: _this.bookingInformation.locale,
+        })
+        .on("select.calendar", function (a, b) {
+          console.log(a, b);
+        });
     // .getData((calendar) => {
     //   const currentDepartDate = calendar.selected;
     //   console.log(currentDepartDate);
@@ -95,15 +99,19 @@ const flightSelection = {
 
     //handle return select flights
     calendarReturn.length > 0 &&
-      calendarReturn.sliderCalendar(
-        {
-          selected: _this.bookingreturnDate,
-          locale: _this.bookingInformation.locale,
-        },
-        function (a, b) {
+      calendarReturn
+        .sliderCalendar(
+          {
+            selected: _this.bookingreturnDate,
+            locale: _this.bookingInformation.locale,
+          },
+          function (a, b) {
+            console.log(a, b);
+          }
+        )
+        .on("select.calendar", function (a, b) {
           console.log(a, b);
-        }
-      );
+        });
     // .getData((calendar) => {
     //   const returnCalendar = calendar.selected;
     //   console.log(returnCalendar);
