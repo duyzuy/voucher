@@ -128,7 +128,6 @@
         .on("click", ".bk__calendar-item", $.proxy(this.clickItem, this));
 
     this.renderSlider();
-    console.log(this);
   };
   return (
     (calendar.prototype = {
@@ -433,12 +432,9 @@
 
         this.calendar.selected = selectedDay.format(locale.locale.format);
         this.currentSelect = selectedDay;
-        for (let i = 0; i < Math.abs(Number(numberOfDay)); i++) {
-          // newDay = this.addDay(day.moment, num);
-          newDay = day.moment
-            .add(num, "days")
-            .format(this.currentLocale.locale.format);
-          // newDay = day.moment.add(num, day);
+        for (let i = 1; i <= Math.abs(Number(numberOfDay)); i++) {
+          newDay = this.addDay(day.moment, numberOfDay < 0 ? -i : i);
+
           days.push(
             this.keysOfDay({
               date: newDay,

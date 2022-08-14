@@ -95,10 +95,15 @@ const flightSelection = {
 
     //handle return select flights
     calendarReturn.length > 0 &&
-      calendarReturn.sliderCalendar({
-        selected: _this.bookingreturnDate,
-        locale: _this.bookingInformation.locale,
-      });
+      calendarReturn.sliderCalendar(
+        {
+          selected: _this.bookingreturnDate,
+          locale: _this.bookingInformation.locale,
+        },
+        function (a, b) {
+          console.log(a, b);
+        }
+      );
     // .getData((calendar) => {
     //   const returnCalendar = calendar.selected;
     //   console.log(returnCalendar);
