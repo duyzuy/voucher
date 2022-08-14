@@ -83,27 +83,26 @@ const flightSelection = {
     //handle depart select flights
 
     calendarDepart.length > 0 &&
-      calendarDepart
-        .sliderCalendar({
-          selected: _this.bookingDepartDate,
-          locale: _this.bookingInformation.locale,
-        })
-        .getData((calendar) => {
-          const currentDepartDate = calendar.selected;
-          console.log(currentDepartDate);
-          _this.setBookingValue("departDate", currentDepartDate);
-        });
-    // handle return select flights
+      calendarDepart.sliderCalendar({
+        selected: _this.bookingDepartDate,
+        locale: _this.bookingInformation.locale,
+      });
+    // .getData((calendar) => {
+    //   const currentDepartDate = calendar.selected;
+    //   console.log(currentDepartDate);
+    //   // _this.setBookingValue("departDate", currentDepartDate);
+    // });
+
+    //handle return select flights
     calendarReturn.length > 0 &&
-      calendarReturn
-        .sliderCalendar({
-          selected: _this.bookingreturnDate,
-          locale: _this.bookingInformation.locale,
-        })
-        .getData((calendar) => {
-          const returnCalendar = calendar.selected;
-          console.log(returnCalendar);
-        });
+      calendarReturn.sliderCalendar({
+        selected: _this.bookingreturnDate,
+        locale: _this.bookingInformation.locale,
+      });
+    // .getData((calendar) => {
+    //   const returnCalendar = calendar.selected;
+    //   console.log(returnCalendar);
+    // });
   },
   handleEvent: function () {
     /*
@@ -112,9 +111,8 @@ const flightSelection = {
      *
      */
 
-    flightItem.on("click", ".btn-flight-option-detail", function (e) {
+    const toggleFlightDetail = function (e) {
       e.preventDefault();
-
       const item = $(this).closest(".flight-option-item");
       const dropdownItem = item.find(".flight-option-dropdown");
 
@@ -127,7 +125,9 @@ const flightSelection = {
         item.addClass("expanded");
         $(dropdownItem[0]).css({ height: dropdownItem[0].scrollHeight });
       }
-    });
+    };
+
+    flightItem.on("click", ".btn-flight-option-detail", toggleFlightDetail);
   },
 };
 export default flightSelection;
