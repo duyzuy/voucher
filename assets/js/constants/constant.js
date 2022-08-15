@@ -68,3 +68,5 @@ export const bookingInformation = {
   return: {},
   departure: {},
 };
+
+export const airportDataGroup = [];

@@ -314,7 +314,6 @@ const bookingFormSearch = {
     const _this = this;
     promoCode.on("input", function (e) {
       _this.bookingInform.promoCode = e.target.value;
-      console.log(_this.bookingInform);
     });
   },
   onSearchFlight: function () {
