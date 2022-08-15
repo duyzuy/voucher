@@ -17,6 +17,8 @@ export const constants = {
   INFANT: "infant",
   INCREATE: "increate",
   DECREATE: "decreate",
+  DIRECT: "direct",
+  ONE_STOP: "one-stop",
 };
 export const bkInforKey = {
   TripType: "tripType",
@@ -34,6 +36,9 @@ export const bkInforKey = {
   Adult: "adult",
   Children: "children",
   Infant: "infant",
+  SessionExpIn: "sessionExpIn",
+  SessionId: "sessionId",
+  DateLocale: "dateLocale",
 };
 
 export const bookingInformation = {
@@ -55,8 +60,11 @@ export const bookingInformation = {
   },
   currentSelect: "",
   locale: "",
+  dateLocale: {},
   promoCode: "",
-  travelOption: [],
-  departure: [],
-  return: [],
+  sessionId: "",
+  sessionExpIn: "",
+  travelOption: {},
+  return: {},
+  departure: {},
 };

@@ -165,8 +165,8 @@
       <form id="bookingFlightForm" method="POST" action="/passengers.html">
         <!------------value from form submit------------>
         <input type="hidden" name="tripType" value="return" />
-        <input type="hidden" name="depatureCode" value="SGN" />
-        <input type="hidden" name="returnCode" value="HAN" />
+        <input type="hidden" name="depatureCode" value="HAN" />
+        <input type="hidden" name="returnCode" value="SGN" />
         <input type="hidden" name="departDate" value="18-08-2022" />
         <input type="hidden" name="returnDate" value="27-08-2022" />
         <input type="hidden" name="adult" value="1" />
@@ -235,7 +235,7 @@
             <div class="row">
               <div class="col-12">
                 <!--------------start flights selections------------------->
-                <div class="booking__layout--flights flights--sector">
+                <div id="booking__layout--flights--depart" class="booking__layout--flights flights--sector">
                   <div class="booking__layout--title mb-3">
                     <p class="title">Chuyến đi</p>
                     <h3>
@@ -744,7 +744,7 @@
                 </div>
                 <!--------------end of flights selections------------------->
                 <!--------------start flights selections------------------->
-                <div class="booking__layout--flights flights--sector">
+                <div id="booking__layout--flights--return" class="booking__layout--flights flights--sector">
                   <div class="booking__layout--title mb-3">
                     <p class="title">Chuyến về</p>
                     <h3>
