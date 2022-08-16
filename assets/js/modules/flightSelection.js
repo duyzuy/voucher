@@ -3,10 +3,12 @@ import {
   bkInforKey,
   constants,
 } from "../constants/constant.js";
+import config, { baseURL, languageId } from "../config.js";
 import { isExistsInput, dateFormat, getScheduleTime } from "../utils/helper.js";
 import { dateLocale } from "../translate.js";
-import { getAirportData } from "./airportData.js";
+import { airportLists } from "../services/airports.js";
 import { client } from "../api/client.js";
+
 const calendarDepart = $("#bk__calendar--depart");
 const calendarReturn = $("#bk__calendar--return");
 const flightItem = $(".flight-option-item");
@@ -17,13 +19,18 @@ const flightOptionsReturn = $("#booking__layout--flights--return");
 
 const flightSelection = {
   bookingInformation: bookingInformation,
-  airportData: {},
+  airportData: [],
   start: function (locale) {
+    const _this = this;
     this.setDefault(locale);
     //load data airport
-    this.ajaxGetAirports();
     this.defineProperties();
-    this.flightOptionSelection();
+    this.flightOptionSelection(
+      {
+        lang: locale.locale,
+      },
+      () => _this.handleAsyncData({ lang: locale.locale })
+    );
 
     this.handleEvent();
   },
@@ -65,8 +72,6 @@ const flightSelection = {
 
     isExistsInput(promoCodeInput) &&
       this.setBookingValue("promoCode", promoCodeInput.val());
-
-    console.log(bookingInformation);
   },
   setBookingValue: function (key, value) {
     // Object.hasOwnProperty.call(bkInforKey, key){
@@ -96,10 +101,29 @@ const flightSelection = {
       },
     });
   },
-  flightOptionSelection: function () {
-    const _this = this;
+  loadingTemplate: function () {
+    const amyUrl = "images/booking/loadingicon/amy.png";
 
-    //handle depart select flights
+    let images = "";
+    for (let i = 1; i <= 5; i++) {
+      const image = `<img src="images/booking/loadingicon/cloud-${i}.svg" class="cloud-img cloud-img-${i}" />`;
+      images = images.concat(" ", image);
+    }
+
+    const template = `<div class="vj__loading"><div class="vj__loading-container"><div class="vj__loading-image">
+    <div class="vj__loading-amy"><img src="${amyUrl}" class="img-loading"></div>
+    <div class="vj__loading-clouds">
+      ${images}
+    </div>
+    </div>
+    <div class="vj__loading-bottom">
+    <span class="vj__loading-text">Enjoy Flying!</span>
+    <span class="vj__loading-bar"><span class="vj__loading-bar-inner"></span></span></div></div></div>`;
+
+    return template;
+  },
+  flightOptionSelection: function ({ lang }, asyncData) {
+    const _this = this;
 
     calendarDepart.length > 0 &&
       calendarDepart
@@ -107,28 +131,33 @@ const flightSelection = {
           selected: _this.bookingDepartDate,
           locale: _this.bookingInformation.locale,
         })
-        .on("select.calendar", async function (e, obj) {
-          const { calendar } = obj;
-          console.log(calendar);
-          const departureDate = calendar.currentSelect.selected;
+        .on("select.calendar", async function (e, slider) {
+          const { calendar } = slider;
+
+          const departureDate = calendar.selected;
 
           const departTripCode = `${_this.bookingInformation.departCode}-${_this.bookingInformation.returnCode}`;
 
           _this.setBookingValue(bkInforKey.DepartDate, departureDate);
-          const flights = client.get(
-            "http://127.0.0.1:5500/assets/js/data.json"
-          );
-          const data = await flights;
-          if (data.status === true) {
-            _this.setBookingValue(bkInforKey.SessionId, data.sessionId);
-            _this.setBookingValue(bkInforKey.SessionExpIn, data.sessionExpIn);
-            _this.setBookingValue(bkInforKey.TravelOption, data.travelOption);
-            _this.flightItemsOptions(data.travelOption[departTripCode]);
+          slider.loading = true;
+          try {
+            console.log(slider);
+            const data = await asyncData();
+            console.log(data);
+
+            if (data.status === true) {
+              _this.setBookingValue(bkInforKey.SessionId, data.sessionId);
+              _this.setBookingValue(bkInforKey.SessionExpIn, data.sessionExpIn);
+              _this.setBookingValue(bkInforKey.TravelOption, data.travelOption);
+              _this.flightItemsOptions(data.travelOption[departTripCode]);
+            }
+          } catch (error) {
+            console.log(error);
+          } finally {
+            slider.loading = false;
+            console.log(slider);
           }
 
-          //appendto html
-          // flightOptionsDepart.find(".flight-option-items").html("");
-          // console.log(currentSelect, calendar.loading);
           console.log(bookingInformation);
         });
 
@@ -212,7 +241,7 @@ const flightSelection = {
     // return flights;
   },
   flightItem: function (data) {
-    console.log(data);
+    // console.log(data);
     const flightItemTemplate = `<div class="flight-option-item"><div class="flight-option-bar"></div><div class="flight-option-dropdown"></div></div>`;
     const item = $(flightItemTemplate).closest(".flight-option-item");
     const itemBar = $(flightItemTemplate).closest(".flight-option-bar");
@@ -248,13 +277,14 @@ const flightSelection = {
         </div>`;
       });
     } else {
-      flightOptionTop = `<div class="flight-option-top">`;
-      flightOptionTop += `<div class="flight-option-location-time">
+      data.flights.forEach((flight) => {
+        flightOptionTop = `<div class="flight-option-top">`;
+        flightOptionTop += `<div class="flight-option-location-time">
           <span class="flight-option-time">${flight.departure.scheduledTime.time}</span>
           <span class="flight-option-city">${flight.departure.airport.name}</span>
           <span class="flight-option-date">${flight.departure.scheduledTime.date}</span>
         </div>`;
-      flightOptionTop += `<div class="flight-option-types">
+        flightOptionTop += `<div class="flight-option-types">
         <div class="flight-option-middle-inner">
           <div class="flight-option-icon icon-flight">
             <span class="flight-code">VJ142 | A330</span>
@@ -273,11 +303,12 @@ const flightSelection = {
           </div>
         </div>
       </div>`;
-      flightOptionTop += `<div class="flight-option-location-time">
+        flightOptionTop += `<div class="flight-option-location-time">
           <span class="flight-option-time">${flight.arrival.scheduledTime.time}</span>
           <span class="flight-option-city">${flight.arrival.airport.name}</span>
           <span class="flight-option-date">${flight.arrival.scheduledTime.date}</span>
         </div>`;
+      });
     }
     itemBar.append(flightOptionTop);
     item.append(itemBar);
@@ -307,10 +338,31 @@ const flightSelection = {
 
     flightItem.on("click", ".btn-flight-option-detail", toggleFlightDetail);
   },
-  ajaxGetAirports: async function () {
-    const airportData = await getAirportData();
+  promiseFc: function (time) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("oke");
+      }, time);
+    });
+  },
 
-    this.airportData = airportData.airportGroups;
+  handleAsyncData: async function ({ lang }) {
+    const _this = this;
+
+    const airportURL = baseURL + "?languageId=" + languageId[lang];
+    const getAirports = await client.get(airportURL);
+    const getFlightsOptions = await client.get(
+      "http://127.0.0.1:5500/assets/js/data.json"
+    );
+    const test = await _this.promiseFc(3000);
+    const [airportList, flightOptions] = await Promise.all([
+      getAirports,
+      getFlightsOptions,
+      test,
+    ]);
+
+    return [airportList, flightOptions, test];
+    // await this.flightOptionSelection();
   },
 };
 export default flightSelection;

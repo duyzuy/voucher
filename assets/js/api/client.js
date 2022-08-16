@@ -1,5 +1,5 @@
-export async function client(url, method = "GET") {
-  const promisData = new Promise((resolve, reject) => {
+export function client(url, method = "GET") {
+  return new Promise((resolve, reject) => {
     let xhttp = new XMLHttpRequest();
 
     xhttp.onreadystatechange = function () {
@@ -12,10 +12,6 @@ export async function client(url, method = "GET") {
     xhttp.open(method, url, true);
     xhttp.send();
   });
-
-  let response = await promisData;
-
-  return response;
 }
 
 client.post = function (url, method = "POST") {
