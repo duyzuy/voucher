@@ -12,7 +12,7 @@ const tripPassenger = $("#trip__passenger");
 const bookingForm = $("#booking__form");
 const quantityControl = $(".booking__quantity--control");
 const searchFlightBtn = $("#booking__searchflight");
-
+const quantities = $(".booking__quantity");
 const bookingFormSearch = {
   bookingInform: bookingInformation,
   start({ locale }) {
@@ -37,6 +37,7 @@ const bookingFormSearch = {
     this.onSearchFlight();
 
     this.paxSelectDropdown();
+    console.log(this.bookingInform);
   },
   onSelectTripType: function () {
     const _this = this;
@@ -54,7 +55,6 @@ const bookingFormSearch = {
   },
   onSelectDeparture: function () {
     const _this = this;
-    // tripDeparture.val(_this.bookingInform.departDate).trigger("change");
 
     tripDeparture
       .select2({
@@ -215,51 +215,49 @@ const bookingFormSearch = {
     tripPassenger.on("click", function (e) {
       $("#booking__form--passenger--inner").toggleClass("open");
     });
-
+    console.log(this.bookingInform);
     _this.renderPaxHtml(
       {
-        adult: _this.bookingInform.passenngers.adult,
-        children: _this.bookingInform.passenngers.children,
-        infant: _this.bookingInform.passenngers.infant,
+        adult: _this.bookingInform.passengers.adult,
+        children: _this.bookingInform.passengers.children,
+        infant: _this.bookingInform.passengers.infant,
       },
       locale
     );
 
-    quantityControl.click(function (e) {
-      const parentQuantity = $(this).context.parentNode.parentNode;
-      const passengerType = $(parentQuantity).data("type");
+    quantities.on("click", ".booking__quantity--control", function (e) {
+      const parentQuantity = $(this).context.parentNode;
+      const paxType = $(parentQuantity).data("type");
       const actionType = $(this).data("type");
       const quantityValue = $(parentQuantity).find(".booking__quantity--value");
       let paxNumber = Number($(quantityValue).text());
-
+      console.log(quantityValue);
       if (actionType === constants.INCREATE) {
         paxNumber++;
       } else {
         paxNumber--;
       }
 
-      // .context.parentNode("div.booking__quantity")
-
-      switch (passengerType) {
+      switch (paxType) {
         case constants.ADULT: {
           if (
             (actionType === constants.INCREATE &&
               paxNumber >
-                config.PAXLIMIT - _this.bookingInform.passenngers.children) ||
+                config.PAXLIMIT - _this.bookingInform.passengers.children) ||
             (actionType === constants.DECREATE &&
-              _this.bookingInform.passenngers.adult === config.ADULT_MINIMUN)
+              _this.bookingInform.passengers.adult === config.ADULT_MINIMUN)
           ) {
             return;
           }
           if (
             actionType === constants.DECREATE &&
-            _this.bookingInform.passenngers.adult ===
-              _this.bookingInform.passenngers.infant
+            _this.bookingInform.passengers.adult ===
+              _this.bookingInform.passengers.infant
           ) {
-            _this.bookingInform.passenngers.infant = paxNumber;
+            _this.bookingInform.passengers.infant = paxNumber;
             $("#infantInput").find(".booking__quantity--value").text(paxNumber);
           }
-          _this.bookingInform.passenngers.adult = paxNumber;
+          _this.bookingInform.passengers.adult = paxNumber;
 
           break;
         }
@@ -267,27 +265,27 @@ const bookingFormSearch = {
           if (
             (actionType === constants.INCREATE &&
               paxNumber >
-                config.PAXLIMIT - _this.bookingInform.passenngers.adult) ||
+                config.PAXLIMIT - _this.bookingInform.passengers.adult) ||
             (actionType === constants.DECREATE &&
-              _this.bookingInform.passenngers.children ===
+              _this.bookingInform.passengers.children ===
                 config.CHILDREN_MINIMUN)
           ) {
             return;
           }
-          _this.bookingInform.passenngers.children = paxNumber;
+          _this.bookingInform.passengers.children = paxNumber;
 
           break;
         }
         case constants.INFANT: {
           if (
             (actionType === constants.INCREATE &&
-              paxNumber > _this.bookingInform.passenngers.adult) ||
+              paxNumber > _this.bookingInform.passengers.adult) ||
             (actionType === constants.DECREATE &&
-              _this.bookingInform.passenngers.infant === config.INFANT_MINIMUN)
+              _this.bookingInform.passengers.infant === config.INFANT_MINIMUN)
           ) {
             return;
           }
-          _this.bookingInform.passenngers.infant = paxNumber;
+          _this.bookingInform.passengers.infant = paxNumber;
 
           break;
         }
@@ -300,9 +298,9 @@ const bookingFormSearch = {
 
       _this.renderPaxHtml(
         {
-          adult: _this.bookingInform.passenngers.adult,
-          children: _this.bookingInform.passenngers.children,
-          infant: _this.bookingInform.passenngers.infant,
+          adult: _this.bookingInform.passengers.adult,
+          children: _this.bookingInform.passengers.children,
+          infant: _this.bookingInform.passengers.infant,
         },
         locale
       );

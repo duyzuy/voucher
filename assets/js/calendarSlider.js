@@ -98,7 +98,8 @@
         currentSelect: "",
         days: [],
       }),
-      (this.loading = !1),
+      (this.isLoading = !1),
+      (this.isSliding = !1),
       (this.viewRange = 7),
       (this.actionSlider = {
         NEXT: "next",
@@ -111,12 +112,10 @@
       (this.today = m().format(this.currentLocale.locale.format)),
       this.defineProperties(),
       (this.currentIndex = 3),
-      (this.loading = false),
       (this.activeIndex = 3),
       (this.template = `<div class="bk__calendar--container"><span class="bk__calendar-btn bk__calendar-prev"><i class="bi bi-arrow-left-short"></i></span><span class="bk__calendar-btn bk__calendar-next"><i class="bi bi-arrow-right-short"></i></span><div class="bk__calendar--slider"><ul class="bk__calendar-items"></ul></div></div>`),
       (this.container = $(this.template).appendTo(this.element)),
-      ((this.wrapItems = $(this.container).find("ul.bk__calendar-items")),
-      (this.sliding = !1)),
+      (this.wrapItems = $(this.container).find("ul.bk__calendar-items")),
       "string" === typeof option.minimumDate &&
         (this.minimumDate = option.minimumDate),
       "string" === typeof option.selected &&
@@ -195,9 +194,9 @@
         return days;
       },
       clickNext: function (e) {
-        if (this.loading) return;
+        if (this.isSliding || this.isLoading) return;
 
-        this.loading = true;
+        this.setSliding(true);
 
         const selectedDay = this.addDay(this.calendar.currentSelect, 1);
         const lastOfRangeDay =
@@ -217,18 +216,18 @@
             this.wrapItems.removeClass("animating").css({
               transform: `translate3d(0,0,0)`,
             });
-            this.loading = false;
+            this.setSliding(false);
           },
         });
       },
       clickPrev: function (e) {
-        if (this.loading === true) return;
+        if (this.isLoading || this.isSliding) return;
         const currentSelect = this.calendar.currentSelect;
         const todayM = m(this.today, this.currentLocale.locale.format);
         if (currentSelect.isBefore(todayM) || currentSelect.isSame(todayM))
           return;
 
-        this.loading = true;
+        this.setSliding(true);
         //take array prevDay
         const selectedDay = this.addDay(this.calendar.currentSelect, -1);
 
@@ -245,7 +244,7 @@
           selectedDay,
           callback: () => {
             this.wrapItems.removeClass("animating");
-            this.loading = false;
+            this.setSliding(false);
           },
         });
       },
@@ -256,7 +255,7 @@
         const dayValue = $(item).data("value");
         const dayMoment = m(dayValue, this.currentLocale.locale.format);
         const todayM = m(this.today, this.currentLocale.locale.format);
-        if (this.loading === true) return;
+        if (this.isLoading || this.isSliding) return;
         if (dayValue === this.calendar.selected) return;
         if (dayMoment.isBefore(todayM)) return;
         if (
@@ -264,7 +263,7 @@
           dayMoment.isSame(todayM)
         )
           return;
-        this.loading = true;
+        this.setSliding(true);
 
         const numberOfDay = itemIndex - Math.floor(this.viewRange / 2);
         const days = this.UpdateDaysAndGetNewDays({
@@ -282,11 +281,11 @@
           numberOfDay: numberOfDay,
           selectedDay: dayMoment,
           callback: () => {
-            this.loading = false;
             this.wrapItems.removeClass("animating");
             this.wrapItems.css({
               transform: `translate3d(0,0,0)`,
             });
+            this.setSliding(false);
           },
         });
       },
@@ -507,6 +506,12 @@
 
         $(window).on("resize", reloadCalendar);
         $(window).on("load", reloadCalendar);
+      },
+      setLoading: function (loading) {
+        this.isLoading = loading;
+      },
+      setSliding: function (sliding) {
+        this.isSliding = sliding;
       },
     }),
     ($.fn.sliderCalendar = function (t, i) {

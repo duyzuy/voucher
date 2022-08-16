@@ -53,7 +53,7 @@ export const bookingInformation = {
     value: "",
     alt: "",
   },
-  passenngers: {
+  passengers: {
     adult: 1,
     children: 0,
     infant: 0,

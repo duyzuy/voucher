@@ -1,3 +1,4 @@
+import { loadingTemplate } from "../components/loading.js";
 import {
   bookingInformation,
   bkInforKey,
@@ -20,6 +21,7 @@ const flightOptionsReturn = $("#booking__layout--flights--return");
 const flightSelection = {
   bookingInformation: bookingInformation,
   airportData: [],
+  isSuccess: !1,
   start: function (locale) {
     const _this = this;
     this.setDefault(locale);
@@ -65,6 +67,7 @@ const flightSelection = {
 
     isExistsInput(adultInput) &&
       this.setBookingValue(bkInforKey.Adult, adultInput.val());
+    console.log(adultInput);
     isExistsInput(childrenInput) &&
       this.setBookingValue("children", childrenInput.val());
     isExistsInput(infantInput) &&
@@ -74,9 +77,6 @@ const flightSelection = {
       this.setBookingValue("promoCode", promoCodeInput.val());
   },
   setBookingValue: function (key, value) {
-    // Object.hasOwnProperty.call(bkInforKey, key){
-
-    // }
     if (key === bkInforKey.DepartDate || key === bkInforKey.ReturnDate) {
       this.bookingInformation[key].value = value;
     } else if (
@@ -84,7 +84,7 @@ const flightSelection = {
       key === bkInforKey.Children ||
       key === bkInforKey.Infant
     ) {
-      this.bookingInformation.passenngers[key] = value;
+      this.bookingInformation.passengers[key] = value;
     } else {
       this.bookingInformation[key] = value;
     }
@@ -100,27 +100,6 @@ const flightSelection = {
         return this.bookingInformation.returnDate.value;
       },
     });
-  },
-  loadingTemplate: function () {
-    const amyUrl = "images/booking/loadingicon/amy.png";
-
-    let images = "";
-    for (let i = 1; i <= 5; i++) {
-      const image = `<img src="images/booking/loadingicon/cloud-${i}.svg" class="cloud-img cloud-img-${i}" />`;
-      images = images.concat(" ", image);
-    }
-
-    const template = `<div class="vj__loading"><div class="vj__loading-container"><div class="vj__loading-image">
-    <div class="vj__loading-amy"><img src="${amyUrl}" class="img-loading"></div>
-    <div class="vj__loading-clouds">
-      ${images}
-    </div>
-    </div>
-    <div class="vj__loading-bottom">
-    <span class="vj__loading-text">Enjoy Flying!</span>
-    <span class="vj__loading-bar"><span class="vj__loading-bar-inner"></span></span></div></div></div>`;
-
-    return template;
   },
   flightOptionSelection: function ({ lang }, asyncData) {
     const _this = this;
@@ -139,23 +118,40 @@ const flightSelection = {
           const departTripCode = `${_this.bookingInformation.departCode}-${_this.bookingInformation.returnCode}`;
 
           _this.setBookingValue(bkInforKey.DepartDate, departureDate);
-          slider.loading = true;
+          flightOptionsDepart
+            .find(".booking__layout--flights")
+            .html(loadingTemplate());
           try {
-            console.log(slider);
-            const data = await asyncData();
-            console.log(data);
+            slider.setLoading(true);
+            flightOptionsDepart
+              .find(".booking__layout--flights")
+              .html(loadingTemplate());
+            const [airportData, flightOptions] = await asyncData();
+            _this.isSuccess = true;
 
-            if (data.status === true) {
-              _this.setBookingValue(bkInforKey.SessionId, data.sessionId);
-              _this.setBookingValue(bkInforKey.SessionExpIn, data.sessionExpIn);
-              _this.setBookingValue(bkInforKey.TravelOption, data.travelOption);
-              _this.flightItemsOptions(data.travelOption[departTripCode]);
-            }
+            _this.setBookingValue(
+              bkInforKey.SessionId,
+              flightOptions.sessionId
+            );
+            _this.setBookingValue(
+              bkInforKey.SessionExpIn,
+              flightOptions.sessionExpIn
+            );
+            _this.setBookingValue(
+              bkInforKey.TravelOption,
+              flightOptions.travelOption
+            );
+            _this.flightItemsOptions(
+              flightOptions.travelOption[departTripCode]
+            );
           } catch (error) {
             console.log(error);
+            _this.isSuccess = false;
           } finally {
-            slider.loading = false;
-            console.log(slider);
+            slider.setLoading(false);
+            flightOptionsDepart
+              .find(".booking__layout--flights")
+              .html("no data");
           }
 
           console.log(bookingInformation);
@@ -338,13 +334,6 @@ const flightSelection = {
 
     flightItem.on("click", ".btn-flight-option-detail", toggleFlightDetail);
   },
-  promiseFc: function (time) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        resolve("oke");
-      }, time);
-    });
-  },
 
   handleAsyncData: async function ({ lang }) {
     const _this = this;
@@ -354,15 +343,13 @@ const flightSelection = {
     const getFlightsOptions = await client.get(
       "http://127.0.0.1:5500/assets/js/data.json"
     );
-    const test = await _this.promiseFc(3000);
+
     const [airportList, flightOptions] = await Promise.all([
       getAirports,
       getFlightsOptions,
-      test,
     ]);
 
-    return [airportList, flightOptions, test];
-    // await this.flightOptionSelection();
+    return [airportList, flightOptions];
   },
 };
 export default flightSelection;
