@@ -101,6 +101,7 @@
       (this.isLoading = !1),
       (this.isSliding = !1),
       (this.viewRange = 7),
+      (this.isWindowResize = !1),
       (this.actionSlider = {
         NEXT: "next",
         PREV: "prev",
@@ -165,7 +166,7 @@
         const newMDay = m(newDayValue, this.currentLocale.locale.format);
         return newMDay;
       },
-      getDays: function () {
+      getDays: function (e) {
         //get midView of number view;
         const midView = Math.floor(this.viewRange / 2);
 
@@ -186,7 +187,10 @@
         }
 
         this.calendar.days = days;
-        this.element.trigger("select.calendar", this);
+
+        if (e === undefined || (e !== undefined && e.type !== "resize")) {
+          this.element.trigger("select.calendar", this);
+        }
 
         //ajax callback call after update
         this.ajax && this.ajax(this.calendar, this);
@@ -478,11 +482,12 @@
       },
       renderSlider: function () {
         const _this = this;
+        _this.container.find(".bk__calendar-items").css({
+          width: "200%",
+        });
         const reloadCalendar = function (e) {
           const calendarWidth = _this.container.width();
-          _this.container.find(".bk__calendar-items").css({
-            width: "200%",
-          });
+
           if (calendarWidth > 1140) {
             _this.viewRange = 7;
           }
@@ -495,7 +500,7 @@
           _this.currentIndex = Math.floor(_this.viewRange / 2);
 
           //get new days on calendar bar
-          const days = _this.getDays();
+          const days = _this.getDays(e);
           //update view UI
           const items = _this.items({
             days: days,

@@ -15,7 +15,7 @@ class FlightItem extends HTMLElement {
     this.render();
   }
   render() {
-    this.shadow.innerHTML = `  <div class="flight-option-item one-stop">
+    this.shadow.innerHTML = `<div class="flight-option-item one-stop">
       <div class="flight-option-bar">
         <div class="flight-option-top">
           <div class="flight-option-location-time">

@@ -22,8 +22,8 @@ export const constants = {
 };
 export const bkInforKey = {
   TripType: "tripType",
-  DepartCode: "departCode",
-  ReturnCode: "returnCode",
+  Depart: "departCode",
+  Return: "returnCode",
   DepartDate: "departDate",
   ReturnDate: "returnDate",
   Passenngers: "passenngers",
@@ -31,8 +31,8 @@ export const bkInforKey = {
   Promotion: "promoCode",
   Locale: "locale",
   TravelOption: "travelOption",
-  Departure: "departure",
-  return: "return",
+  DepartureSelected: "returnSelected",
+  ReturnSelected: "returnSelected",
   Adult: "adult",
   Children: "children",
   Infant: "infant",
@@ -43,8 +43,8 @@ export const bkInforKey = {
 
 export const bookingInformation = {
   tripType: constants.RETURN,
-  departCode: "",
-  returnCode: "",
+  departure: {},
+  return: {},
   departDate: {
     value: "",
     alt: "",
@@ -65,8 +65,8 @@ export const bookingInformation = {
   sessionId: "",
   sessionExpIn: "",
   travelOption: {},
-  return: {},
-  departure: {},
+  returnSelected: {},
+  departureSelected: {},
 };
 
 export const airportDataGroup = [];

@@ -1,4 +1,5 @@
 import { loadingTemplate } from "../components/loading.js";
+import { noFlight } from "../components/noFlight.js";
 import {
   bookingInformation,
   bkInforKey,
@@ -7,7 +8,6 @@ import {
 import config, { baseURL, languageId } from "../config.js";
 import { isExistsInput, dateFormat, getScheduleTime } from "../utils/helper.js";
 import { dateLocale } from "../translate.js";
-import { airportLists } from "../services/airports.js";
 import { client } from "../api/client.js";
 
 const calendarDepart = $("#bk__calendar--depart");
@@ -20,8 +20,12 @@ const flightOptionsReturn = $("#booking__layout--flights--return");
 
 const flightSelection = {
   bookingInformation: bookingInformation,
-  airportData: [],
+  airportGroups: [],
   isSuccess: !1,
+  asyncStatus: {
+    airports: !1,
+    flightOptions: !1,
+  },
   start: function (locale) {
     const _this = this;
     this.setDefault(locale);
@@ -31,7 +35,7 @@ const flightSelection = {
       {
         lang: locale.locale,
       },
-      () => _this.handleAsyncData({ lang: locale.locale })
+      (lc) => _this.handleAsyncData(lc)
     );
 
     this.handleEvent();
@@ -49,6 +53,10 @@ const flightSelection = {
     const returnCodeInput = bookingFlightForm.find('input[name="returnCode"]');
     const departDateInput = bookingFlightForm.find('input[name="departDate"]');
     const returnDateInput = bookingFlightForm.find('input[name="returnDate"]');
+    const tripDepartInput = bookingFlightForm.find(
+      'input[name="tripDeparture"]'
+    );
+    const tripReturnInput = bookingFlightForm.find('input[name="tripReturn"]');
     const adultInput = bookingFlightForm.find('input[name="adult"]');
     const childrenInput = bookingFlightForm.find('input[name="children"]');
     const infantInput = bookingFlightForm.find('input[name="infant"]');
@@ -57,13 +65,18 @@ const flightSelection = {
     isExistsInput(tripType) && this.setBookingValue("tripType", tripType.val());
 
     isExistsInput(departCodeInput) &&
-      this.setBookingValue("departCode", departCodeInput.val());
+      this.setBookingValue("depart", departCodeInput.val());
     isExistsInput(returnCodeInput) &&
-      this.setBookingValue("returnCode", returnCodeInput.val());
+      this.setBookingValue("return", returnCodeInput.val());
     isExistsInput(departDateInput) &&
       this.setBookingValue("departDate", departDateInput.val());
     isExistsInput(returnDateInput) &&
       this.setBookingValue("returnDate", returnDateInput.val());
+
+    isExistsInput(tripDepartInput) &&
+      this.setBookingValue("departure", JSON.parse(tripDepartInput.val()));
+    isExistsInput(tripReturnInput) &&
+      this.setBookingValue("return", JSON.parse(tripReturnInput.val()));
 
     isExistsInput(adultInput) &&
       this.setBookingValue(bkInforKey.Adult, adultInput.val());
@@ -75,6 +88,8 @@ const flightSelection = {
 
     isExistsInput(promoCodeInput) &&
       this.setBookingValue("promoCode", promoCodeInput.val());
+
+    console.log(this.bookingInformation);
   },
   setBookingValue: function (key, value) {
     if (key === bkInforKey.DepartDate || key === bkInforKey.ReturnDate) {
@@ -114,47 +129,71 @@ const flightSelection = {
           const { calendar } = slider;
 
           const departureDate = calendar.selected;
-
-          const departTripCode = `${_this.bookingInformation.departCode}-${_this.bookingInformation.returnCode}`;
-
+          const departTripCode = `${_this.bookingInformation.departure.code}-${_this.bookingInformation.return.code}`;
+          console.log(departTripCode);
           _this.setBookingValue(bkInforKey.DepartDate, departureDate);
-          flightOptionsDepart
-            .find(".booking__layout--flights")
-            .html(loadingTemplate());
+          let airportDepart = {
+            group: {},
+            airport: {},
+          };
           try {
             slider.setLoading(true);
             flightOptionsDepart
               .find(".booking__layout--flights")
               .html(loadingTemplate());
-            const [airportData, flightOptions] = await asyncData();
-            _this.isSuccess = true;
+            const [airportData, flightOptions] = await asyncData(lang);
 
-            _this.setBookingValue(
-              bkInforKey.SessionId,
-              flightOptions.sessionId
-            );
-            _this.setBookingValue(
-              bkInforKey.SessionExpIn,
-              flightOptions.sessionExpIn
-            );
-            _this.setBookingValue(
-              bkInforKey.TravelOption,
-              flightOptions.travelOption
-            );
-            _this.flightItemsOptions(
-              flightOptions.travelOption[departTripCode]
-            );
+            airportData && airportData.status === true
+              ? (_this.asyncStatus.airports = true)
+              : (_this.asyncStatus.airports = false);
+
+            flightOptions && flightOptions.status === true
+              ? (_this.asyncStatus.flightOptions = true)
+              : (_this.asyncStatus.flightOptions = false);
+
+            Object.values(_this.asyncStatus).some((key) => key === false) ===
+            true
+              ? (_this.isSuccess = false)
+              : (_this.isSuccess = true);
+
+            _this.airportGroups = airportData.airportGroups;
+            _this.bookingInformation.travelOption = flightOptions.travelOption;
+            //set flights if success get full data
+
+            console.log("load data async success");
           } catch (error) {
             console.log(error);
             _this.isSuccess = false;
           } finally {
             slider.setLoading(false);
-            flightOptionsDepart
-              .find(".booking__layout--flights")
-              .html("no data");
+            // flightOptionsDepart
+            //   .find(".booking__layout--flights")
+            //   .html(noFlight());
           }
 
-          console.log(bookingInformation);
+          if (_this.isSuccess === true) {
+            _this.setBookingValue(
+              bkInforKey.SessionId,
+              _this.bookingInformation.sessionId
+            );
+            _this.setBookingValue(
+              bkInforKey.SessionExpIn,
+              _this.bookingInformation.sessionExpIn
+            );
+            _this.setBookingValue(
+              bkInforKey.TravelOption,
+              _this.bookingInformation.travelOption
+            );
+            const flightList = _this.flightItemsOptions(
+              _this.bookingInformation.travelOption[departTripCode],
+              _this.airportGroups
+            );
+            flightOptionsDepart.find(".booking__layout--flights").html("");
+            for (const fl of flightList) {
+              flightOptionsDepart.find(".booking__layout--flights").append(fl);
+            }
+          }
+          console.log(_this.bookingInformation);
         });
 
     //handle return select flights
@@ -169,11 +208,17 @@ const flightSelection = {
           const returnDate = calendar.currentSelect;
         });
   },
-  flightItemsOptions: function (flightOptions) {
+  flightItemsOptions: function (flightOptions, airportData) {
     let type;
-    let departDate, promoCodeApplicability, durationTime, href, key;
+    let departDate,
+      promoCodeApplicability,
+      durationTime,
+      href,
+      key,
+      numberOfChanges,
+      numberOfStops;
     console.log(flightOptions[0]);
-
+    let flightListHtml = [];
     flightOptions.forEach((fl) => {
       let classes = "";
       classes =
@@ -225,33 +270,39 @@ const flightSelection = {
       });
       href = fl.href;
       key = fl.key;
+      numberOfChanges = fl.numberOfChanges;
+      numberOfStops = fl.numberOfStops;
       //set template html
-      this.flightItem({
-        classes,
-        departDate,
-        type,
-        flights,
-      });
+      flightListHtml.push(
+        this.flightItem({
+          classes,
+          departDate,
+          type,
+          flights,
+        })
+      );
     });
 
-    // return flights;
+    return flightListHtml;
   },
   flightItem: function (data) {
     // console.log(data);
-    const flightItemTemplate = `<div class="flight-option-item"><div class="flight-option-bar"></div><div class="flight-option-dropdown"></div></div>`;
-    const item = $(flightItemTemplate).closest(".flight-option-item");
-    const itemBar = $(flightItemTemplate).closest(".flight-option-bar");
-    const itemDropdown = $(flightItemTemplate).closest(
-      ".flight-option-dropdown"
-    );
+    const flightOptionItem = document.createElement("div");
+    flightOptionItem.classList.add("flight-option-item");
+
+    const flightOptionBar = document.createElement("div");
+    flightOptionBar.classList.add("flight-option-bar");
+
+    const flightOptionDropdown = document.createElement("div");
+    flightOptionDropdown.classList.add("flight-option-dropdown");
+
     const iconFlight = `<span class="icon-flight"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
   <path d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z"></path>
 </svg></span>`;
 
-    let flightOptionTop = "";
+    let flightOptionTop = `<div class="flight-option-top">`;
     if (data.type === constants.DIRECT) {
       data.flights.forEach((flight) => {
-        flightOptionTop = `<div class="flight-option-top">`;
         flightOptionTop += `<div class="flight-option-location-time">
           <span class="flight-option-time">${flight.departure.scheduledTime.time}</span>
           <span class="flight-option-city">${flight.departure.airport.name}</span>
@@ -274,7 +325,6 @@ const flightSelection = {
       });
     } else {
       data.flights.forEach((flight) => {
-        flightOptionTop = `<div class="flight-option-top">`;
         flightOptionTop += `<div class="flight-option-location-time">
           <span class="flight-option-time">${flight.departure.scheduledTime.time}</span>
           <span class="flight-option-city">${flight.departure.airport.name}</span>
@@ -306,8 +356,253 @@ const flightSelection = {
         </div>`;
       });
     }
-    itemBar.append(flightOptionTop);
-    item.append(itemBar);
+    flightOptionTop += "</div>";
+    let flightOftionInfor = `<div class="flight-option-infor">
+        <ul>
+          <li>
+            <p class="duration-label">Thời gian bay</p>
+            <p class="duration-time">2 giờ 15 phút</p>
+          </li>
+          <li>
+            <button class="btn btn-flight-option-detail">
+              Chi tiết <i class="bi bi-chevron-down"></i>
+            </button>
+          </li>
+        </ul>
+      </div>`;
+    let flightOftionPrice = `<div class="flight-option-price">
+      <div class="flight-option-price--inner">
+        <!-- <p class="price">
+          <del
+            >1,200,000<span class="currency-symbol"
+              >VND</span
+            ></del
+          >
+        </p> -->
+        <p class="price">
+          <ins>850,000<span class="currency-symbol">VND</span></ins>
+        </p>
+      </div>
+      <div class="flight-option-btns">
+        <button class="btn btn-booking-selecting">
+          Chọn
+        </button>
+      </div>
+    </div>`;
+
+    let flightDropdownInnerDirect = `<div class="dropdown-inner">
+    <div class="flight-option-detail">
+      <div class="flight-option-detail-inner">
+        <div class="flight-option-depart depart-last">
+          <div class="option-detail-flight-code">
+            <div class="option-detail-icon">
+              <span class="icon-flight"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                  </path>
+                </svg>
+              </span>
+            </div>
+            <div class="option-detail-content">
+              <div class="option-label">
+                Số hiệu chuyến bay:
+              </div>
+              <div class="option-value">
+                <p class="flight-code">VJ142</p>
+              </div>
+            </div>
+          </div>
+          <div class="option-detail-flight-city-airport">
+            <div class="option-detail-content">
+              <p class="option-label">Khởi hành:</p>
+              <div class="option-value">
+                <ul>
+                  <li class="city">
+                    Đà Nẵng (DAD) - Sân bay Đà Nẵng
+                  </li>
+                  <li class="time">
+                    06:50, 17/08/2022 (Giờ địa phương)
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="option-detail-flight-city-airport">
+            <div class="option-detail-icon bottom">
+              <i class="bi bi-geo-alt-fill"></i>
+            </div>
+            <div class="option-detail-content">
+              <div class="option-label">
+                <p>Đến:</p>
+              </div>
+              <div class="option-value">
+                <ul>
+                  <li class="city">
+                    Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
+                    tế Tân sơn nhất
+                  </li>
+                  <li class="time">
+                    06:50, 17/08/2022 (Giờ địa phương)
+                  </li>
+                  <li class="aircraft">
+                    <p>Thời gian: 2 giờ 05 phút</p>
+                    <p>Máy bay: A320</p>
+                    <p>Hãng khai thác: Vietjet</p>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+
+    let flightDropdownOneStop = `<div class="dropdown-inner">
+  <div class="flight-option-detail">
+    <div class="flight-option-detail-inner">
+      <div class="flight-option-depart">
+        <div class="option-detail-flight-code">
+          <div class="option-detail-icon">
+            <span class="icon-flight"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                </path>
+              </svg>
+            </span>
+          </div>
+          <div class="option-detail-content">
+            <div class="option-label">
+              <p>Số hiệu chuyến bay:</p>
+            </div>
+            <div class="option-value">
+              <p class="flight-code">VJ142</p>
+            </div>
+          </div>
+        </div>
+        <div class="option-detail-flight-city-airport">
+          <div class="option-detail-content">
+            <div class="option-label">
+              <p>Khởi hành:</p>
+            </div>
+            <div class="option-value">
+              <ul>
+                <li class="city">
+                  Hà Nội (HAN) - Sân bay Nội Bài
+                </li>
+                <li class="time">
+                  06:50, 17/08/2022 (Giờ địa phương)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="option-detail-flight-city-airport">
+          <div class="option-detail-content">
+            <div class="option-label">
+              <p>Đến:</p>
+            </div>
+            <div class="option-value">
+              <ul>
+                <li class="city">
+                  Đà Nẵng (DAD) - Sân bay Đà Nẵng
+                </li>
+                <li class="time">
+                  06:50, 17/08/2022 (Giờ địa phương)
+                </li>
+                <li class="aircraft">
+                  <p>Thời gian: 2 giờ 05 phút</p>
+                  <p>Máy bay: A320</p>
+                  <p>Hãng khai thác: Vietjet</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flight-option-onstop">
+        <div class="option-detail-flight-onstop">
+          <div class="option-detail-icon">
+            <i class="bi bi-clock"></i>
+          </div>
+          <div class="option-detail-content">
+            <p>
+              Thời gian nối chuyến ở Đà Nẵng (DAD) 1
+              giờ 05 phút
+            </p>
+          </div>
+        </div>
+      </div>
+      <div class="flight-option-depart depart-last">
+        <div class="option-detail-flight-code">
+          <div class="option-detail-icon">
+            <span class="icon-flight"><svg width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                </path>
+              </svg>
+            </span>
+          </div>
+          <div class="option-detail-content">
+            <div class="option-label">
+              Số hiệu chuyến bay:
+            </div>
+            <div class="option-value">
+              <p class="flight-code">VJ142</p>
+            </div>
+          </div>
+        </div>
+        <div class="option-detail-flight-city-airport">
+          <div class="option-detail-content">
+            <p class="option-label">Khởi hành:</p>
+            <div class="option-value">
+              <ul>
+                <li class="city">
+                  Đà Nẵng (DAD) - Sân bay Đà Nẵng
+                </li>
+                <li class="time">
+                  06:50, 17/08/2022 (Giờ địa phương)
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="option-detail-flight-city-airport">
+          <div class="option-detail-icon bottom">
+            <i class="bi bi-geo-alt-fill"></i>
+          </div>
+          <div class="option-detail-content">
+            <div class="option-label">
+              <p>Đến:</p>
+            </div>
+            <div class="option-value">
+              <ul>
+                <li class="city">
+                  Tp. Hồ Chí Minh (SGN) - Sân bay Quốc
+                  tế Tân sơn nhất
+                </li>
+                <li class="time">
+                  06:50, 17/08/2022 (Giờ địa phương)
+                </li>
+                <li class="aircraft">
+                  <p>Thời gian: 2 giờ 05 phút</p>
+                  <p>Máy bay: A320</p>
+                  <p>Hãng khai thác: Vietjet</p>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>`;
+
+    flightOptionBar.innerHTML =
+      flightOptionTop + flightOftionInfor + flightOftionPrice;
+
+    flightOptionDropdown.innerHTML = flightDropdownInnerDirect;
+
+    flightOptionItem.append(flightOptionBar);
+    flightOptionItem.append(flightOptionDropdown);
+    return flightOptionItem;
   },
   handleEvent: function () {
     /*
@@ -320,7 +615,7 @@ const flightSelection = {
       e.preventDefault();
       const item = $(this).closest(".flight-option-item");
       const dropdownItem = item.find(".flight-option-dropdown");
-
+      console.log(item);
       if (item.hasClass("expanded")) {
         item.removeClass("expanded");
         $(dropdownItem[0]).removeAttr("style");
@@ -332,10 +627,18 @@ const flightSelection = {
       }
     };
 
-    flightItem.on("click", ".btn-flight-option-detail", toggleFlightDetail);
+    $(
+      "#booking__layout--flights--depart .booking__layout--flights, #booking__layout--flights--return .booking__layout--flights"
+    ).on("click", ".btn-flight-option-detail", toggleFlightDetail);
   },
-
-  handleAsyncData: async function ({ lang }) {
+  asyncData: function (timeout) {
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve("get data success");
+      }, timeout);
+    });
+  },
+  handleAsyncData: async function (lang) {
     const _this = this;
 
     const airportURL = baseURL + "?languageId=" + languageId[lang];
@@ -343,13 +646,14 @@ const flightSelection = {
     const getFlightsOptions = await client.get(
       "http://127.0.0.1:5500/assets/js/data.json"
     );
-
-    const [airportList, flightOptions] = await Promise.all([
+    const asyncdt = await _this.asyncData(3000);
+    const [airportList, flightOptions, asyncdts] = await Promise.all([
       getAirports,
       getFlightsOptions,
+      asyncdt,
     ]);
 
-    return [airportList, flightOptions];
+    return [airportList, flightOptions, asyncdts];
   },
 };
 export default flightSelection;

@@ -2773,6 +2773,32 @@ del .currency-symbol{
     margin-bottom: 10px;
     display: block;
 }
+.vj__nodata{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    color: #bebebe;
+    border-radius: 10px;
+}
+.vj__nodata-container{
+    text-align: center;
+}
+.vj__nodata-image {
+
+    font-size: 40px;
+    color: #bebebe
+}
+.vj__nodata-image svg{
+    width: 60px;
+    height: 60px;
+}
+.vj__nodata-image svg, 
+.vj__nodata-image path{
+    fill: #d3d3d3
+}
 @keyframes slidingBarOne {
     0%{
 

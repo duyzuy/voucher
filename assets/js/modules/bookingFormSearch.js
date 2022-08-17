@@ -5,27 +5,26 @@ import config, { baseURL, languageId } from "../config.js";
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
-const tripDateDepart = $("#trip__date--depart");
-const tripDatereturn = $("#trip__date--return");
 const tripType = $("#trip__type--oneway, #trip__type--return");
 const tripPassenger = $("#trip__passenger");
 const bookingForm = $("#booking__form");
-const quantityControl = $(".booking__quantity--control");
 const searchFlightBtn = $("#booking__searchflight");
 const quantities = $(".booking__quantity");
+
 const bookingFormSearch = {
   bookingInform: bookingInformation,
   start({ locale }) {
     //set locale for booking form
 
-    this.setLocale(locale);
+    this.setDefault(locale);
     //handle all event for booking flow
     this.handleEvents();
 
     this.renderAlert();
   },
-  setLocale: function (locale) {
+  setDefault: function (locale) {
     this.bookingInform.locale = locale;
+    this.bookingInform.dateLocale = dateLocale.find((lc) => lc.lang === locale);
   },
   handleEvents: function () {
     this.onSelectTripType();
@@ -35,9 +34,7 @@ const bookingFormSearch = {
     this.onSelectPassenger();
     this.onChangePromoCode();
     this.onSearchFlight();
-
     this.paxSelectDropdown();
-    console.log(this.bookingInform);
   },
   onSelectTripType: function () {
     const _this = this;
@@ -67,11 +64,13 @@ const bookingFormSearch = {
             locale: _this.bookingInform.locale,
           }),
         dropdownCssClass: "booking__form__dropdown",
-        // dropdownParent: $("#dropdown__citypare--departure"),
         width: "resolve",
       })
       .on("select2:select", function (e) {
-        _this.bookingInform.departCode = e.params.data.id;
+        const { selected, ...rest } = e.params.data;
+        _this.bookingInform.departure = {
+          ...rest,
+        };
         tripReturn.val(null).trigger("change");
         tripReturn.select2("open");
       });
@@ -94,9 +93,12 @@ const bookingFormSearch = {
         width: "resolve",
       })
       .on("select2:select", function (e) {
-        _this.bookingInform.returnCode = e.params.data.id;
-        $(this).val(_this.bookingInform.returnCode).trigger("change");
-        if (_this.bookingInform.departCode !== "") {
+        _this.bookingInform.return = {
+          ...e.params.data,
+        };
+        $(this).val(_this.bookingInform.return.code).trigger("change");
+
+        if (_this.bookingInform.departure !== "") {
           setTimeout(() => {
             bookingForm.addClass("expanded");
             tripDate.data("daterangepicker").show();
@@ -106,17 +108,15 @@ const bookingFormSearch = {
   },
   onSelectDate: function () {
     const _this = this;
-    const currentLocale = dateLocale.find((item) => {
-      return item.lang === _this.bookingInform.locale;
-    });
-    const currentDate = new Date();
+    const currentLocale = this.bookingInform.dateLocale;
+    const today = new Date();
     tripDate
       .daterangepicker({
         // autoApply: true,
         autoApplyByStep: true,
         singleDatePicker:
           _this.bookingInform.tripType === constants.ONEWAY ? true : false,
-        minDate: currentDate,
+        minDate: today,
         opens: "left",
         locale: { ...currentLocale.locale },
         parentEl: "#trip__date--dropdown",
@@ -124,8 +124,8 @@ const bookingFormSearch = {
       .on("show.daterangepicker", function (ev, picker) {
         $(".drp-calendar.right").show();
         if (picker.currentStep === "start" || picker.doneSelect) {
-          tripDateDepart.addClass("selecting");
-          tripDate.data("daterangepicker").setMinDate(currentDate);
+          tripDate.find("#trip__date--depart").addClass("selecting");
+          tripDate.data("daterangepicker").setMinDate(today);
         }
 
         _this.bookingInform.currentSelect = "departDate";
@@ -150,8 +150,8 @@ const bookingFormSearch = {
           });
         }
         _this.bookingInform.currentSelect = "";
-        tripDateDepart.removeClass("selecting");
-        tripDatereturn.removeClass("selecting");
+        tripDate.find("#trip__date--depart").removeClass("selecting");
+        tripDate.find("#trip__date--return").removeClass("selecting");
       })
       .on("apply.daterangepicker", function (ev, picker) {
         if (picker.currentStep === "start") {
@@ -171,9 +171,9 @@ const bookingFormSearch = {
             },
           };
 
-          tripDateDepart.addClass("selected");
-          tripDateDepart.removeClass("selecting");
-          tripDatereturn.addClass("selecting");
+          tripDate.find("#trip__date--depart").addClass("selected");
+          tripDate.find("#trip__date--depart").removeClass("selecting");
+          tripDate.find("#trip__date--return").addClass("selecting");
 
           _this.bookingInform.tripType === constants.ONEWAY &&
             _this.paxSelectDropdown().open();
@@ -197,8 +197,8 @@ const bookingFormSearch = {
             },
           };
 
-          tripDatereturn.removeClass("selecting");
-          tripDatereturn.addClass("selected");
+          tripDate.find("#trip__date--return").removeClass("selecting");
+          tripDate.find("#trip__date--return").addClass("selected");
           _this.paxSelectDropdown().open();
         }
         _this.updateDateSelecting({
@@ -215,7 +215,7 @@ const bookingFormSearch = {
     tripPassenger.on("click", function (e) {
       $("#booking__form--passenger--inner").toggleClass("open");
     });
-    console.log(this.bookingInform);
+
     _this.renderPaxHtml(
       {
         adult: _this.bookingInform.passengers.adult,
@@ -231,7 +231,7 @@ const bookingFormSearch = {
       const actionType = $(this).data("type");
       const quantityValue = $(parentQuantity).find(".booking__quantity--value");
       let paxNumber = Number($(quantityValue).text());
-      console.log(quantityValue);
+
       if (actionType === constants.INCREATE) {
         paxNumber++;
       } else {
@@ -307,22 +307,24 @@ const bookingFormSearch = {
     });
   },
   onChangePromoCode: function () {
-    const promoCode = bookingForm.find(`input[name="promocode"]`);
+    const promoCode = bookingForm.find(`input[name="promoCode"]`);
 
     const _this = this;
-    promoCode.on("input", function (e) {
+    promoCode.on("change", function (e) {
       _this.bookingInform.promoCode = e.target.value;
     });
   },
   onSearchFlight: function () {
     const _this = this;
+
     searchFlightBtn.on("click", function (e) {
       e.preventDefault();
+
       bookingForm.submit();
       if (
+        _this.bookingInform.de === "" ||
         _this.bookingInform.departDate === "" ||
-        _this.bookingInform.departDate === "" ||
-        _this.bookingInform.departCode === ""
+        _this.bookingInform.departure === ""
       ) {
         _this.renderAlert().showPopup({
           type: "error",
@@ -396,6 +398,11 @@ const bookingFormSearch = {
 
       data.airportGroups.forEach((group, groupInd) => {
         let airport = [];
+        let apGroup = {
+          id: group.id,
+          engName: group.engName,
+          name: group.name,
+        };
         group.airports.forEach((item, itemInd) => {
           airport.push({
             id: item.code,
@@ -407,6 +414,7 @@ const bookingFormSearch = {
             provinceEngName: item.province.provinceEngName,
             code: item.code,
             engName: item.engName,
+            group: apGroup,
           });
         });
 
@@ -445,7 +453,7 @@ const bookingFormSearch = {
       url: () => {
         let ajaxURL;
         if (type === constants.RETURN_CODE) {
-          let departLocation = _this.bookingInform.departCode;
+          let departLocation = _this.bookingInform.departure.code;
           ajaxURL =
             baseURL +
             (departLocation !== ""
@@ -480,11 +488,15 @@ const bookingFormSearch = {
       tripDate.addClass("oneway");
     }
 
-    tripDateDepart.find(".booking__date--value").text(data.departDate.alt);
-    tripDateDepart.find('input[name="departDate"]').val(data.departDate.value);
+    tripDate
+      .find("#trip__date--depart .booking__date--value")
+      .text(data.departDate.alt);
+    tripDate.find('input[name="departDate"]').val(data.departDate.value);
 
-    tripDatereturn.find(".booking__date--value").text(data.returnDate.alt);
-    tripDatereturn.find('input[name="returnDate"]').val(data.returnDate.value);
+    tripDate
+      .find("#trip__date--return .booking__date--value")
+      .text(data.returnDate.alt);
+    tripDate.find('input[name="returnDate"]').val(data.returnDate.value);
   },
   renderPaxHtml: function (data, locale) {
     const localText = bookingFormText.find((item) => item.lang === locale);
