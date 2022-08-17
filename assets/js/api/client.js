@@ -1,16 +1,30 @@
 export function client(url, method = "GET") {
   return new Promise((resolve, reject) => {
-    let xhttp = new XMLHttpRequest();
+    let xhr = new XMLHttpRequest();
+    const progressBar = document.getElementById("progressBar");
 
-    xhttp.onreadystatechange = function () {
-      if (this.readyState == 4 && this.status == 200) {
+    xhr.onreadystatechange = function () {
+      if (this.readyState !== 4) return;
+
+      if (this.status == 200) {
         let data = JSON.parse(this.response);
 
         resolve(data);
+      } else {
+        reject("can't get data from async");
       }
     };
-    xhttp.open(method, url, true);
-    xhttp.send();
+    // xhr.onprogress = (evt) => {
+    //   if (evt.lengthComputable === true) {
+    //     console.log(evt);
+    //     progressBar.style.transition = `all linear ${evt.timeStamp}ms`;
+    //     progressBar.style.width =
+    //       Math.round(evt.loaded / evt.total) * 100 + "%";
+    //   }
+    // };
+
+    xhr.open(method, url, true);
+    xhr.send();
   });
 }
 

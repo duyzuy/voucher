@@ -1493,8 +1493,10 @@ button:focus:not(:focus-visible){
     font-weight: 900;
 }
 .booking__form__dropdown .select2-results__group{
-    background-color: #f9f9f9;
-    padding: 10px 15px
+    background-color: #e13029;
+    padding: 10px 15px;
+    color: #fff;
+    text-transform: uppercase;
 }
 .booking__form__dropdown .citypare__name i,
 .trip__date--icon{
@@ -2798,6 +2800,62 @@ del .currency-symbol{
 .vj__nodata-image svg, 
 .vj__nodata-image path{
     fill: #d3d3d3
+}
+.booking__layout--button--inner{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.booking__layout--button--inner > button{
+    display: block;
+    width: 100%;
+    max-width: 240px;
+}
+#progressBar{
+    position: fixed;
+    width: 0;
+    height: 2px;
+    background-color: red;
+    left: 0;
+    bottom: 0;
+    z-index: 99;
+    pointer-events: none;
+
+}
+
+.pax__form{
+    margin-bottom: 30px;
+}
+.pax__form--header{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #ffff;
+    padding: 15px 20px;
+}
+.pax__form--header-text{
+
+}
+.pax__form--header-text > div, 
+.pax__form--header-text > p{
+    display: inline-block;
+    line-height: 1.5;
+}
+.pax__form--header-text p{
+    margin-bottom: 0;
+    font-weight: bold;
+}
+
+.pax__form-inputs{
+    padding: 15px 20px;
+    background-color: #ffff;
+}
+.pax__form--row{
+    display: flex;
+    align-items: center;
+}
+.pax__form .form-control{
+    border-radius: 5px;
 }
 @keyframes slidingBarOne {
     0%{

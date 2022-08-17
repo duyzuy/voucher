@@ -19,6 +19,14 @@ export const constants = {
   DECREATE: "decreate",
   DIRECT: "direct",
   ONE_STOP: "one-stop",
+  DEPARTURE: "departure",
+  RETURN: "return",
+};
+export const status = {
+  SUCCESS: "success",
+  FAILED: "failed",
+  PENDING: "pending",
+  LOADING: "loading",
 };
 export const bkInforKey = {
   TripType: "tripType",

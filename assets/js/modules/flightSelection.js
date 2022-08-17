@@ -22,10 +22,14 @@ const flightSelection = {
   bookingInformation: bookingInformation,
   airportGroups: [],
   isSuccess: !1,
+  isDepartSuccess: !1,
+  isReturnSuccess: !1,
   asyncStatus: {
     airports: !1,
     flightOptions: !1,
   },
+  currentStack: "",
+  constant: constants,
   start: function (locale) {
     const _this = this;
     this.setDefault(locale);
@@ -116,7 +120,7 @@ const flightSelection = {
       },
     });
   },
-  flightOptionSelection: function ({ lang }, asyncData) {
+  flightOptionSelection: async function ({ lang }, asyncData) {
     const _this = this;
 
     calendarDepart.length > 0 &&
@@ -153,8 +157,8 @@ const flightSelection = {
 
             Object.values(_this.asyncStatus).some((key) => key === false) ===
             true
-              ? (_this.isSuccess = false)
-              : (_this.isSuccess = true);
+              ? (_this.isDepartSuccess = false)
+              : (_this.isDepartSuccess = true);
 
             _this.airportGroups = airportData.airportGroups;
             _this.bookingInformation.travelOption = flightOptions.travelOption;
@@ -163,15 +167,12 @@ const flightSelection = {
             console.log("load data async success");
           } catch (error) {
             console.log(error);
-            _this.isSuccess = false;
+            _this.isDepartSuccess = false;
           } finally {
             slider.setLoading(false);
-            // flightOptionsDepart
-            //   .find(".booking__layout--flights")
-            //   .html(noFlight());
           }
 
-          if (_this.isSuccess === true) {
+          if (_this.isDepartSuccess === true) {
             _this.setBookingValue(
               bkInforKey.SessionId,
               _this.bookingInformation.sessionId
@@ -204,8 +205,73 @@ const flightSelection = {
           locale: _this.bookingInformation.locale,
           minimumDate: _this.bookingDepartDate,
         })
-        .on("select.calendar", function (e, calendar) {
-          const returnDate = calendar.currentSelect;
+        .on("select.calendar", async function (e, slider) {
+          const { calendar } = slider;
+
+          const returnDate = calendar.selected;
+          const returnTripCode = `${_this.bookingInformation.return.code}-${_this.bookingInformation.departure.code}`;
+          console.log(returnTripCode);
+          _this.setBookingValue(bkInforKey.returnDate, returnDate);
+          let airportReturn = {
+            group: {},
+            airport: {},
+          };
+
+          try {
+            slider.setLoading(true);
+            flightOptionsReturn
+              .find(".booking__layout--flights")
+              .html(loadingTemplate());
+            const [airportData, flightOptions] = await asyncData(lang);
+
+            airportData && airportData.status === true
+              ? (_this.asyncStatus.airports = true)
+              : (_this.asyncStatus.airports = false);
+
+            flightOptions && flightOptions.status === true
+              ? (_this.asyncStatus.flightOptions = true)
+              : (_this.asyncStatus.flightOptions = false);
+
+            Object.values(_this.asyncStatus).some((key) => key === false) ===
+            true
+              ? (_this.isDepartSuccess = false)
+              : (_this.isDepartSuccess = true);
+
+            _this.airportGroups = airportData.airportGroups;
+            _this.bookingInformation.travelOption = flightOptions.travelOption;
+            //set flights if success get full data
+
+            console.log("load data async success");
+          } catch (error) {
+            console.log(error);
+            _this.isDepartSuccess = false;
+          } finally {
+            slider.setLoading(false);
+          }
+
+          if (_this.isDepartSuccess === true) {
+            _this.setBookingValue(
+              bkInforKey.SessionId,
+              _this.bookingInformation.sessionId
+            );
+            _this.setBookingValue(
+              bkInforKey.SessionExpIn,
+              _this.bookingInformation.sessionExpIn
+            );
+            _this.setBookingValue(
+              bkInforKey.TravelOption,
+              _this.bookingInformation.travelOption
+            );
+            const flightList = _this.flightItemsOptions(
+              _this.bookingInformation.travelOption[returnTripCode],
+              _this.airportGroups
+            );
+            flightOptionsReturn.find(".booking__layout--flights").html("");
+            for (const fl of flightList) {
+              flightOptionsReturn.find(".booking__layout--flights").append(fl);
+            }
+          }
+          console.log(_this.bookingInformation);
         });
   },
   flightItemsOptions: function (flightOptions, airportData) {
@@ -364,7 +430,7 @@ const flightSelection = {
             <p class="duration-time">2 giờ 15 phút</p>
           </li>
           <li>
-            <button class="btn btn-flight-option-detail">
+            <button class="btn btn-flight-option-detail" type="button">
               Chi tiết <i class="bi bi-chevron-down"></i>
             </button>
           </li>
@@ -384,7 +450,7 @@ const flightSelection = {
         </p>
       </div>
       <div class="flight-option-btns">
-        <button class="btn btn-booking-selecting">
+        <button class="btn btn-booking-selecting" type="button">
           Chọn
         </button>
       </div>

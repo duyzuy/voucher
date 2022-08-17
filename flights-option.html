@@ -18,6 +18,7 @@
 
 
 <body>
+  <div id="progressBar"></div>
   <div id="app" class="wrapper">
     <div class="mobile__menu">
       <div class="overlay"></div>
@@ -162,82 +163,80 @@
 
     <!-----------------main page----------------->
     <div class="wrapper__main booking__layout">
-      <form id="bookingFlightForm" method="POST" action="/passengers.html">
-        <!------------value from form submit------------>
-        <input type="hidden" name="tripType" value="return" />
-        <input type="hidden" name="depatureCode" value="HAN" />
-        <input type="hidden" name="tripDeparture"
-          value='{"id":"SGN","name":"Sân bay Tân Sơn Nhất","provinceName":"Tp. Hồ Chí Minh","provinceEngName":"Ho Chi Minh","code":"SGN","engName":"Tan Son Nhat Airport","group":{"id":"6ce7c9e9-e5e3-40f5-9902-38a52b0e5fc8","engName":"Vietnam","name":"Việt Nam"}}'>
-        <input type="hidden" name="returnCode" value="SGN" />
-        <input type="hidden" name="tripReturn"
-          value='{"id":"HAN","name":"Sân bay Nội Bài","provinceName":"Hà Nội","provinceEngName":"Ha Noi","code":"HAN","engName":"Noibai Airport","group":{"id":"6ce7c9e9-e5e3-40f5-9902-38a52b0e5fc8","engName":"Vietnam","name":"Việt Nam"}}' />
-        <input type="hidden" name="departDate" value="18-08-2022" />
-        <input type="hidden" name="returnDate" value="27-08-2022" />
-        <input type="hidden" name="adult" value="1" />
-        <input type="hidden" name="children" value="1" />
-        <input type="hidden" name="infant" value="1" />
-        <input type="hidden" name="promoCode" value="VJ888" />
-        <!------------value from selection flight------------>
-        <input type="hidden" name="flight_sector_one" value="" />
-        <input type="hidden" name="flight_sector_second" value="" />
-        <input type="hidden" name="sessionId" value="" />
-        <input type="hidden" name="travelOption" value="" />
-        <div class="booking__layout--header">
-          <div class="container">
-            <div class="row">
-              <div class="col-12 col-md-7 col-left booking__layout--header--infor">
-                <div class="header--infor">
-                  <p class="destinations">
-                    Hà nội
-                    <span class="icon"><img src="./images/booking/ic-return.svg" /></span>
-                    Tp Hồ Chí Minh
-                  </p>
-                  <p class="triptype-passengers">
-                    <span class="status-triptype">Khứ hồi</span><span class="status-passenger">1 Người lớn, 1 Trẻ em,
-                      1 Em bé</span>
-                  </p>
-                </div>
-                <div class="header--btns">
-                  <button class="btn btn-outline-dark btn-sm">
-                    <i class="bi bi-pencil-fill"></i> Sửa
-                  </button>
-                </div>
+      <div class="booking__layout--header">
+        <div class="container">
+          <div class="row">
+            <div class="col-12 col-md-7 col-left booking__layout--header--infor">
+              <div class="header--infor">
+                <p class="destinations">
+                  Hà nội
+                  <span class="icon"><img src="./images/booking/ic-return.svg" /></span>
+                  Tp Hồ Chí Minh
+                </p>
+                <p class="triptype-passengers">
+                  <span class="status-triptype">Khứ hồi</span><span class="status-passenger">1 Người lớn, 1 Trẻ em,
+                    1 Em bé</span>
+                </p>
               </div>
-              <div class="col-12 col-md-5 col-right booking__layout--header--status">
-                <ul class="status__inner">
-                  <li class="step status-search current">
-                    <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z" />
-                      </svg>
-                    </span>
-                  </li>
-                  <li class="step status-user">
-                    <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M7.5 6.5C7.5 8.981 9.519 11 12 11C14.481 11 16.5 8.981 16.5 6.5C16.5 4.019 14.481 2 12 2C9.519 2 7.5 4.019 7.5 6.5ZM20 21H21V20C21 16.141 17.859 13 14 13H10C6.14 13 3 16.141 3 20V21H20Z" />
-                      </svg>
-                    </span>
-                  </li>
-                  <li class="step status-pay">
-                    <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M4.93206 4.28613C4.07958 4.28613 3.26201 4.62478 2.65922 5.22758C2.05642 5.83037 1.71777 6.64794 1.71777 7.50042V8.14328H22.2858V7.50042C22.2858 6.64794 21.9471 5.83037 21.3443 5.22758C20.7415 4.62478 19.924 4.28613 19.0715 4.28613H4.93292H4.93206ZM1.71777 16.5004V9.42899H22.2858V16.5004C22.2858 17.3529 21.9471 18.1705 21.3443 18.7733C20.7415 19.3761 19.924 19.7147 19.0715 19.7147H4.93292C4.08043 19.7147 3.26287 19.3761 2.66007 18.7733C2.05728 18.1705 1.71863 17.3529 1.71863 16.5004H1.71777ZM15.6429 14.1433C15.4724 14.1433 15.3089 14.211 15.1883 14.3316C15.0678 14.4521 15.0001 14.6156 15.0001 14.7861C15.0001 14.9566 15.0678 15.1201 15.1883 15.2407C15.3089 15.3613 15.4724 15.429 15.6429 15.429H18.6429C18.8134 15.429 18.9769 15.3613 19.0975 15.2407C19.218 15.1201 19.2858 14.9566 19.2858 14.7861C19.2858 14.6156 19.218 14.4521 19.0975 14.3316C18.9769 14.211 18.8134 14.1433 18.6429 14.1433H15.6429Z" />
-                      </svg>
-                    </span>
-                  </li>
-                </ul>
+              <div class="header--btns">
+                <button class="btn btn-outline-dark btn-sm">
+                  <i class="bi bi-pencil-fill"></i> Sửa
+                </button>
               </div>
+            </div>
+            <div class="col-12 col-md-5 col-right booking__layout--header--status">
+              <ul class="status__inner">
+                <li class="step status-search current">
+                  <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z" />
+                    </svg>
+                  </span>
+                </li>
+                <li class="step status-user">
+                  <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M7.5 6.5C7.5 8.981 9.519 11 12 11C14.481 11 16.5 8.981 16.5 6.5C16.5 4.019 14.481 2 12 2C9.519 2 7.5 4.019 7.5 6.5ZM20 21H21V20C21 16.141 17.859 13 14 13H10C6.14 13 3 16.141 3 20V21H20Z" />
+                    </svg>
+                  </span>
+                </li>
+                <li class="step status-pay">
+                  <span><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M4.93206 4.28613C4.07958 4.28613 3.26201 4.62478 2.65922 5.22758C2.05642 5.83037 1.71777 6.64794 1.71777 7.50042V8.14328H22.2858V7.50042C22.2858 6.64794 21.9471 5.83037 21.3443 5.22758C20.7415 4.62478 19.924 4.28613 19.0715 4.28613H4.93292H4.93206ZM1.71777 16.5004V9.42899H22.2858V16.5004C22.2858 17.3529 21.9471 18.1705 21.3443 18.7733C20.7415 19.3761 19.924 19.7147 19.0715 19.7147H4.93292C4.08043 19.7147 3.26287 19.3761 2.66007 18.7733C2.05728 18.1705 1.71863 17.3529 1.71863 16.5004H1.71777ZM15.6429 14.1433C15.4724 14.1433 15.3089 14.211 15.1883 14.3316C15.0678 14.4521 15.0001 14.6156 15.0001 14.7861C15.0001 14.9566 15.0678 15.1201 15.1883 15.2407C15.3089 15.3613 15.4724 15.429 15.6429 15.429H18.6429C18.8134 15.429 18.9769 15.3613 19.0975 15.2407C19.218 15.1201 19.2858 14.9566 19.2858 14.7861C19.2858 14.6156 19.218 14.4521 19.0975 14.3316C18.9769 14.211 18.8134 14.1433 18.6429 14.1433H15.6429Z" />
+                    </svg>
+                  </span>
+                </li>
+              </ul>
             </div>
           </div>
         </div>
-        <div class="booking__layout--container">
+      </div>
+      <div class="booking__layout--container">
+        <form id="bookingFlightForm" method="POST" action="/passengers.html">
+          <!------------value from form submit------------>
+          <input type="hidden" name="tripType" value="return" />
+          <input type="hidden" name="depatureCode" value="HAN" />
+          <input type="hidden" name="tripDeparture"
+            value='{"id":"SGN","name":"Sân bay Tân Sơn Nhất","provinceName":"Tp. Hồ Chí Minh","provinceEngName":"Ho Chi Minh","code":"SGN","engName":"Tan Son Nhat Airport","group":{"id":"6ce7c9e9-e5e3-40f5-9902-38a52b0e5fc8","engName":"Vietnam","name":"Việt Nam"}}'>
+          <input type="hidden" name="returnCode" value="SGN" />
+          <input type="hidden" name="tripReturn"
+            value='{"id":"HAN","name":"Sân bay Nội Bài","provinceName":"Hà Nội","provinceEngName":"Ha Noi","code":"HAN","engName":"Noibai Airport","group":{"id":"6ce7c9e9-e5e3-40f5-9902-38a52b0e5fc8","engName":"Vietnam","name":"Việt Nam"}}' />
+          <input type="hidden" name="departDate" value="18-08-2022" />
+          <input type="hidden" name="returnDate" value="27-08-2022" />
+          <input type="hidden" name="adult" value="1" />
+          <input type="hidden" name="children" value="1" />
+          <input type="hidden" name="infant" value="1" />
+          <input type="hidden" name="promoCode" value="VJ888" />
+          <!------------value from selection flight------------>
+          <input type="hidden" name="flight_sector_one" value="" />
+          <input type="hidden" name="flight_sector_second" value="" />
+          <input type="hidden" name="sessionId" value="" />
+          <input type="hidden" name="travelOption" value="" />
           <div class="container">
             <div class="row">
               <div class="col-12">
+
                 <!--------------start flights selections------------------->
                 <div id="booking__layout--flights--depart" class="booking__layout--flights flights--sector">
                   <div class="booking__layout--title mb-3">
@@ -1256,13 +1255,19 @@
                   </div>
                 </div>
                 <!--------------end of flights selections------------------->
-
+                <div class="booking__layout--buttons">
+                  <div class="booking__layout--button--inner">
+                    <button type="button" class="btn btn-outline-info">Quay lại</button>
+                    <button id="button__booking--next" class="btn btn-primary btn-booking" type="button">
+                      Tìm chuyến bay
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div>
-
-      </form>
+        </form>
+      </div>
     </div>
   </div>
 
