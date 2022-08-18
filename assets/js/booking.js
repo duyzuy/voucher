@@ -4,6 +4,7 @@ import { bookingFormText, dateLocale } from "./translate.js";
 
 import bookingFormSearch from "./modules/bookingFormSearch.js";
 import flightSelection from "./modules/flightSelection.js";
+import passengers from "./modules/passengers.js";
 import { isLocation } from "./utils/helper.js";
 const app = {
   init: function (locale) {
@@ -15,6 +16,10 @@ const app = {
 
     if (isLocation("flights-option")) {
       flightSelection.start(locale);
+    }
+
+    if (isLocation("flights-passenger")) {
+      passengers.start(locale);
     }
   },
 };

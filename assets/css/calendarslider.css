@@ -91,14 +91,7 @@
     left: 10px
 }
 
-.bk__calendar--container ul li.selected .name-of-day{
-    font-size: 20px;
-    color: #c30c13
-}
-.bk__calendar--container ul li.selected .day-format{
-    font-size: 14px;
-    color: #c30c13
-}
+
 .bk__calendar--slider{
     position: relative;
     overflow: hidden;
@@ -121,6 +114,17 @@
 .bk__calendar--container .name-of-day{
     font-size: 18px;
     font-weight: bold;
+}
+.bk__calendar--container ul li.selected .name-of-day, 
+.bk__calendar--container ul li.selected .day-format{
+    font-size: 20px;
+    color: #e1192f;
+    font-family: 'Jambono';
+    font-weight: normal;
+
+}
+.bk__calendar--container ul li.selected .day-format{
+    font-size: 14px;
 }
 @media screen and (max-width: 991.98px) {
    
@@ -148,13 +152,14 @@
         margin-right: 15px;
     }
   
-    .bk__calendar--container ul li.selected .name-of-day{
+    .bk__calendar--container ul li.selected .name-of-day, 
+    .bk__calendar--container ul li.selected .day-format{
         font-size: 16px;
         color: #c30c13
     }
     .bk__calendar--container ul li.selected .day-format{
         font-size: 13px;
-        color: #c30c13
+
     }
     .bk__calendar--slider{
         margin-left: 15px;

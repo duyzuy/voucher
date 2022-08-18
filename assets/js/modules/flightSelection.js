@@ -436,15 +436,8 @@ const flightSelection = {
           </li>
         </ul>
       </div>`;
-    let flightOftionPrice = `<div class="flight-option-price">
+    let flightOftionPrice = `<div class="flight-option-price"><span class="line"></span><div class="flight-option-price-wrap">
       <div class="flight-option-price--inner">
-        <!-- <p class="price">
-          <del
-            >1,200,000<span class="currency-symbol"
-              >VND</span
-            ></del
-          >
-        </p> -->
         <p class="price">
           <ins>850,000<span class="currency-symbol">VND</span></ins>
         </p>
@@ -453,6 +446,7 @@ const flightSelection = {
         <button class="btn btn-booking-selecting" type="button">
           Chọn
         </button>
+      </div>
       </div>
     </div>`;
 
@@ -681,7 +675,7 @@ const flightSelection = {
       e.preventDefault();
       const item = $(this).closest(".flight-option-item");
       const dropdownItem = item.find(".flight-option-dropdown");
-      console.log(item);
+
       if (item.hasClass("expanded")) {
         item.removeClass("expanded");
         $(dropdownItem[0]).removeAttr("style");
