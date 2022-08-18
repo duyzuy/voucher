@@ -84,7 +84,7 @@ const flightSelection = {
 
     isExistsInput(adultInput) &&
       this.setBookingValue(bkInforKey.Adult, adultInput.val());
-    console.log(adultInput);
+
     isExistsInput(childrenInput) &&
       this.setBookingValue("children", childrenInput.val());
     isExistsInput(infantInput) &&
@@ -92,8 +92,6 @@ const flightSelection = {
 
     isExistsInput(promoCodeInput) &&
       this.setBookingValue("promoCode", promoCodeInput.val());
-
-    console.log(this.bookingInformation);
   },
   setBookingValue: function (key, value) {
     if (key === bkInforKey.DepartDate || key === bkInforKey.ReturnDate) {
@@ -134,7 +132,7 @@ const flightSelection = {
 
           const departureDate = calendar.selected;
           const departTripCode = `${_this.bookingInformation.departure.code}-${_this.bookingInformation.return.code}`;
-          console.log(departTripCode);
+
           _this.setBookingValue(bkInforKey.DepartDate, departureDate);
           let airportDepart = {
             group: {},
@@ -163,10 +161,7 @@ const flightSelection = {
             _this.airportGroups = airportData.airportGroups;
             _this.bookingInformation.travelOption = flightOptions.travelOption;
             //set flights if success get full data
-
-            console.log("load data async success");
           } catch (error) {
-            console.log(error);
             _this.isDepartSuccess = false;
           } finally {
             slider.setLoading(false);
@@ -194,7 +189,6 @@ const flightSelection = {
               flightOptionsDepart.find(".booking__layout--flights").append(fl);
             }
           }
-          console.log(_this.bookingInformation);
         });
 
     //handle return select flights
@@ -203,14 +197,14 @@ const flightSelection = {
         .sliderCalendar({
           selected: _this.bookingreturnDate,
           locale: _this.bookingInformation.locale,
-          minimumDate: _this.bookingDepartDate,
+          // minimumDate: _this.bookingDepartDate,
         })
         .on("select.calendar", async function (e, slider) {
           const { calendar } = slider;
 
           const returnDate = calendar.selected;
           const returnTripCode = `${_this.bookingInformation.return.code}-${_this.bookingInformation.departure.code}`;
-          console.log(returnTripCode);
+
           _this.setBookingValue(bkInforKey.returnDate, returnDate);
           let airportReturn = {
             group: {},
@@ -240,8 +234,6 @@ const flightSelection = {
             _this.airportGroups = airportData.airportGroups;
             _this.bookingInformation.travelOption = flightOptions.travelOption;
             //set flights if success get full data
-
-            console.log("load data async success");
           } catch (error) {
             console.log(error);
             _this.isDepartSuccess = false;
@@ -270,8 +262,8 @@ const flightSelection = {
             for (const fl of flightList) {
               flightOptionsReturn.find(".booking__layout--flights").append(fl);
             }
+            _this.viewScrollShowing();
           }
-          console.log(_this.bookingInformation);
         });
   },
   flightItemsOptions: function (flightOptions, airportData) {
@@ -283,7 +275,7 @@ const flightSelection = {
       key,
       numberOfChanges,
       numberOfStops;
-    console.log(flightOptions[0]);
+
     let flightListHtml = [];
     flightOptions.forEach((fl) => {
       let classes = "";
@@ -352,7 +344,6 @@ const flightSelection = {
     return flightListHtml;
   },
   flightItem: function (data) {
-    // console.log(data);
     const flightOptionItem = document.createElement("div");
     flightOptionItem.classList.add("flight-option-item");
 
@@ -714,6 +705,27 @@ const flightSelection = {
     ]);
 
     return [airportList, flightOptions, asyncdts];
+  },
+  viewScrollShowing: function () {
+    let interSection = new IntersectionObserver(
+      (entries, observer) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting === true) {
+            $(entry.target).addClass("viewing");
+          } else {
+            $(entry.target).removeClass("viewing");
+          }
+        });
+        console.log(entries);
+        console.log(observer);
+      },
+      { rootMargin: "0px 0px 0px 0px" }
+    );
+
+    $(".flight-option-item").each((index, item) => {
+      interSection.observe(item);
+      interSection.takeRecords(item);
+    });
   },
 };
 export default flightSelection;
