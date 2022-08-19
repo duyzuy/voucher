@@ -21,6 +21,9 @@ const app = {
     if (isLocation("flights-passenger")) {
       passengers.start(locale);
     }
+    if (isLocation("flights-payment")) {
+      passengers.start(locale);
+    }
   },
 };
 

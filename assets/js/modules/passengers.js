@@ -25,6 +25,24 @@ const passengers = {
         }
       }
     );
+
+    $(".flight__sectors--header").on(
+      "click",
+      ".flight__sector--icon",
+      function (e) {
+        const targetEl = $(this).closest(".flight__sector--icon");
+        if (targetEl) {
+          const parentItem = $(this).closest(".flight__sectors");
+          if (parentItem.hasClass("expanded")) {
+            parentItem.removeClass("expanded");
+            $(this).html(`<i class="bi bi-plus-square-dotted"></i>`);
+          } else {
+            parentItem.addClass("expanded");
+            $(this).html(`<i class="bi bi-dash-square-dotted"></i>`);
+          }
+        }
+      }
+    );
   },
 };
 

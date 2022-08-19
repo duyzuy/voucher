@@ -3217,8 +3217,8 @@ del .currency-symbol{
     padding-top: 20px;
     display: flex;
 }
-.flight__sectors{
-
+.flight__sectors:not(.expanded) .flight__sectors--body{
+    display: none;
 }
 .flight__sectors--header{
     display: flex;
