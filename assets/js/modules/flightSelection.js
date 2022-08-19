@@ -12,7 +12,6 @@ import { client } from "../api/client.js";
 
 const calendarDepart = $("#bk__calendar--depart");
 const calendarReturn = $("#bk__calendar--return");
-const flightItem = $(".flight-option-item");
 const bookingFlightForm = $("#bookingFlightForm");
 
 const flightOptionsDepart = $("#booking__layout--flights--depart");
@@ -667,6 +666,7 @@ const flightSelection = {
       const item = $(this).closest(".flight-option-item");
       const dropdownItem = item.find(".flight-option-dropdown");
 
+      console.log($(this));
       if (item.hasClass("expanded")) {
         item.removeClass("expanded");
         $(dropdownItem[0]).removeAttr("style");
