@@ -2922,8 +2922,12 @@ del .currency-symbol{
 }
 
 /*===== start passenger page ======*/
-.col__booking-summary{
-
+.col__booking--summary{
+    width: 360px;
+}
+.col__booking--body{
+    flex: 1;
+    padding-right: 40px;
 }
 .booking__summary{
   
@@ -3068,13 +3072,13 @@ del .currency-symbol{
     margin-bottom: 0;
 }
 .summary-destination{
-    font-size: 14px;
+    font-size: 13px;
     font-weight: bold;
     text-transform: uppercase;
 
 }
 .summary-destination .title--icon {
-    margin: 0 15px
+    margin: 0 10px
 }
 .summary-destination .title--icon svg, 
 .summary-destination .title--icon path {
@@ -3192,13 +3196,16 @@ del .currency-symbol{
 .pax__form-collapse-btn{
     cursor: pointer;
 }
+.flight__box{
+    border-radius: 5px;
+    overflow: hidden;
+}
 .flight__header{
     display: flex;
     align-items: center;
     padding: 15px 20px;
     background: #fff;
     /* background: linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b); */
-    border-radius: 5px 5px 0 0;
     border-bottom: 1px solid #f1f1f1;
 }
 .flight__header h4, 
@@ -3225,33 +3232,34 @@ del .currency-symbol{
     justify-content: space-between;
     padding: 15px 20px;
     align-items: center;
-    border-bottom: 1px solid #f1f1f2;
 }
 .flight__sector--box{
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .box__sector{
-    padding: 15px 0;
-
-
+    padding-top: 15px;
+    padding-bottom: 15px;
 }
 .flight__sector--box .box__sector + .box__sector{
-    padding-left: 40px;
+    padding-left: 30px;
+    margin-left: 30px;
+    border-left: 1px solid #f1f1f1;
 }
 .box__sector--icon{
     float: left;
-    width: 36px;
-    height: 36px;
+    width: 32px;
+    height: 32px;
     background: linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b);
-    border-radius: 36px;
+    border-radius: 32px;
     text-align: center;
-    line-height: 32px;
+    line-height: 28px;
 }
 
 .box__sector-infor{
-    padding-left: 50px;
+    padding-left: 45px;
 }
 .box__sector-infor p{
     margin-bottom: 5px;
@@ -3264,8 +3272,8 @@ p.box__sector-destination{
 .box__sector--icon svg, 
 .box__sector--icon path{
     fill: white;
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
 }
 .flight__sector--icon{
     width: 40px;
@@ -3297,7 +3305,8 @@ p.box__sector-destination{
     left: -2px;
 }
 .flight__sectors--body{
-    padding: 20px 20px
+    padding: 20px 20px;
+    border-top: 1px solid #f1f1f1;
 }
 .flight__sectors--body .flight__sectors{
     max-width: 600px;
@@ -3310,6 +3319,10 @@ p.box__sector-destination{
 .flight__sector--label p{
     margin-bottom: 0;
     font-weight: bold;
+    background: -webkit-linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
 }
 .flight__sector--timeline{
     position: relative;
@@ -3320,7 +3333,7 @@ p.box__sector-destination{
     content: "";
     position: absolute;
     width: 1px;
-    height: 100%;
+    height: 80%;
     display: block;
     background-color: #f1f1f1;
     top: 0;
@@ -3354,15 +3367,20 @@ p.box__sector-destination{
     align-items: center;
 }
 .flight__sector--info-row.sector-one-stop .sector--stoptime{
-    padding-left: 40px;
+    padding-left: 20px;
 }
 .flight__sector--info-row .flight__sector--aircraft{
-    padding: 8px 20px;
+    padding-top: 8px;
+    padding-bottom: 8px;
     border-radius: 40px;
-    background-color: #f1f1f1;
+    color: #707070;
+    flex: 1
+ 
 }
 .flight__sector--info-row .flight__sector--aircraft li{
     float: left;
+    font-size: 12px;
+    text-transform: uppercase;
 }
 .flight__sector--info-row .flight__sector--aircraft li:not(li:last-of-type) {
     margin-right: 10px;
@@ -3428,7 +3446,128 @@ p.box__sector-destination{
     display: inline-block;
 }
 .flight__sector--info-row.sector-one-stop{
-    padding-left: 160px;
+    /* padding-left: 160px; */
+}
+.sector-one-stop .flight__sector--airport--info{
+   
+  
+    flex: 1;
+    width: 100%;
+}
+.flight__sector--onestop--info{
+ 
+    padding: 10px 15px;
+    border-radius: 27px;
+    font-size: 14px;
+    background-color: #f1f1f1;
+}
+.flight__sector--info-row.sector-one-stop .sector-icon{
+    background-color: transparent;
+    width: auto;
+    height: auto;
+ 
+}
+.flight__sector--info-row.sector-one-stop .sector-icon i{
+    color: initial;
+}
+.flight__paxs{
+    background: #fff;
+    padding: 15px 20px
+}
+.flight__paxs--body{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.flight__pax {
+    padding-left: 15px;
+    padding-right: 15px;
+    margin-bottom: 30px;
+}
+.flight__pax .flight__pax--inner{
+    padding: 10px 15px;
+    border: 1px solid #f1f1f1;
+    border-radius: 10px;
+    flex-basis: 50%;
+}
+.box-pax-detail .flight__pax--icon{
+    background: linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    line-height: 24px;
+    text-align: center;
+    float: left;
+
+}
+.box-pax-detail .flight__pax--infor{
+    padding-left: 40px;
+}
+.box-pax-detail .pax-type{
+    font-size: 13px;
+}
+.box-pax-detail .pax-name{
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.flight__pax--infor ul{
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+.box-pax-detail .flight__pax--icon svg,
+.box-pax-detail .flight__pax--icon path{
+    fill: #fff;
+}
+.flight__confirms{
+    padding: 20px;
+    background-color: #fff;
+    text-align: justify;
+}
+.vj-check {
+padding-left: 0;
+}
+.vj-check .form-check-input{
+    display: none;
+    opacity: 0;
+}
+.vj-check .form-check-label{
+    position: relative;
+    padding-left: 30px;
+    line-height: 1.3;
+}
+.vj-check .form-check-label::after,
+.vj-check .form-check-label::before{
+    content: "";
+    position: absolute;
+
+}
+.vj-check .form-check-label:after{
+    width: 20px;
+    height: 20px;
+    border: 2px solid #c2c2c2;
+    left: 0;
+    border-radius: 3px;
+}
+.vj-check .form-check-label:before{
+
+    width: 8px;
+    height: 12px;
+    border-right: 2px solid red;
+    border-bottom: 2px solid red;
+    transform: rotate(45deg) scale(0.5);
+    opacity: 0;
+    left: 6px;
+    top: 2px
+}
+.vj-check .form-check-input:checked ~ .form-check-label:before{
+    opacity: 1;
+    transform: rotate(45deg) scale(1);
+}
+.vj-check .form-check-input:checked ~ .form-check-label:after{
+    border-color: red;
 }
 @keyframes slidingBarOne {
     0%{
@@ -3520,7 +3659,11 @@ p.box__sector-destination{
     }
 }
 @media screen and (max-width: 1399px) {
-
+    .flight__sector--box .box__sector + .box__sector{
+        padding-left: 0;
+        margin-left: 0;
+        border-left-width: 0;
+    }
 }
 @media screen and (max-width: 1199px) {
     .voucher__detail__template{
@@ -3551,6 +3694,11 @@ p.box__sector-destination{
     }
     .flight-option-item{
         margin-bottom: 20px;
+    }
+    .flight__sector--box .box__sector + .box__sector{
+        padding-left: 0;
+        margin-left: 0;
+        border-left-width: 0;
     }
 
 }
@@ -3782,6 +3930,17 @@ p.box__sector-destination{
      .flight-option-infor{
          padding-left: 15px;
      }
+     .col__booking--body{
+        padding-right: calc(var(--bs-gutter-x) * .5);
+        width: 100%;
+        flex-basis: 100%;
+     }
+     .col__booking--summary{
+        display: none;
+     }
+     .flight__pax{
+        margin-bottom: 15px;
+     }
 
 }
 @media screen and (max-width: 767.98px) {
@@ -3907,6 +4066,55 @@ p.box__sector-destination{
     .flight-option-detail .option-value .aircraft p + p{
         margin-left: 10px;
     }
+    .booking__layout--title .title, .booking__summary-header .title{
+        font-size: 20px;
+     }
+     .pax__form--header{
+        padding: 10px 15px;  
+     }
+     .pax__form-inputs{
+        padding: 10px 15px 0;
+     }
+     .mb-4{
+        margin-bottom: 15px !important;
+     }
+     .flight__sector--info-row .flight__sector--date-time .flight-time,
+     .flight__sector--info-row .city-name{
+        font-size: 13px;
+     }
+     .flight__sector--info-row .flight__sector--date-time > span, .flight__sector--info-row .flight__sector--duration p,
+     .flight__sector--airport--info p{
+        font-size: 12px;
+     }
+     .flight__sector--info-row .flight__sector--aircraft{
+        font-size: 11px;
+     }
+     .flight__sectors--body{
+        padding-left: 15px;
+        padding-right: 15px;
+     }
+     .flight__sector--info-row .flight__sector--date-time, .flight__sector--info-row .flight__sector--duration{
+        width: 90px;
+        padding-right: 10px;
+     }
+     .flight__sectors--body .sector-icon{
+        width: 24px;
+        height: 24px;
+     }
+     .flight__sectors--body .sector-icon > svg,
+     .ic-sector-stop{
+        width: 12px;
+        height: 12px;
+     }
+     .sector-icon i{
+        font-size: 12px;
+     }
+     .flight__sector--timeline:after{
+        left: 101px;
+     }
+     .flight__sector--info-row{
+        margin-bottom: 15px;
+     }
 }
 @media screen and (max-width: 575.98px){
 

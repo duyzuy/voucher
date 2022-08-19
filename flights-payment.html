@@ -240,7 +240,7 @@
                     <input type="hidden" name="travelOption" value="" />
                     <div class="container">
                         <div class="row">
-                            <div class="col-12 col-lg-8 col__payment">
+                            <div class="col__booking--body">
 
                                 <!--------------start flights passengers------------------->
                                 <div class="booking__layout--payment">
@@ -249,7 +249,7 @@
                                             <h3 class="title">Hành trình</h3>
                                         </div>
                                         <div class="booking__layout--body">
-                                            <div class="flight__box box-flight-detail">
+                                            <div class="flight__box box-flight-detail mb-4">
                                                 <div class="flight__header">
                                                     <div class="flight__text">
                                                         <h4>Thông tin chuyến bay</h4>
@@ -342,6 +342,7 @@
                                                                                 </div>
                                                                                 <div
                                                                                     class="flight__sector--airport--info">
+
                                                                                     <span class="sector-icon"><svg
                                                                                             width="24" height="24"
                                                                                             viewBox="0 0 24 24"
@@ -403,12 +404,13 @@
                                                                                 </div>
                                                                             </div>
 
+                                                                        </div>
 
-
-                                                                            <div
-                                                                                class="flight__sector--info-row sector-one-stop">
+                                                                        <div
+                                                                            class="flight__sector--info-row sector-one-stop">
+                                                                            <div class="flight__sector--airport--info">
                                                                                 <div
-                                                                                    class="flight__sector--airport--info">
+                                                                                    class="flight__sector--onestop--info">
                                                                                     <span class="sector-icon">
                                                                                         <i class="bi bi-clock"></i>
                                                                                     </span>
@@ -421,7 +423,8 @@
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
-
+                                                                        </div>
+                                                                        <div class="flight__sector--timeline">
                                                                             <div
                                                                                 class="flight__sector--info-row sector-point">
                                                                                 <div class="flight__sector--date-time">
@@ -595,90 +598,88 @@
                                                 </div>
                                             </div>
 
-                                            <div class="flight__box box-pax-detail">
-                                                <div class="flight__header">
+                                            <div class="flight__box box-pax-detail mb-4">
+                                                <div class="flight__header box-pax-header">
                                                     <div class="flight__text">
                                                         <h4>Thông tin hành khách</h4>
                                                     </div>
 
                                                 </div>
                                                 <div class="flight__paxs">
-                                                    <div class="flight__paxs--header">
-                                                        <div class="flight__sector--box">
-                                                            <div class="box__sector">
-                                                                <span class="box__sector--icon"><svg width="24"
-                                                                        height="24" viewBox="0 0 24 24"
-                                                                        xmlns="http://www.w3.org/2000/svg">
+                                                    <div class="flight__paxs--body row">
+                                                        <div class="col-12 col-md-6 flight__pax adult">
+                                                            <div class="flight__pax--inner">
+                                                                <div class="flight__pax--icon">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
                                                                         <path
-                                                                            d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
-                                                                        </path>
+                                                                            d="M12.16 1.59961C12.7905 1.59961 13.3951 1.8431 13.8409 2.27652C14.2867 2.70994 14.5371 3.29778 14.5371 3.91072C14.5371 4.52367 14.2867 5.11151 13.8409 5.54492C13.3951 5.97834 12.7905 6.22183 12.16 6.22183C11.5295 6.22183 10.9249 5.97834 10.4791 5.54492C10.0333 5.11151 9.78286 4.52367 9.78286 3.91072C9.78286 3.29778 10.0333 2.70994 10.4791 2.27652C10.9249 1.8431 11.5295 1.59961 12.16 1.59961ZM10.3771 7.37739H13.9429C14.5733 7.37739 15.178 7.62088 15.6238 8.0543C16.0696 8.48771 16.32 9.07555 16.32 9.6885V16.0441H14.5371V22.3996H9.78286V16.0441H8V9.6885C8 9.07555 8.25045 8.48771 8.69625 8.0543C9.14205 7.62088 9.74669 7.37739 10.3771 7.37739Z"
+                                                                            fill="#fff"></path>
                                                                     </svg>
-                                                                </span>
-
-                                                                <div class="box__sector-infor">
-                                                                    <p class="box__sector-destination">
-                                                                        <span class="title-location">Tp Hồ Chí Minh
-                                                                            (SGN)</span>
-                                                                        <span class="space"><i
-                                                                                class="bi bi-arrow-right"></i></span>
-                                                                        <span class="title-location">Hà Nội (HAN)</span>
-                                                                    </p>
-                                                                    <p class="box__sector-sub">
-                                                                        <span class="summary-sub-date">Thứ 6, 26 thg 08
-                                                                            2022</span>
-                                                                        <span class="summary-sub-time">09:10 -
-                                                                            10:10</span>
-                                                                        <span
-                                                                            class="summary-sub-flightNumber">VJ358</span>
-                                                                    </p>
                                                                 </div>
-                                                            </div>
-                                                            <div class="box__sector">
-
-                                                                <span class="box__sector--icon"><svg width="24"
-                                                                        height="24" viewBox="0 0 24 24"
-                                                                        xmlns="http://www.w3.org/2000/svg">
-                                                                        <path
-                                                                            d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
-                                                                        </path>
-                                                                    </svg>
-                                                                </span>
-
-                                                                <div class="box__sector-infor">
-                                                                    <p class="box__sector-destination">
-                                                                        <span class="title-location">Hà Nội (HAN)</span>
-                                                                        <span class="space"><i
-                                                                                class="bi bi-arrow-right"></i></span>
-                                                                        <span class="title-location">Tp Hồ Chí Minh
-                                                                            (SGN)</span>
-                                                                    </p>
-                                                                    <p class="box__sector-sub">
-                                                                        <span class="summary-sub-date">Thứ 6, 26 thg 08
-                                                                            2022</span>
-                                                                        <span class="summary-sub-time">09:10 -
-                                                                            10:10</span>
-                                                                        <span
-                                                                            class="summary-sub-flightNumber">VJ358</span>
-                                                                    </p>
+                                                                <div class="flight__pax--infor">
+                                                                    <ul>
+                                                                        <li class="pax-type">Người lớn</li>
+                                                                        <li class="pax-name">Vu, Truong Duy</li>
+                                                                    </ul>
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div class="flight__sector--icon">
-                                                            <i class="bi-dash-square-dotted"></i>
+                                                        <div class="col-12 col-md-6 flight__pax child">
+                                                            <div class="flight__pax--inner">
+                                                                <div class="flight__pax--icon">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M9.66531 5.6752C9.66531 4.30827 10.7573 3.2002 12.1044 3.2002C13.4516 3.2002 14.5436 4.30827 14.5436 5.6752C14.5436 7.04208 13.4516 8.1502 12.1044 8.1502C10.7573 8.1502 9.66531 7.04208 9.66531 5.6752ZM18.2913 5.72239C17.8679 5.29281 17.1815 5.29281 16.7582 5.72239L13.8235 8.70019H10.3853L7.45068 5.72239C7.02735 5.29281 6.34094 5.29281 5.91762 5.72239C5.49426 6.15198 5.49426 6.84845 5.91762 7.27803L9.12328 10.5308V19.7002C9.12328 20.3077 9.60864 20.8002 10.2073 20.8002H10.7494C11.3481 20.8002 11.8334 20.3077 11.8334 19.7002V15.8502H12.3755V19.7002C12.3755 20.3077 12.8608 20.8002 13.4595 20.8002H14.0015C14.6003 20.8002 15.0856 20.3077 15.0856 19.7002V10.5308L18.2913 7.278C18.7146 6.84841 18.7146 6.15198 18.2913 5.72239Z"
+                                                                            fill="#fff"></path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="flight__pax--infor">
+                                                                    <ul>
+                                                                        <li class="pax-type">Trẻ em</li>
+                                                                        <li class="pax-name">Nguyen, Thanh Hung</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 flight__pax infant">
+                                                            <div class="flight__pax--inner">
+                                                                <div class="flight__pax--icon">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M11.9996 9C13.4731 9 14.6666 7.88125 14.6666 6.5C14.6666 5.11875 13.4731 4 11.9996 4C10.5261 4 9.33267 5.11875 9.33267 6.5C9.33267 7.88125 10.5261 9 11.9996 9ZM10.2194 16.775L11.0729 15.775L9.02263 14.175L7.49246 15.9687C7.11242 16.4125 7.10242 17.0437 7.46579 17.5L9.06597 19.5C9.32933 19.8281 9.72938 20 10.1328 20C10.4095 20 10.6928 19.9187 10.9328 19.75C11.5229 19.3375 11.6396 18.5531 11.1995 18L10.2194 16.775ZM14.9766 14.175L12.9264 15.775L13.7798 16.775L12.7997 18C12.3597 18.5531 12.4764 19.3375 13.0664 19.75C13.3065 19.9187 13.5865 20 13.8665 20C14.2732 20 14.6733 19.8281 14.9333 19.5L16.5335 17.5C16.8969 17.0437 16.8869 16.4125 16.5068 15.9687L14.9766 14.175ZM18.157 8.53125C17.7336 7.96562 16.9035 7.83125 16.3001 8.225L14.9466 9.11562C13.1898 10.2719 10.8062 10.2719 9.05264 9.11562L7.69915 8.22812C7.09575 7.83125 6.26565 7.96875 5.84227 8.53125C5.41889 9.09687 5.56557 9.875 6.16564 10.2719L7.51913 11.1625C8.08586 11.5344 8.69926 11.8156 9.33267 12.0344V13H14.6666V12.0375C15.3 11.8187 15.9134 11.5375 16.4801 11.1656L17.8336 10.275C18.437 9.875 18.5804 9.09687 18.157 8.53125Z"
+                                                                            fill="#fff"></path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="flight__pax--infor">
+                                                                    <ul>
+                                                                        <li class="pax-type">Em bé</li>
+                                                                        <li class="pax-name">Nguyen, Thanh Hung</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="flight__sectors--body">
-                                                        <div class="flight__sectors">
-                                                            <div class="flight__sectors-inner">
-                                                                <!-----------start ----- sector-------->
+                                                </div>
+                                            </div>
 
-
-                                                                <!-----------end ----- sector-------->
-
-                                                            </div>
-                                                        </div>
-
-
+                                            <div class="flight__box box-confirmation">
+                                                <div class="flight__confirms">
+                                                    <div class="flight__confirms--text">
+                                                        <p>
+                                                            Quý khách tích chọn đồng ý và tiếp tục là đã đồng ý với điều
+                                                            khoản và điều kiện của chúng tôi và đồng thời hoàn thành quá
+                                                            trình đặt vé.
+                                                        </p>
+                                                    </div>
+                                                    <div class="form-check vj-check">
+                                                        <input class="form-check-input" type="checkbox" value=""
+                                                            id="fligghtConfirm">
+                                                        <label class="form-check-label" for="fligghtConfirm">
+                                                            Đồng ý và xác nhận.
+                                                        </label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -699,7 +700,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-lg-4 col__booking-summary">
+                            <div class="col__booking--summary">
                                 <div class="booking__summary">
                                     <div class="booking__summary-header mb-3">
                                         <h3 class="title">Thông tin Đặt chỗ</h3>
