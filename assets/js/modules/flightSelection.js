@@ -261,7 +261,7 @@ const flightSelection = {
             for (const fl of flightList) {
               flightOptionsReturn.find(".booking__layout--flights").append(fl);
             }
-            _this.viewScrollShowing();
+            // _this.viewScrollShowing();
           }
         });
   },
@@ -671,8 +671,8 @@ const flightSelection = {
         item.removeClass("expanded");
         $(dropdownItem[0]).removeAttr("style");
       } else {
-        flightItem.hasClass("expanded") && flightItem.removeClass("expanded");
-        $(flightItem.find(".flight-option-dropdown")).removeAttr("style");
+        item.hasClass("expanded") && item.removeClass("expanded");
+        $(item.find(".flight-option-dropdown")).removeAttr("style");
         item.addClass("expanded");
         $(dropdownItem[0]).css({ height: dropdownItem[0].scrollHeight });
       }
