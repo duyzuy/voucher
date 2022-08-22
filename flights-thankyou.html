@@ -1,0 +1,1062 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/bootstrap-icons.css" />
+    <link rel="stylesheet" href="./assets/css/slick.css" />
+    <link rel="stylesheet" href="./assets/css/slick-theme.css" />
+    <link rel="stylesheet" href="./assets/css/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/select.css" />
+    <link rel="stylesheet" href="./assets/css/calendarslider.css" />
+    <link rel="stylesheet" href="./assets/css/theme.css" />
+    <title>Flight options</title>
+</head>
+
+
+<body>
+
+    <div id="app" class="wrapper">
+        <div class="mobile__menu">
+            <div class="overlay"></div>
+            <div class="navbar mobile-navbar">
+                <div class="navbar-user">
+                    <svg width="28" height="28" viewBox="0 0 28 28" fill="#000" xmlns="http://www.w3.org/2000/svg">
+                        <path
+                            d="M14 7C13.1347 7 12.2888 7.25659 11.5694 7.73732C10.8499 8.21805 10.2892 8.90133 9.95803 9.70076C9.6269 10.5002 9.54026 11.3799 9.70907 12.2285C9.87788 13.0772 10.2946 13.8567 10.9064 14.4686C11.5183 15.0804 12.2978 15.4971 13.1465 15.6659C13.9951 15.8347 14.8748 15.7481 15.6742 15.417C16.4737 15.0858 17.157 14.5251 17.6377 13.8056C18.1184 13.0862 18.375 12.2403 18.375 11.375C18.375 10.2147 17.9141 9.10188 17.0936 8.28141C16.2731 7.46094 15.1603 7 14 7Z"
+                            fill="#3c3c3c" />
+                        <path
+                            d="M14 1.75C11.5772 1.75 9.20877 2.46845 7.19427 3.8145C5.17977 5.16054 3.60965 7.07373 2.68248 9.31213C1.75531 11.5505 1.51272 14.0136 1.98539 16.3899C2.45805 18.7661 3.62475 20.9489 5.33795 22.6621C7.05114 24.3752 9.23388 25.542 11.6101 26.0146C13.9864 26.4873 16.4495 26.2447 18.6879 25.3175C20.9263 24.3904 22.8395 22.8202 24.1855 20.8057C25.5316 18.7912 26.25 16.4228 26.25 14C26.2463 10.7522 24.9545 7.63855 22.658 5.34203C20.3615 3.04552 17.2478 1.75371 14 1.75ZM20.993 21.8103C20.9756 20.6625 20.508 19.5676 19.6909 18.7614C18.8739 17.9552 17.7728 17.5022 16.625 17.5H11.375C10.2272 17.5022 9.12611 17.9552 8.30908 18.7614C7.49205 19.5676 7.02444 20.6625 7.00701 21.8103C5.42025 20.3934 4.30127 18.528 3.79824 16.4611C3.2952 14.3941 3.43184 12.2232 4.19006 10.2356C4.94829 8.24808 6.29232 6.53771 8.04421 5.331C9.79609 4.12428 11.8732 3.47815 14.0004 3.47815C16.1277 3.47815 18.2048 4.12428 19.9567 5.331C21.7086 6.53771 23.0526 8.24808 23.8108 10.2356C24.569 12.2232 24.7057 14.3941 24.2027 16.4611C23.6996 18.528 22.5806 20.3934 20.9939 21.8103H20.993Z"
+                            fill="#3c3c3c" />
+                    </svg>
+                    <div class="mb__user__link">
+                        <a href="./register.html" class="btn btn-link">Đăng ký</a> |
+                        <a href="" class="btn btn-link">Đăng nhập</a>
+                    </div>
+                </div>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Điều kiện điều khoản</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Nhận voucher</a>
+                    </li>
+                    <li class="nav-item has-sub">
+                        <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+                        <ul class="submenu">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Nhận voucher</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Câu hỏi thường gặp Câu hỏi thường gặp</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Câu hỏi thường gặp</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Sử dụng voucher</a>
+                    </li>
+                    <li class="nav-item dropdown nav-lang">
+                        <a class="nav-link dropdown-toggle" href="#" id="mbnavbarLanguage" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="./images/flag-vn.jpg" alt="" />
+                            Tiếng Việt
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="mbnavbarLanguage">
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <img src="./images/flag-vn.jpg" alt="Tiếng Việt" />Tiếng
+                                    Việt</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#">
+                                    <img src="./images/flag-en.jpg" alt="" />English</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-----------------header----------------->
+        <div class="wrapper__header">
+            <nav class="navbar navbar-expand-lg navbar-dark bg-red">
+                <div class="container">
+                    <a class="navbar-brand d-flex align-items-center justify-content-center" href="./index.html">
+                        <img src="./images/vj-logo-white.svg" alt="Logo Vietjet" class="mr-2" />
+                    </a>
+
+                    <div class="collapse navbar-collapse">
+                        <div class="navbar__top">
+                            <div class="navbar-user">
+                                <img src="images/user.svg" alt="user" />
+                                <div class="user__link">
+                                    <a href="./register.html" class="btn btn-link">Đăng ký</a> |
+                                    <a href="./sing-in.html" class="btn btn-link">Đăng nhập</a>
+                                </div>
+                            </div>
+                            <div class="navbar-language">
+                                <div class="nav-item dropdown nav-lang">
+                                    <a class="nav-link dropdown-toggle" href="#" id="navbarLanguage" role="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                        <img src="./images/flag-vn.jpg" alt="" />
+                                        Tiếng Việt
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarLanguage">
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <img src="./images/flag-vn.jpg" alt="Tiếng Việt" />Tiếng Việt</a>
+                                        </li>
+                                        <li>
+                                            <a class="dropdown-item" href="#">
+                                                <img src="./images/flag-en.jpg" alt="" />English</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="navbar__bottom">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="./page_detail.html">Điều kiện
+                                        điều khoản</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="./get-voucher-op1.html">Nhận voucher</a>
+                                </li>
+                                <li class="nav-item has-sub">
+                                    <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+                                    <ul class="submenu">
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Nhận voucher</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Hướng dẫn sử dụng</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" href="#">Câu hỏi thường gặp Câu hỏi thường gặp</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Câu hỏi thường gặp</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Sử dụng voucher</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <button class="navbar-toggler ml-2" type="button">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </nav>
+        </div>
+
+        <!-----------------main page----------------->
+        <div class="wrapper__main booking__layout noside">
+
+            <div class="booking__layout--container">
+                <form id="bookingFlightForm" method="POST" action="/passengers.html">
+                    <!------------value from form submit------------>
+                    <input type="hidden" name="tripType" value="return" />
+                    <input type="hidden" name="depatureCode" value="HAN" />
+                    <input type="hidden" name="tripDeparture"
+                        value='{"id":"SGN","name":"Sân bay Tân Sơn Nhất","provinceName":"Tp. Hồ Chí Minh","provinceEngName":"Ho Chi Minh","code":"SGN","engName":"Tan Son Nhat Airport","group":{"id":"6ce7c9e9-e5e3-40f5-9902-38a52b0e5fc8","engName":"Vietnam","name":"Việt Nam"}}'>
+                    <input type="hidden" name="returnCode" value="SGN" />
+                    <input type="hidden" name="tripReturn"
+                        value='{"id":"HAN","name":"Sân bay Nội Bài","provinceName":"Hà Nội","provinceEngName":"Ha Noi","code":"HAN","engName":"Noibai Airport","group":{"id":"6ce7c9e9-e5e3-40f5-9902-38a52b0e5fc8","engName":"Vietnam","name":"Việt Nam"}}' />
+                    <input type="hidden" name="departDate" value="18-08-2022" />
+                    <input type="hidden" name="returnDate" value="27-08-2022" />
+                    <input type="hidden" name="adult" value="1" />
+                    <input type="hidden" name="children" value="1" />
+                    <input type="hidden" name="infant" value="1" />
+                    <input type="hidden" name="promoCode" value="VJ888" />
+                    <!------------value from selection flight------------>
+                    <input type="hidden" name="flight_sector_one" value="" />
+                    <input type="hidden" name="flight_sector_second" value="" />
+                    <input type="hidden" name="sessionId" value="" />
+                    <input type="hidden" name="travelOption" value="" />
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-12 col-xl-10">
+
+                                <!--------------start flights passengers------------------->
+                                <div class="booking__layout--thanksyou">
+                                    <div class="booking__layout--flight-info">
+                                        <div class="booking__layout--body">
+                                            <div class="flight__box flight-box-noti mb-4">
+                                                <div class="bk__amy">
+                                                    <img src="./images/booking/amy-success.png" alt="Amy success">
+                                                </div>
+                                                <div class="bk__notice">
+                                                    <h2 class="title">Đặt vé thành công!</h2>
+                                                    <p>Mã đặt chỗ của bạn được giữ tối đa trong 6 giờ, Quý khách vui
+                                                        lòng thực hiện thanh toán trước 13:03 | thứ 7, ngày
+                                                        15 thg 11 2022 để không bị huỷ.</p>
+                                                </div>
+                                            </div>
+
+                                            <div class="flight__box box-flight-detail-information mb-4">
+                                                <div class="flight__header">
+                                                    <div class="flight__text">
+                                                        <h4>Thông tin đặt chỗ</h4>
+                                                    </div>
+
+                                                </div>
+                                                <div class="flight__booking__infomation">
+                                                    <div class="row flight__booking__infomation--inner">
+                                                        <div class="col-12 flight__booking__info_qr">
+                                                            <div class="bk__qr">
+                                                                <img src="./images/booking/qr-code.png"
+                                                                    alt="PNR QR code">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 flight__booking__info__text">
+                                                            <ul class="bk__info-list">
+                                                                <li class="bk__info--pnr">
+                                                                    <p class="label">Mã đặt chỗ</p>
+                                                                    <p class="value">PXKUAL</p>
+                                                                </li>
+                                                                <li class="bk__info--name">
+                                                                    <p class="label">Họ, tên đệm & tên</p>
+                                                                    <p class="value">NGUYEN, VAN A</p>
+                                                                </li>
+                                                                <li class="bk__info--phone">
+                                                                    <p class="label">Số điện thoại</p>
+                                                                    <p class="value">(+84) 987 382 294</p>
+                                                                </li>
+                                                                <li class="bk__info--email">
+                                                                    <p class="label">Email</p>
+                                                                    <p class="value">nguyenvana@gmail.com</p>
+                                                                </li>
+                                                                <li class="bk__info--date">
+                                                                    <p class="label">Ngày đặt</p>
+                                                                    <p class="value">13:03, 03 Thg 11 2022
+                                                                        <span class="local-text">(Giờ địa phương)</span>
+                                                                    </p>
+                                                                </li>
+                                                            </ul>
+                                                            <div class="sub__total">
+                                                                <p class="price">
+                                                                    <span class="price__label">Tổng tiền:</span>
+                                                                    <ins>8,650,420 <span
+                                                                            class="symbol__currency">VND</span></ins>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="flight__box box-flight-detail mb-4">
+                                                <div class="flight__header">
+                                                    <div class="flight__text">
+                                                        <h4>Thông tin chuyến bay</h4>
+                                                    </div>
+
+                                                </div>
+                                                <div class="flight__options--body-review">
+                                                    <div class="flight__options-inner">
+                                                        <!-----------start ----- sector-------->
+                                                        <div class="flight__sector">
+                                                            <div class="flight__sector__title">
+                                                                <h5 class="sub-title">Chuyến đi</h5>
+                                                            </div>
+                                                            <div class="flight-option-item flight-info-review">
+                                                                <div class="flight-option-bar">
+                                                                    <div class="flight-option-top">
+                                                                        <div class="flight-option-location-time">
+                                                                            <span class="flight-option-time">5:25</span>
+                                                                            <span class="flight-option-city">Ho
+                                                                                Chi
+                                                                                Minh</span>
+                                                                            <span class="flight-option-date">8
+                                                                                Thg
+                                                                                09</span>
+                                                                        </div>
+                                                                        <div class="flight-option-types">
+                                                                            <div class="flight-option-middle-inner">
+                                                                                <div
+                                                                                    class="flight-option-icon icon-flight">
+                                                                                    <span class="flight-code">VJ168
+                                                                                        | A321</span>
+                                                                                    <span class="icon-flight"><svg
+                                                                                            width="24" height="24"
+                                                                                            viewBox="0 0 24 24"
+                                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                                            <path
+                                                                                                d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                                                                                            </path>
+                                                                                        </svg></span>
+                                                                                    <span class="text-label">Bay
+                                                                                        thẳng</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="flight-option-location-time">
+                                                                            <span class="flight-option-time">7:35</span>
+                                                                            <span class="flight-option-city">Ha
+                                                                                Noi</span>
+                                                                            <span class="flight-option-date">8
+                                                                                Thg
+                                                                                09</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flight-option-infor">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <p class="duration-label">Thời
+                                                                                    gian
+                                                                                    bay</p>
+                                                                                <p class="duration-time">2 giờ
+                                                                                    15
+                                                                                    phút</p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <button
+                                                                                    class="btn btn-flight-option-detail"
+                                                                                    type="button">
+                                                                                    Chi tiết <i
+                                                                                        class="bi bi-chevron-down"></i>
+                                                                                </button>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="flight-option-price"><span
+                                                                            class="line"></span>
+                                                                        <div class="flight-option-price-wrap">
+                                                                            <div class="flight-option-price--inner">
+                                                                                <p class="price">
+                                                                                    <ins>850,000<span
+                                                                                            class="currency-symbol">VND</span></ins>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flight-option-dropdown">
+                                                                    <div class="dropdown-inner">
+                                                                        <div class="flight-option-detail">
+                                                                            <div class="flight-option-detail-inner">
+                                                                                <div
+                                                                                    class="flight-option-depart depart-last">
+                                                                                    <div
+                                                                                        class="option-detail-flight-code">
+                                                                                        <div class="option-detail-icon">
+                                                                                            <span
+                                                                                                class="icon-flight"><svg
+                                                                                                    width="24"
+                                                                                                    height="24"
+                                                                                                    viewBox="0 0 24 24"
+                                                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <path
+                                                                                                        d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                                                                                                    </path>
+                                                                                                </svg>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="option-detail-content">
+                                                                                            <div class="option-label">
+                                                                                                Số hiệu chuyến
+                                                                                                bay:
+                                                                                            </div>
+                                                                                            <div class="option-value">
+                                                                                                <p class="flight-code">
+                                                                                                    VJ142</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="option-detail-flight-city-airport">
+                                                                                        <div
+                                                                                            class="option-detail-content">
+                                                                                            <p class="option-label">
+                                                                                                Khởi hành:</p>
+                                                                                            <div class="option-value">
+                                                                                                <ul>
+                                                                                                    <li class="city">
+                                                                                                        Đà Nẵng
+                                                                                                        (DAD) -
+                                                                                                        Sân
+                                                                                                        bay Đà
+                                                                                                        Nẵng
+                                                                                                    </li>
+                                                                                                    <li class="time">
+                                                                                                        06:50,
+                                                                                                        17/08/2022
+                                                                                                        (Giờ địa
+                                                                                                        phương)
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="option-detail-flight-city-airport">
+                                                                                        <div
+                                                                                            class="option-detail-icon bottom">
+                                                                                            <i
+                                                                                                class="bi bi-geo-alt-fill"></i>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="option-detail-content">
+                                                                                            <div class="option-label">
+                                                                                                <p>Đến:</p>
+                                                                                            </div>
+                                                                                            <div class="option-value">
+                                                                                                <ul>
+                                                                                                    <li class="city">
+                                                                                                        Tp. Hồ
+                                                                                                        Chí
+                                                                                                        Minh
+                                                                                                        (SGN) -
+                                                                                                        Sân bay
+                                                                                                        Quốc
+                                                                                                        tế Tân
+                                                                                                        sơn
+                                                                                                        nhất
+                                                                                                    </li>
+                                                                                                    <li class="time">
+                                                                                                        06:50,
+                                                                                                        17/08/2022
+                                                                                                        (Giờ địa
+                                                                                                        phương)
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                        class="aircraft">
+                                                                                                        <p>Thời
+                                                                                                            gian:
+                                                                                                            2
+                                                                                                            giờ
+                                                                                                            05
+                                                                                                            phút
+                                                                                                        </p>
+                                                                                                        <p>Máy
+                                                                                                            bay:
+                                                                                                            A320
+                                                                                                        </p>
+                                                                                                        <p>Hãng
+                                                                                                            khai
+                                                                                                            thác:
+                                                                                                            Vietjet
+                                                                                                        </p>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-----------end ----- sector-------->
+                                                        <!-----------start ----- sector-------->
+                                                        <div class="flight__sector">
+                                                            <div class="flight__sector__title">
+                                                                <h5 class="sub-title">Chuyến về</h5>
+                                                            </div>
+                                                            <div class="flight-option-item flight-info-review">
+                                                                <div class="flight-option-bar">
+                                                                    <div class="flight-option-top">
+                                                                        <div class="flight-option-location-time">
+                                                                            <span class="flight-option-time">5:25</span>
+                                                                            <span class="flight-option-city">Ho
+                                                                                Chi
+                                                                                Minh</span>
+                                                                            <span class="flight-option-date">8
+                                                                                Thg
+                                                                                09</span>
+                                                                        </div>
+                                                                        <div class="flight-option-types">
+                                                                            <div class="flight-option-middle-inner">
+                                                                                <div
+                                                                                    class="flight-option-icon icon-flight">
+                                                                                    <span class="flight-code">VJ168
+                                                                                        | A321</span>
+                                                                                    <span class="icon-flight"><svg
+                                                                                            width="24" height="24"
+                                                                                            viewBox="0 0 24 24"
+                                                                                            xmlns="http://www.w3.org/2000/svg">
+                                                                                            <path
+                                                                                                d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                                                                                            </path>
+                                                                                        </svg></span>
+                                                                                    <span class="text-label">Bay
+                                                                                        thẳng</span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="flight-option-location-time">
+                                                                            <span class="flight-option-time">7:35</span>
+                                                                            <span class="flight-option-city">Ha
+                                                                                Noi</span>
+                                                                            <span class="flight-option-date">8
+                                                                                Thg
+                                                                                09</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="flight-option-infor">
+                                                                        <ul>
+                                                                            <li>
+                                                                                <p class="duration-label">Thời
+                                                                                    gian
+                                                                                    bay</p>
+                                                                                <p class="duration-time">2 giờ
+                                                                                    15
+                                                                                    phút</p>
+                                                                            </li>
+                                                                            <li>
+                                                                                <button
+                                                                                    class="btn btn-flight-option-detail"
+                                                                                    type="button">
+                                                                                    Chi tiết <i
+                                                                                        class="bi bi-chevron-down"></i>
+                                                                                </button>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                    <div class="flight-option-price"><span
+                                                                            class="line"></span>
+                                                                        <div class="flight-option-price-wrap">
+                                                                            <div class="flight-option-price--inner">
+                                                                                <p class="price">
+                                                                                    <ins>850,000<span
+                                                                                            class="currency-symbol">VND</span></ins>
+                                                                                </p>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="flight-option-dropdown">
+                                                                    <div class="dropdown-inner">
+                                                                        <div class="flight-option-detail">
+                                                                            <div class="flight-option-detail-inner">
+                                                                                <div
+                                                                                    class="flight-option-depart depart-last">
+                                                                                    <div
+                                                                                        class="option-detail-flight-code">
+                                                                                        <div class="option-detail-icon">
+                                                                                            <span
+                                                                                                class="icon-flight"><svg
+                                                                                                    width="24"
+                                                                                                    height="24"
+                                                                                                    viewBox="0 0 24 24"
+                                                                                                    xmlns="http://www.w3.org/2000/svg">
+                                                                                                    <path
+                                                                                                        d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                                                                                                    </path>
+                                                                                                </svg>
+                                                                                            </span>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="option-detail-content">
+                                                                                            <div class="option-label">
+                                                                                                Số hiệu chuyến
+                                                                                                bay:
+                                                                                            </div>
+                                                                                            <div class="option-value">
+                                                                                                <p class="flight-code">
+                                                                                                    VJ142</p>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="option-detail-flight-city-airport">
+                                                                                        <div
+                                                                                            class="option-detail-content">
+                                                                                            <p class="option-label">
+                                                                                                Khởi hành:</p>
+                                                                                            <div class="option-value">
+                                                                                                <ul>
+                                                                                                    <li class="city">
+                                                                                                        Đà Nẵng
+                                                                                                        (DAD) -
+                                                                                                        Sân
+                                                                                                        bay Đà
+                                                                                                        Nẵng
+                                                                                                    </li>
+                                                                                                    <li class="time">
+                                                                                                        06:50,
+                                                                                                        17/08/2022
+                                                                                                        (Giờ địa
+                                                                                                        phương)
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="option-detail-flight-city-airport">
+                                                                                        <div
+                                                                                            class="option-detail-icon bottom">
+                                                                                            <i
+                                                                                                class="bi bi-geo-alt-fill"></i>
+                                                                                        </div>
+                                                                                        <div
+                                                                                            class="option-detail-content">
+                                                                                            <div class="option-label">
+                                                                                                <p>Đến:</p>
+                                                                                            </div>
+                                                                                            <div class="option-value">
+                                                                                                <ul>
+                                                                                                    <li class="city">
+                                                                                                        Tp. Hồ
+                                                                                                        Chí
+                                                                                                        Minh
+                                                                                                        (SGN) -
+                                                                                                        Sân bay
+                                                                                                        Quốc
+                                                                                                        tế Tân
+                                                                                                        sơn
+                                                                                                        nhất
+                                                                                                    </li>
+                                                                                                    <li class="time">
+                                                                                                        06:50,
+                                                                                                        17/08/2022
+                                                                                                        (Giờ địa
+                                                                                                        phương)
+                                                                                                    </li>
+                                                                                                    <li
+                                                                                                        class="aircraft">
+                                                                                                        <p>Thời
+                                                                                                            gian:
+                                                                                                            2
+                                                                                                            giờ
+                                                                                                            05
+                                                                                                            phút
+                                                                                                        </p>
+                                                                                                        <p>Máy
+                                                                                                            bay:
+                                                                                                            A320
+                                                                                                        </p>
+                                                                                                        <p>Hãng
+                                                                                                            khai
+                                                                                                            thác:
+                                                                                                            Vietjet
+                                                                                                        </p>
+                                                                                                    </li>
+                                                                                                </ul>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-----------end ----- sector-------->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="flight__box box-pax-detail mb-4">
+                                                <div class="flight__header box-pax-header">
+                                                    <div class="flight__text">
+                                                        <h4>Thông tin hành khách</h4>
+                                                    </div>
+
+                                                </div>
+                                                <div class="flight__paxs">
+                                                    <div class="flight__paxs--body row">
+                                                        <div class="col-12 col-md-6 col-lg-4 flight__pax adult">
+                                                            <div class="flight__pax--inner">
+                                                                <div class="flight__pax--icon">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M12.16 1.59961C12.7905 1.59961 13.3951 1.8431 13.8409 2.27652C14.2867 2.70994 14.5371 3.29778 14.5371 3.91072C14.5371 4.52367 14.2867 5.11151 13.8409 5.54492C13.3951 5.97834 12.7905 6.22183 12.16 6.22183C11.5295 6.22183 10.9249 5.97834 10.4791 5.54492C10.0333 5.11151 9.78286 4.52367 9.78286 3.91072C9.78286 3.29778 10.0333 2.70994 10.4791 2.27652C10.9249 1.8431 11.5295 1.59961 12.16 1.59961ZM10.3771 7.37739H13.9429C14.5733 7.37739 15.178 7.62088 15.6238 8.0543C16.0696 8.48771 16.32 9.07555 16.32 9.6885V16.0441H14.5371V22.3996H9.78286V16.0441H8V9.6885C8 9.07555 8.25045 8.48771 8.69625 8.0543C9.14205 7.62088 9.74669 7.37739 10.3771 7.37739Z"
+                                                                            fill="#fff"></path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="flight__pax--infor">
+                                                                    <ul>
+                                                                        <li class="pax-type">Người lớn</li>
+                                                                        <li class="pax-name">Vu, Truong Duy</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 col-lg-4 flight__pax child">
+                                                            <div class="flight__pax--inner">
+                                                                <div class="flight__pax--icon">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M9.66531 5.6752C9.66531 4.30827 10.7573 3.2002 12.1044 3.2002C13.4516 3.2002 14.5436 4.30827 14.5436 5.6752C14.5436 7.04208 13.4516 8.1502 12.1044 8.1502C10.7573 8.1502 9.66531 7.04208 9.66531 5.6752ZM18.2913 5.72239C17.8679 5.29281 17.1815 5.29281 16.7582 5.72239L13.8235 8.70019H10.3853L7.45068 5.72239C7.02735 5.29281 6.34094 5.29281 5.91762 5.72239C5.49426 6.15198 5.49426 6.84845 5.91762 7.27803L9.12328 10.5308V19.7002C9.12328 20.3077 9.60864 20.8002 10.2073 20.8002H10.7494C11.3481 20.8002 11.8334 20.3077 11.8334 19.7002V15.8502H12.3755V19.7002C12.3755 20.3077 12.8608 20.8002 13.4595 20.8002H14.0015C14.6003 20.8002 15.0856 20.3077 15.0856 19.7002V10.5308L18.2913 7.278C18.7146 6.84841 18.7146 6.15198 18.2913 5.72239Z"
+                                                                            fill="#fff"></path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="flight__pax--infor">
+                                                                    <ul>
+                                                                        <li class="pax-type">Trẻ em</li>
+                                                                        <li class="pax-name">Nguyen, Thanh Hung</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-12 col-md-6 col-lg-4 flight__pax infant">
+                                                            <div class="flight__pax--inner">
+                                                                <div class="flight__pax--icon">
+                                                                    <svg width="24" height="24" viewBox="0 0 24 24"
+                                                                        fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                                        <path
+                                                                            d="M11.9996 9C13.4731 9 14.6666 7.88125 14.6666 6.5C14.6666 5.11875 13.4731 4 11.9996 4C10.5261 4 9.33267 5.11875 9.33267 6.5C9.33267 7.88125 10.5261 9 11.9996 9ZM10.2194 16.775L11.0729 15.775L9.02263 14.175L7.49246 15.9687C7.11242 16.4125 7.10242 17.0437 7.46579 17.5L9.06597 19.5C9.32933 19.8281 9.72938 20 10.1328 20C10.4095 20 10.6928 19.9187 10.9328 19.75C11.5229 19.3375 11.6396 18.5531 11.1995 18L10.2194 16.775ZM14.9766 14.175L12.9264 15.775L13.7798 16.775L12.7997 18C12.3597 18.5531 12.4764 19.3375 13.0664 19.75C13.3065 19.9187 13.5865 20 13.8665 20C14.2732 20 14.6733 19.8281 14.9333 19.5L16.5335 17.5C16.8969 17.0437 16.8869 16.4125 16.5068 15.9687L14.9766 14.175ZM18.157 8.53125C17.7336 7.96562 16.9035 7.83125 16.3001 8.225L14.9466 9.11562C13.1898 10.2719 10.8062 10.2719 9.05264 9.11562L7.69915 8.22812C7.09575 7.83125 6.26565 7.96875 5.84227 8.53125C5.41889 9.09687 5.56557 9.875 6.16564 10.2719L7.51913 11.1625C8.08586 11.5344 8.69926 11.8156 9.33267 12.0344V13H14.6666V12.0375C15.3 11.8187 15.9134 11.5375 16.4801 11.1656L17.8336 10.275C18.437 9.875 18.5804 9.09687 18.157 8.53125Z"
+                                                                            fill="#fff"></path>
+                                                                    </svg>
+                                                                </div>
+                                                                <div class="flight__pax--infor">
+                                                                    <ul>
+                                                                        <li class="pax-type">Em bé</li>
+                                                                        <li class="pax-name">Nguyen, Thanh Hung</li>
+                                                                    </ul>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="flight__box box-pax-detail mb-4">
+                                                <div class="flight__header box-pax-header">
+                                                    <div class="flight__text">
+                                                        <h4>Chi tiết giá vé</h4>
+                                                    </div>
+
+                                                </div>
+                                                <div class="flight__summary summary--section">
+                                                    <div class="flight__summary-section--inner">
+                                                        <div class="box__summary trip__section--info">
+                                                            <div class="trip__section--info-header mb-2">
+                                                                <p class="title">Chuyến đi</p>
+                                                                <p class="price">788,520 VND</p>
+                                                            </div>
+                                                            <div class="trip__section--info-detail">
+                                                                <div
+                                                                    class="box__summary--label summary-text sm-vertical">
+
+                                                                    <p class="summary-destination">
+                                                                        <span class="title-location">Hà Nội
+                                                                            (HAN)</span>
+                                                                        <span class="sm-ic ic-aircraft"><svg width="24"
+                                                                                height="24" viewBox="0 0 24 24"
+                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                <path
+                                                                                    d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                                                                                </path>
+                                                                            </svg>
+                                                                        </span>
+                                                                        <span class="sm-ic ic-stop">
+                                                                            <span class="ic-sector-stop"></span>
+                                                                        </span>
+                                                                        <span class="title-location">Tp Hồ Chí
+                                                                            Minh (SGN)</span>
+                                                                    </p>
+
+                                                                </div>
+                                                                <div class="box__summary--inner--body">
+                                                                    <div class="box__summary--stack">
+                                                                        <div class="box__summary--stack--header">
+                                                                            <p>Giá vé</p>
+                                                                            <p>236,520 VND</p>
+                                                                        </div>
+                                                                        <div class="box__summary--stack--body">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        W1 Eco</p>
+                                                                                    <p class="stack--value">
+                                                                                        219,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Thuế VAT</p>
+                                                                                    <p class="stack--value">
+                                                                                        17,520</p>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box__summary--stack">
+                                                                        <div class="box__summary--stack--header">
+                                                                            <p>Thuế, phí</p>
+                                                                            <p>552,000 VND</p>
+                                                                        </div>
+                                                                        <div class="box__summary--stack--body">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phí an ninh soi
+                                                                                        chiếu</p>
+                                                                                    <p class="stack--value">
+                                                                                        20,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phí sân bay quốc nội
+                                                                                    </p>
+                                                                                    <p class="stack--value">
+                                                                                        100,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phụ thu dịch vụ hệ
+                                                                                        thống
+                                                                                        (Quốc nội)</p>
+                                                                                    <p class="stack--value">
+                                                                                        200,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phụ thu quản trị hệ
+                                                                                        thống
+                                                                                    </p>
+                                                                                    <p class="stack--value">
+                                                                                        200,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Thuế VAT</p>
+                                                                                    <p class="stack--value">
+                                                                                        32,000</p>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <div class="box__summary trip__section--info">
+                                                            <div class="trip__section--info-header mb-2">
+                                                                <p class="title">Chuyến về</p>
+                                                                <p class="price">788,520 VND</p>
+                                                            </div>
+                                                            <div class="trip__section--info-detail">
+                                                                <div
+                                                                    class="box__summary--label summary-text sm-vertical">
+
+                                                                    <p class="summary-destination">
+                                                                        <span class="title-location">Tp Hồ Chí
+                                                                            Minh (SGN)</span>
+
+                                                                        <span class="sm-ic ic-aircraft"><svg width="24"
+                                                                                height="24" viewBox="0 0 24 24"
+                                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                                <path
+                                                                                    d="M7.2 1.56283L9.6 1.56283L15.6 10.3152L22.2 10.3152C22.6774 10.3152 23.1352 10.4881 23.4728 10.7958C23.8104 11.1036 24 11.521 24 11.9562C24 12.3915 23.8104 12.8089 23.4728 13.1166C23.1352 13.4244 22.6774 13.5973 22.2 13.5973L15.6 13.5973L9.6 22.3496L7.2 22.3496L10.2 13.5973L3.6 13.5973L1.8 15.7854L1.59677e-06 15.7854L1.2 11.9562L1.23442e-06 8.12707L1.8 8.12707L3.6 10.3152L10.2 10.3152L7.2 1.56283Z">
+                                                                                </path>
+                                                                            </svg>
+                                                                        </span>
+                                                                        <span class="sm-ic ic-stop">
+                                                                            <span class="ic-sector-stop"></span>
+                                                                        </span>
+                                                                        <span class="title-location">Hà Nội
+                                                                            (HAN)</span>
+                                                                    </p>
+
+                                                                </div>
+                                                                <div class="box__summary--inner--body">
+                                                                    <div class="box__summary--stack">
+                                                                        <div class="box__summary--stack--header">
+                                                                            <p>Giá vé</p>
+                                                                            <p>236,520 VND</p>
+                                                                        </div>
+                                                                        <div class="box__summary--stack--body">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        W1 Eco</p>
+                                                                                    <p class="stack--value">
+                                                                                        219,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Thuế VAT</p>
+                                                                                    <p class="stack--value">
+                                                                                        17,520</p>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="box__summary--stack">
+                                                                        <div class="box__summary--stack--header">
+                                                                            <p>Thuế, phí</p>
+                                                                            <p>552,000 VND</p>
+                                                                        </div>
+                                                                        <div class="box__summary--stack--body">
+                                                                            <ul>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phí an ninh soi
+                                                                                        chiếu</p>
+                                                                                    <p class="stack--value">
+                                                                                        20,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phí sân bay quốc nội
+                                                                                    </p>
+                                                                                    <p class="stack--value">
+                                                                                        100,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phụ thu dịch vụ hệ
+                                                                                        thống
+                                                                                        (Quốc nội)</p>
+                                                                                    <p class="stack--value">
+                                                                                        200,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Phụ thu quản trị hệ
+                                                                                        thống
+                                                                                    </p>
+                                                                                    <p class="stack--value">
+                                                                                        200,000</p>
+                                                                                </li>
+                                                                                <li>
+                                                                                    <p class="stack--label">
+                                                                                        Thuế VAT</p>
+                                                                                    <p class="stack--value">
+                                                                                        32,000</p>
+                                                                                </li>
+                                                                            </ul>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+
+                                                        <div class="box__summary sub--total">
+                                                            <div class="sub-total-inner">
+                                                                <p class="summary-label">Tổng tiền</p>
+                                                                <p class="summary-value">2,500,860 VND</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <!--------------end of flights passengers------------------->
+                                <div class="booking__layout--buttons">
+                                    <div class="booking__layout--button--inner">
+                                        <button type="button" class="btn btn-outline-back"><i
+                                                class="bi bi-arrow-return-left"></i>Về trang chủ</button>
+                                        <button id="button__booking--next" class="btn btn-primary btn-booking"
+                                            type="button">
+                                            Hoàn thành
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-----------------Footer----------------->
+    <div class="wrapper__footer">
+        <div class="container">
+            <div class="footer__one">
+                <div class="row">
+                    <div class="col-ft col-12 col-md-3">
+                        <h4 class="footer__title">Liên kết với Vietjet qua các kênh</h4>
+                        <div class="footer__content">
+                            <ul class="social__follow">
+                                <li>
+                                    <a href=""><img src="images/fb.png" alt="" /></a>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/ins.png" alt="" /></a>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/tw.png" alt="" /></a>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/line.png" alt="" /></a>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/wec.png" alt="" /></a>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/zl.png" alt="" /></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-ft col-12 col-md-3">
+                        <h4 class="footer__title">Tải ứng dụng di động Vietjet Air</h4>
+                        <div class="footer__content">
+                            <ul class="stores">
+                                <li>
+                                    <a href=""><img src="images/googleplay.png" alt="" /></a>
+                                </li>
+                                <li>
+                                    <a href=""><img src="images/applestore.png" alt="" /></a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-ft col-12 col-md-6">
+                        <div class="footer__content">
+                            <p class="text-uppercase bold">
+                                Công ty Cổ phần hàng không Vietjet
+                            </p>
+                            <p>
+                                302/3 Phố Kim Mã, Phường Ngọc Khánh, Quận Ba Đình, TP. Hà
+                                Nội
+                            </p>
+                            <p>Tổng đài bán vé: (+84) 19001886</p>
+                            <p>Email: 19001886@vietjetair.com</p>
+                            <p>
+                                <a href=""><img src="images/bct.png" alt="" /></a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="./assets/js/jquery.js"></script>
+    <script src="./assets/js/bootstrap.min.js"></script>
+    <script src="./assets/js/slick.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js"
+        integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./assets/js/daterangepicker.js"></script>
+    <script src="./assets/js/select.js"></script>
+    <script src="./assets/js/theme.js"></script>
+    <script src="./assets/js/calendarSlider.js"></script>
+    <script type="module" src="./assets/js/booking.js"></script>
+
+
+</body>
+
+</html>

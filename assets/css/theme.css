@@ -1682,7 +1682,10 @@ border-bottom-left-radius: 0 !important;
     justify-content: center;
 
 }
-
+.header--btns .btn-outline-dark:active{
+    background-color: transparent;
+    color: #000
+}
 
 
 .trip__date--wrap{
@@ -2191,6 +2194,7 @@ border-bottom-left-radius: 0 !important;
     position: absolute;
     top: calc(50% - 0.5px);
 }
+
 .status__inner .step:last-of-type:after{
     content: none
 }
@@ -2200,8 +2204,9 @@ border-bottom-left-radius: 0 !important;
 }
 
 .status__inner .step.current,
-.status__inner .step.done{
-    background: linear-gradient(72.74deg, #459B02 -15.27%, #AAFA6B 113.22%);
+.status__inner .step.done, 
+.status__inner .step.done:after{
+    background: linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b);
 }
 .status__inner .step.current svg, 
 .status__inner .step.current path,
@@ -2224,7 +2229,7 @@ border-bottom-left-radius: 0 !important;
     margin-right: 20px;
 }
 .header--infor .destinations{
-    font-size: 20px;
+    font-size: 18px;
     font-weight: bold;
     text-transform: uppercase;
     color: #e2192f;
@@ -2235,18 +2240,38 @@ border-bottom-left-radius: 0 !important;
 }
 .header--infor .triptype-passengers{
     font-size: 14px;
+    display: flex;
 }
 .booking__layout--container{
     padding-top: 30px;
 }
+
 .triptype-passengers span{
     display: inline-block;
+    color: #3c3c3c
+}
+.triptype-passengers span svg, 
+.triptype-passengers span path{
+    fill: #3c3c3c;
+    width: 12px;
+    height: 12px;
+    margin-top: -3px;
 }
 .triptype-passengers .status-triptype{
     margin-right: 8px;
     padding-right: 8px;
     position: relative;
-    
+}
+.header--infor span.icon{
+
+    width: 14px;
+    height: 14px;
+    text-align: center;
+
+}
+.triptype-passengers .status-triptype span.icon svg{
+    transform: rotate(-90deg);
+    margin-top: -3px;
 }
 .triptype-passengers .status-triptype:after{
     content: "";
@@ -2279,15 +2304,15 @@ border-bottom-left-radius: 0 !important;
 .flight-option-top{
     display: flex;
     align-items: center;
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
     height: 100%;
     background-color: #ffff;
     flex: 1;
     z-index: 9;
 }
 .flight-option-price{
-    padding-right: 30px;
+    padding-right: 20px;
     width: 25%;
     display: flex;
     align-items: center;
@@ -2400,7 +2425,8 @@ del .currency-symbol{
 }
 .flight-option-icon svg, 
 .flight-option-icon path{
-    fill: #c1c1c1
+    fill: #c1c1c1;
+    width: 18px;
 }
 .flight-option-middle-inner .flight-option-icon .flight-code,
 .flight-aircraft,
@@ -2440,7 +2466,7 @@ del .currency-symbol{
 
 .flight-option-location-time{
     text-align: left;
-    width: 120px;
+    width: 100px;
 }
 .flight-option-location-time span{
     display: block;
@@ -2449,8 +2475,10 @@ del .currency-symbol{
     flex: 1;
 }
 .flight-option-infor{
-    padding-left: 30px;
-    padding-right: 30px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     font-size: 14px;
     height: 100%;
     display: flex;
@@ -2492,8 +2520,8 @@ del .currency-symbol{
 .flight-option-icon .icon-flight{
     line-height: 1;
     background: #fff;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     position: relative;
     z-index: 2;
@@ -2516,8 +2544,8 @@ del .currency-symbol{
 
 .icon-stop{
     position: relative;
-    width: 16px;
-    height: 16px;
+    width: 14px;
+    height: 14px;
     display: block;
     border-radius: 10px;
     border: 1px solid #c1c1c1;
@@ -2534,11 +2562,11 @@ del .currency-symbol{
 .icon-stop:after{
     content: "";
     position: absolute;
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
     border-radius: 50%;
-    left: calc(50% - 5px);
-    top: calc(50% - 5px);
+    left: calc(50% - 4px);
+    top: calc(50% - 4px);
     background-color: #c1c1c1;
 
 
@@ -2931,25 +2959,19 @@ del .currency-symbol{
 }
 .col__booking--body{
     flex: 1;
-    padding-right: 40px;
+    padding-right: 30px;
 }
-.booking__summary{
-  
-
-}
-.booking__summary .booking__summary-header{
-   
-
-}
-.booking__summary .booking__summary-header h3{
-    
+.booking__layout.noside .booking__layout--body{
+    padding-right: 0;
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
 }
 .booking__summary-body{
-    /* padding: 20px  */
+   padding-bottom: 15px;
 }
-.pax--infor{
 
-}
+
 .box__summary {
     background-color: #fff;
     margin-bottom: 30px;
@@ -2968,8 +2990,11 @@ del .currency-symbol{
     margin-bottom: 10px;
     text-transform: uppercase;
     font-weight: bold;
-    background: linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b);
-    color: #fff;
+    /* text-shadow: 2px 2px 5px #c9c9c9;
+    color: #f40f48 */
+    background: -webkit-linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 .box__summary--header p{
     margin-bottom: 0;
@@ -3069,7 +3094,7 @@ del .currency-symbol{
 }
 
 .box__summary--short-infor{
-    padding: 1px 20px 10px;
+    padding: 0px 20px 10px;
     line-height: 1;
 }
 .box__summary--short-infor p{
@@ -3088,6 +3113,7 @@ del .currency-symbol{
 .summary-destination .title--icon path {
     fill: #a4a4a4;
     width: 16px;
+    height: 16px;
 }
 
 .box__summary--stack{
@@ -3100,7 +3126,6 @@ del .currency-symbol{
     display: flex;
     justify-content: space-between;
     padding: 5px 0;
-    color: #e2192f;
     font-weight: bold;
     font-size: 14px;
 }
@@ -3176,10 +3201,13 @@ del .currency-symbol{
 .col-booking-summary{
 
 }
-.box__summary.sub--total{
+.col__booking--summary .box__summary.sub--total{
     background: linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b)
 }
-.sub-total-inner{
+.col__booking--summary .box__summary.sub--total p {
+    color: #fff
+}
+.col__booking--summary .sub-total-inner{
     padding: 15px;
     
 }
@@ -3188,12 +3216,10 @@ del .currency-symbol{
     text-align: right;
 }
 .sub-total-inner p.summary-label{
-    color: #fff;
     font-size: 13px;
 }
 .sub-total-inner p.summary-value{
     font-weight: bold;
-    color: #fff;
     font-size: 24px;
 
 }
@@ -3216,7 +3242,8 @@ del .currency-symbol{
 .flight__header p, 
 .flight__header h3{
     margin-bottom: 0;
-    /* color: #fff; */
+    text-shadow: 2px 2px 5px #c9c9c9;
+    text-transform: uppercase;
 }
 
 .flight__sectors{
@@ -3476,7 +3503,7 @@ p.box__sector-destination{
 }
 .flight__paxs{
     background: #fff;
-    padding: 15px 20px
+    padding: 30px 20px
 }
 .flight__paxs--body{
     display: flex;
@@ -3631,7 +3658,10 @@ padding-left: 0;
     transition: all linear 320ms;
     padding: 15px 0 0;
 }
-
+.header__summary__dropdown--inner .booking__summary-header h3{
+    text-transform: uppercase;
+    /* text-shadow: 2px 2px 5px #c9c9c9; */
+}
 .btn__summary__close--dropdown{
     text-align: center;
     color: #fff;
@@ -3649,9 +3679,9 @@ padding-left: 0;
 
 .header__summary--body{
     padding: 20px 15px 0;
- width: 100%;
- height: 100%;
- overflow-y: scroll;   
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;   
 }
 .header__summary__dropdown .overlay{
     background: rgb(0 0 0 / 70%);
@@ -3661,10 +3691,7 @@ padding-left: 0;
     transition: all linear 320ms;
     opacity: 0;
 }
-.header__summary__dropdown .box__summary.trip--infor .box__summary--header{
-    background: transparent;
-    color: #474747;
-}
+
 .header__summary__dropdown .box__summary.trip--infor .box__summary--header p{
     padding: 0
 }
@@ -3678,8 +3705,11 @@ padding-left: 0;
 .header__summary__dropdown .box__summary--stack{
     margin-bottom: 0;
 }
-.header__summary__dropdown .box__summary{
-    margin-bottom: 0;
+.header__summary__dropdown .box__summary:not(.sub--total) {
+    border-bottom: 1px solid #f1f1f1;
+    padding-top: 10px;
+    margin-bottom: 10px;
+    border-radius: 0;
 }
 .header__summary__dropdown .box__summary--body{
     padding-bottom: 10px;
@@ -3701,7 +3731,218 @@ padding-left: 0;
 
 
 }
+/*================ THANKS YOU PAGE============*/
+.bk__amy{
+    max-width: 120px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+}
+.bk__notice .title{
+    font-family: jambono;
+    font-weight: normal;
+    color: red;
+    text-align: center;
+    font-size: 20px;
+}
+.flight-box-noti {
+    max-width: 360px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.bk__notice p{
+    text-align: center;
+}
+.box-flight-detail-information .flight__booking__infomation{
+    background-color: #ffff;
+    padding: 30px 0
+}
+.flight__booking__infomation--inner{
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.flight__booking__info_qr{
+    width: 220px;
+}
+.flight__booking__info__text{
+    flex: 1;
+    flex-basis: calc(100% - 220px);
+    padding-top: 10px;
+}
+.flight__booking__info__text ins{
+    text-decoration: none;
+    color: red;
+    font-weight: bold;
+}
+.flight__booking__info__text .sub__total .price__label{
+   font-size: 13px;
+}
+.flight__booking__info__text .sub__total p{
+    margin-bottom: 0;
+}
+.bk__info-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+}
+.bk__info-list li {
+    margin-bottom: 15px;
+    max-width: 380px;
+}
+.bk__info-list li:first-of-type{
+    width: 100%;
+    flex-basis: 100%;
+}
+.bk__info-list li + li{
+    width: 50%;
+}
+.bk__info-list p{
+    margin-bottom: 0;
+}
+.bk__info-list p.label{
+    font-size: 13px;
+    line-height: 1.3;
+}
+.bk__info-list p.value{
+    font-weight: bold;
+    line-height: 1.3;
+    word-break: break-word;
+}
+.bk__info--pnr p.value{
+    color: red
+}
+.bk__info-list p.value span.local-text{
+    font-size: 13px;
+    display: block;
+    font-weight: normal;
+}
+.flight__options--body-review{
+    background-color: #fff;
+    padding: 30px 20px 10px
+}
+.flight-info-review{
+    border: 1px solid #f1f1f1;
+}
+.flight__sector__title .sub-title{
+    font-size: 18px;
+    font-weight: bold;
+}
+.flight-info-review .flight-option-price p.price ins{
+    font-size: 20px;
+}
+.flight-info-review ins .currency-symbol{
+    font-size: 16px;
+}
+.flight-info-review .flight-option-top .flight-option-time{
+    font-size: 24px;
+}
+.flight__summary-section--inner{
+    padding: 30px 20px 10px;
+    background-color: #fff;
+}
+.flight__summary-section--inner .box__summary {
+    border-radius: 0;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+.flight__summary-section--inner .box__summary:not(:last-of-type){
+    border-bottom: 1px solid #f1f1f1;
+}
 
+.trip__section--info,
+.flight__summary-section--inner .box__summary.sub--total{
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.trip__section--info .trip__section--info-detail, 
+.trip__section--info-header{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+}
+.trip__section--info-header p{
+   text-transform: uppercase;
+   font-weight: bold;
+   margin-bottom: 0;
+}
+
+.trip__section--info .box__summary--details{
+    flex: 1;
+    padding-left: 30px;
+}
+.box__summary--stack--body ul {
+    padding-left: 0;
+}
+.box__summary--details .box__summary--inner--body{
+    max-width: 360px;
+}
+.box__summary--label.sm-vertical .summary-destination{
+    position: relative;
+}
+.box__summary--label.sm-vertical .summary-destination span{
+    display: block;
+}
+.box__summary--label.sm-vertical .summary-destination span.title-location{
+    padding-left: 25px;
+}
+.box__summary--label.sm-vertical .summary-destination span.title-location:first-of-type{
+    margin-bottom: 30px;
+}
+.sm-vertical .summary-destination::after{
+    content: "";
+    position: absolute;
+    width: 1px;
+    background: #f1f1f1;
+    top: 10px;
+    bottom: 10px;
+    left: 11px;
+}
+.summary-destination .sm-ic{
+   
+    position: absolute;
+    left: 0;
+    z-index: 2;
+    line-height: 0;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+}
+.summary-destination .sm-ic svg, 
+.summary-destination .sm-ic path{
+    fill: #a4a4a4;
+    width: 16px;
+    height: 16px;
+
+}
+.summary-destination .ic-aircraft{
+    top: 0;
+}
+.summary-subtotal-sector{
+    text-align: right;
+}
+.trip__section--info-detail .box__summary--label{
+    width: 100%;
+    max-width: 180px;
+}
+.trip__section--info-detail .box__summary--inner--body{
+    flex: 1;
+    max-width: 380px;
+}
+.flight__summary-section--inner .sub-total-inner p.summary-value, 
+.header__summary__dropdown .sub-total-inner p.summary-value{
+    background: -webkit-linear-gradient(0deg, #da1a23, #f70e4c, #ff6b6b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
 @keyframes slidingBarOne {
     0%{
 
@@ -3807,9 +4048,6 @@ padding-left: 0;
     }
     .flight-option-top .flight-option-time{
         font-size: 28px;
-    }
-    .flight-option-location-time{
-        width: 100px;
     }
 
     .flight-option-price{
@@ -4025,6 +4263,9 @@ padding-left: 0;
     .flight-option-detail .flight-option-depart .option-label{
         width: 160px;
     }
+    .booking__layout--title .title, .booking__summary-header .title{
+        font-size: 20px;
+    }
     .option-detail-content,
     .flight-option-detail .option-value .city, 
     .flight-option-detail .option-value .time,
@@ -4093,7 +4334,6 @@ padding-left: 0;
      .status__inner .step{
         width: 30px;
         height: 30px;
-        
      }
      .status__inner svg, .status__inner path{
         width: 14px;
@@ -4124,7 +4364,16 @@ padding-left: 0;
         max-width: 180px;
         height: 45px;
     }
-
+    .flight__summary-section--inner{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .bk__notice p{
+        font-size: 14px
+    };
+    .bk__notice .title{
+        font-size: 18px;
+    }
 }
 @media screen and (max-width: 767.98px) {
     .form__group{
@@ -4200,11 +4449,11 @@ padding-left: 0;
         justify-content: space-between
     }
     .flight-option-icon .icon-flight{
-        width: 20px;
-        height: 20px;
+        width: 24px;
+        height: 24px;
     }
     .flight-option-icon svg, .flight-option-icon path{
-        width: 18px;
+        width: 16px;
     }
     .flight-option-types .icon-stop{
         margin-left: 40px;
@@ -4222,9 +4471,7 @@ padding-left: 0;
     .flight-option-detail-inner ul{
         margin-bottom: 10px;
     }
-    .flight-option-detail-inner .option-detail-icon{
 
-    }
     .option-detail-flight-code{
         padding-top: 20px;
     }
@@ -4315,7 +4562,54 @@ padding-left: 0;
      p.box__sector-destination{
         font-size: 13px;
      }
+     .flight__booking__info__text{
+        flex-basis: 100%;
+        max-width: 380px;
+        margin-left: auto;
+        margin-right: auto;
+     }
+     .flight__booking__info_qr{
+        width: 100%;
+        max-width: 140px; 
+        margin-left: auto;
+        margin-right: auto;
+     }
+    .bk__info--pnr{
+        text-align: center;
+    }
+    .bk__info-list li + li{
+        width: 100%;
+        flex-basis: 100%;
+        display: flex;
 
+    }
+    .bk__info-list li + li p.label{
+        width: 120px;
+        text-align: right;
+        padding-right: 10px;
+        margin-top: 3px;
+    }
+    .bk__info-list li + li p.value{
+        flex: 1;
+        flex-basis: calc(100% - 120px);
+    }
+    .flight__booking__info__text .sub__total{
+        text-align: center;
+    }
+    .box-flight-detail-information .flight__booking__infomation{
+        padding-bottom: 15px;
+    }
+    .flight__options--body-review{
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .trip__section--info-detail .box__summary--inner--body{
+        max-width: 100%;
+        flex-basis: 100%;
+    }
+    .bk__amy{
+        max-width: 80px;
+    }
 
 }
 @media screen and (max-width: 575.98px){

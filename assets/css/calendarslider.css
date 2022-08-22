@@ -154,11 +154,11 @@
   
     .bk__calendar--container ul li.selected .name-of-day, 
     .bk__calendar--container ul li.selected .day-format{
-        font-size: 16px;
-        color: #c30c13
+        font-size: 14px;
+
     }
     .bk__calendar--container ul li.selected .day-format{
-        font-size: 13px;
+        font-size: 12px;
 
     }
     .bk__calendar--slider{

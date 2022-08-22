@@ -24,6 +24,26 @@ const app = {
     if (isLocation("flights-payment")) {
       passengers.start(locale);
     }
+
+    this.handleEvents();
+  },
+  handleEvents: function () {
+    //handle summary
+    $(".header__summary").on("click", function (e) {
+      console.log(e.target);
+      const parent = $(this).closest(".header__summary");
+      if (parent.hasClass("expanded")) {
+        if (
+          e.target.closest(".overlay") ||
+          e.target.closest(".header__summary__bar") ||
+          e.target.closest(".btn__summary__close--dropdown")
+        ) {
+          parent.removeClass("expanded");
+        }
+      } else {
+        parent.addClass("expanded");
+      }
+    });
   },
 };
 
