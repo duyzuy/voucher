@@ -455,7 +455,8 @@
             <div class="row justify-content-center">
               <div class="col-12 col-xl-10">
                 <!--------------start flights selections------------------->
-                <div id="booking__layout--flights--depart" class="booking__layout--flights flights--sector">
+                <div id="booking__layout--flights--depart"
+                  class="booking__layout--flights flights--sector flight-selected">
                   <div class="booking__layout--title mb-3">
                     <p class="title">Chuyến đi</p>
                     <h3>
@@ -704,7 +705,7 @@
                     </div>
                     <!----------------- end-item ----------------->
                     <!----------------- start-item ----------------->
-                    <div class="flight-option-item direct">
+                    <div class="flight-option-item selecting direct">
                       <div class="flight-option-bar">
                         <div class="flight-option-top">
                           <div class="flight-option-location-time">
@@ -757,9 +758,13 @@
                               </p>
                             </div>
                             <div class="flight-option-btns">
-                              <button class="btn btn-booking-selecting">
+                              <div class="btn-status">
+                                <i class="bi bi-check"></i>
+                                <span class="status-text">Đã chọn</span>
+                              </div>
+                              <!-- <button class="btn btn-booking-selecting">
                                 Chọn
-                              </button>
+                              </button> -->
                             </div>
                           </div>
                         </div>
@@ -999,7 +1004,7 @@
                   <!-----------------End Calendar start----------------->
                   <div class="booking__layout--flights flight-option-items">
                     <!----------------- start-item ----------------->
-                    <div class="flight-option-item one-stop">
+                    <div class="flight-option-item selecting one-stop">
                       <div class="flight-option-bar">
                         <div class="flight-option-top">
                           <div class="flight-option-location-time">

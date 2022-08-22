@@ -713,14 +713,7 @@ label.form-check-label{
     font-size: 13px;
     color: #7d7d7d
 }
-.body-myaccount__page{
-  
-}
-.table-inform{
-    /* border: 1px solid #f1f1f1;
-    padding: 20px;
-    border-radius: 10px; */
-}
+
 .tbl-row{
     display: flex;
     padding: 10px 0px
@@ -1487,7 +1480,7 @@ button:focus:not(:focus-visible){
     background-color: #fff;
 }
 .booking__form--destination .booking__flight--icon img{
-    opacity: 0.5;
+    opacity: 0.3;
 }
 .booking__form .select2-container .select2-selection--single,
 .trip__date .trip__date--wrap{
@@ -1521,9 +1514,9 @@ button:focus:not(:focus-visible){
     font-weight: 900;
 }
 .booking__form__dropdown .select2-results__group{
-    background-color: #f93355;
+
     padding: 10px 15px;
-    color: #fff;
+    color: #f93355;
     text-transform: uppercase;
 }
 .booking__form__dropdown .citypare__name i,
@@ -2286,8 +2279,10 @@ border-bottom-left-radius: 0 !important;
 .flight-option-item{
     margin-bottom: 30px;
     border-radius: 10px;
+    border: 2px solid transparent;
     overflow: hidden;
 }
+
 
 .flight-option-bar{
     /* background-color: #fff; */
@@ -2611,7 +2606,6 @@ del .currency-symbol{
     overflow: hidden;
     pointer-events: all;
     opacity: 1;
-
 }
 .flight-option-dropdown .dropdown-inner{
     padding: 20px;
@@ -2744,8 +2738,33 @@ del .currency-symbol{
     color: #81d33f;
     font-size: 22px;
 }
-.option-detail-flight-onstop{
-  
+
+.booking__layout--flights.flight-selected .flight-option-item.selecting{
+    border-color: #4caf50;
+}
+.booking__layout--flights.flight-selected .flight-option-item:not(.selecting){
+    display: none;
+    pointer-events: none;
+}
+.btn-status{
+    background-color: #4caf50;
+    display: inline-block;
+    padding: 5px 10px 5px 5px;
+    border-radius: 20px;
+    color: #fff;
+    font-size: 13px;
+}
+.btn-status i{
+    background-color: #fff;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    color: #4caf50;
+    text-align: center;
+    font-size: 18px;
+    float: left;
+    margin-right: 5px;
+    line-height: 1.1;
 }
 .flight-option-onstop p{
     margin-bottom: 0;
@@ -3943,6 +3962,9 @@ padding-left: 0;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.flight-selected{
+
+}
 @keyframes slidingBarOne {
     0%{
 
@@ -4609,6 +4631,10 @@ padding-left: 0;
     }
     .bk__amy{
         max-width: 80px;
+    }
+    .booking__form__wrapper{
+        padding-left: 15px;
+        padding-right: 15px;
     }
 
 }
