@@ -1,7 +1,7 @@
-export function client(url, method = "GET") {
+import { isEmpty } from "../utils/helper.js";
+export function client(url, method, data) {
   return new Promise((resolve, reject) => {
     let xhr = new XMLHttpRequest();
-    const progressBar = document.getElementById("progressBar");
 
     xhr.onreadystatechange = function () {
       if (this.readyState !== 4) return;
@@ -14,24 +14,29 @@ export function client(url, method = "GET") {
         reject("can't get data from async");
       }
     };
-    // xhr.onprogress = (evt) => {
-    //   if (evt.lengthComputable === true) {
-    //     console.log(evt);
-    //     progressBar.style.transition = `all linear ${evt.timeStamp}ms`;
-    //     progressBar.style.width =
-    //       Math.round(evt.loaded / evt.total) * 100 + "%";
-    //   }
-    // };
 
     xhr.open(method, url, true);
-    xhr.send();
+
+    if (data === undefined || isEmpty(data)) {
+      xhr.send();
+    } else {
+      if ("object" === typeof data) {
+        const formData = new FormData();
+        Object.keys(data).forEach((key) => {
+          formData.append(key, data[key]);
+        });
+        xhr.send(formData);
+      } else {
+        throw new Error("data must be object type");
+      }
+    }
   });
 }
 
-client.post = function (url, method = "POST") {
-  return client(url, method);
+client.post = function (url, { method = "POST", body = {} } = {}) {
+  return client(url, method, body);
 };
 
-client.get = function (url, method = "GET") {
-  return client(url, method);
+client.get = function (url, { method = "GET", body = {} } = {}) {
+  return client(url, method, body);
 };

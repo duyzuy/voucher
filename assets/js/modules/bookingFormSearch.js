@@ -1,7 +1,7 @@
 import { constants, bookingInformation } from "../constants/constant.js";
 import { bookingFormText, dateLocale } from "../translate.js";
 import config, { baseURL, languageId } from "../config.js";
-
+import { client } from "../api/client.js";
 const tripDeparture = $("#trip__departure");
 const tripReturn = $("#trip__return");
 const tripDate = $("#trip__date");
@@ -355,9 +355,14 @@ const bookingFormSearch = {
       }
     });
 
-    //handle check promoCode
+    /**
+     *
+     * Handle async check code valid
+     * @params promoCode
+     *
+     */
 
-    promoCodeForm.on("click", ".btn-apply-voucher", function (e) {
+    promoCodeForm.on("click", ".btn-apply-voucher", async function (e) {
       const promoCodecheck = bookingForm.find(
         `input[name="promoCodeInputCheck"]`
       );
@@ -368,24 +373,40 @@ const bookingFormSearch = {
           .text("Ma khuyen mai khong duoc de trong");
         return;
       }
+      const codeCheckURL =
+        baseURL + "?languageId=a6ca5a9f-6a9c-4f35-bf1c-c42ea3d62f14";
 
-      //call api check
+      //ajax call api check
+      const promoCodeValue = promoCodecheck.val();
+      try {
+        const response = await client.get(codeCheckURL, {
+          body: {
+            promoCode: promoCodeValue,
+          },
+        });
 
-      //if valid code
-      if (true) {
-        const codeValid = promoCodecheck.val();
-        inputPromoHidden.val(codeValid);
-        promoCodeForm
-          .find(".promocode__mask")
-          .append(
-            `<span class="code-valid">${codeValid} <i class="bi bi-x removeCode"></i></span>`
-          );
-        _this.bookingInform.promoCode = codeValid;
-        $("body").removeAttr("style");
+        //if response code valid
+        if (response.status) {
+          inputPromoHidden.val(promoCodeValue);
+          promoCodeForm
+            .find(".promocode__mask")
+            .append(
+              `<span class="code-valid">${promoCodeValue} <i class="bi bi-x removeCode"></i></span>`
+            );
+          _this.bookingInform.promoCode = promoCodeValue;
+          $("body").removeAttr("style");
 
-        promoCodeForm.removeClass("expanded");
-        promoCodeForm.addClass("has-code");
-        promoCodeForm.find(".booking__form--promo--popup").remove();
+          promoCodeForm.removeClass("expanded");
+          promoCodeForm.addClass("has-code");
+          promoCodeForm.find(".booking__form--promo--popup").remove();
+        } else {
+          promoCodecheck.addClass("is-invalid");
+          promoCodeForm
+            .find(".invalid-feedback")
+            .text("Ma khuyen mai khong hop le");
+        }
+      } catch (error) {
+        console.log(error);
       }
     });
 
