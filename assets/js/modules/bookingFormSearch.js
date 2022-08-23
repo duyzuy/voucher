@@ -307,11 +307,92 @@ const bookingFormSearch = {
     });
   },
   onChangePromoCode: function () {
-    const promoCode = bookingForm.find(`input[name="promoCode"]`);
+    const promoPopupTemplate = `<div class="booking__form--promo--popup">
+    <div class="overlay"></div>
+    <div class="promo--popup--wrapper">
+      <div class="promo--verify">
+        <div class="promo--popup--header">
+          <span class="promo-close"><i class="bi bi-x-lg"></i></span>
+          <h3>Nhập mã khuyến mại</h3>
+        </div>
+        <div class="promo--popup--body">
+          <div class="col-auto promo-verify-input">
+            <div class="input-group has-validation mb-3">
+              <label for="promoCodeInputCheck" class="form-label sr-only">Mã Khuyến mại</label>
+              <input class="form-control" name="promoCodeInputCheck" id="promoCodeInputCheck" type="text" placeholder="Mã khuyến mại">
+              <p class="invalid-feedback mb-0"></p>
+            </div>
+            <button type="button" class="btn btn-sm btn-apply-voucher">Áp
+              dụng</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>`;
+    const inputPromoHidden = bookingForm.find(`input[name="promoCode"]`);
 
+    const promoCodeForm = bookingForm.find(".booking__form--promo");
     const _this = this;
-    promoCode.on("change", function (e) {
-      _this.bookingInform.promoCode = e.target.value;
+
+    //handle on/of popup
+    promoCodeForm.on("click", function (e) {
+      if ($(this).hasClass("has-code")) return;
+
+      //close and remove popup promoform
+      if (!$(this).hasClass("expanded")) {
+        if (e.target.closest(".removeCode")) return;
+        $(this).addClass("expanded");
+        promoCodeForm
+          .find(".booking__form--promo--inner")
+          .append(promoPopupTemplate);
+        $("body").attr("style", "overflow-y: hidden");
+      } else {
+        if (e.target.closest(".overlay") || e.target.closest(".promo-close")) {
+          $("body").removeAttr("style");
+          $(this).removeClass("expanded");
+          promoCodeForm.find(".booking__form--promo--popup").remove();
+        }
+      }
+    });
+
+    //handle check promoCode
+
+    promoCodeForm.on("click", ".btn-apply-voucher", function (e) {
+      const promoCodecheck = bookingForm.find(
+        `input[name="promoCodeInputCheck"]`
+      );
+      if (promoCodecheck.val() === "" || promoCodecheck.val() === null) {
+        promoCodecheck.addClass("is-invalid");
+        promoCodeForm
+          .find(".invalid-feedback")
+          .text("Ma khuyen mai khong duoc de trong");
+        return;
+      }
+
+      //call api check
+
+      //if valid code
+      if (true) {
+        const codeValid = promoCodecheck.val();
+        inputPromoHidden.val(codeValid);
+        promoCodeForm
+          .find(".promocode__mask")
+          .append(
+            `<span class="code-valid">${codeValid} <i class="bi bi-x removeCode"></i></span>`
+          );
+        _this.bookingInform.promoCode = codeValid;
+        $("body").removeAttr("style");
+
+        promoCodeForm.removeClass("expanded");
+        promoCodeForm.addClass("has-code");
+        promoCodeForm.find(".booking__form--promo--popup").remove();
+      }
+    });
+
+    promoCodeForm.on("click", ".removeCode", function (e) {
+      promoCodeForm.find(".promocode__mask").html("");
+      promoCodeForm.removeClass("has-code");
+      inputPromoHidden.val("");
     });
   },
   onSearchFlight: function () {

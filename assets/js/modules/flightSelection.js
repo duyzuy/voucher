@@ -212,9 +212,9 @@ const flightSelection = {
 
           try {
             slider.setLoading(true);
-            flightOptionsReturn
-              .find(".booking__layout--flights")
-              .html(loadingTemplate());
+            // flightOptionsReturn
+            //   .find(".booking__layout--flights")
+            //   .html(loadingTemplate());
             const [airportData, flightOptions] = await asyncData(lang);
 
             airportData && airportData.status === true
@@ -257,10 +257,10 @@ const flightSelection = {
               _this.bookingInformation.travelOption[returnTripCode],
               _this.airportGroups
             );
-            flightOptionsReturn.find(".booking__layout--flights").html("");
-            for (const fl of flightList) {
-              flightOptionsReturn.find(".booking__layout--flights").append(fl);
-            }
+            // flightOptionsReturn.find(".booking__layout--flights").html("");
+            // for (const fl of flightList) {
+            //   flightOptionsReturn.find(".booking__layout--flights").append(fl);
+            // }
             // _this.viewScrollShowing();
           }
         });

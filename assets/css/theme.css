@@ -293,7 +293,7 @@ h1{
     background-color: #fff;
 }
 .form-control{
-    border-radius: 8px;
+    border-radius: 5px;
     padding: 10px 15px; 
 }
 .form-select{
@@ -1852,10 +1852,86 @@ border-bottom-left-radius: 0 !important;
     border-color: #c30c13 !important;
     color: #c30c13;
 }
+.booking__form--promo--inner{
+    position: relative;
+}
+
+.booking__form--promo--popup{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 999;
+    pointer-events: none;
+}
+
+.booking__form--promo .promo-verify-input input{
+    padding: 5px 15px;
+    border-width: 1px;
+    border-radius: 5px;
+    border-top-left-radius: 5px !important;
+    border-bottom-left-radius: 5px !important;
+}
+.promo--popup--header h3{
+    margin-bottom: 15px;
+    font-size: 20px;
+}
+.promo--popup--header .promo-close{
+    width: 40px;
+    height: 40px;
+    text-align: center;
+    position: absolute;
+    right: 0;
+    top: 0;
+    line-height: 40px;
+    cursor: pointer;
+}
 .booking__form--promo{
     padding-right: 15px;
     width: 30%;
 }
+.overlay{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color: rgb(0 0 0 / 60%);
+    opacity: 0;
+    transition: all linear 320ms
+}
+.promo--popup--wrapper{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: all linear 320ms;
+
+}
+.promo--popup--wrapper .promo--verify{
+
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-width: 450px;
+    background-color: #fff;
+    padding: 15px 20px;
+    border-radius: 5px;
+}
+.form-control.is-invalid, .was-validated .form-control:invalid{
+    border-color: #dc3545;
+}
+.btn-apply-voucher, 
+.btn-apply-voucher:hover,
+.btn-apply-voucher:active, 
+.btn-apply-voucher:focus{
+    border: 1px solid #ff9800;
+    color: #ff9800 !important
+}
+.booking__form--promo
 .booking__form--control{
     background-color:#fff;
     display: flex;
@@ -1876,39 +1952,53 @@ border-bottom-left-radius: 0 !important;
 .booking__form--control .booking__form--control--input{
     position: relative;
 }
+.has-code label{
+    display: none;
+    opacity: 0;
+}
 .booking__form--control .booking__form--control--input label{
     position: absolute;
     margin-bottom: 0;
-    height: 20px;
+    height: 24px;
     left: 0;
-    top: calc(50% - 13px)
+    top: calc(50% - 12px);
+    font-weight: normal;
+    cursor: pointer;
+}
+.promocode__mask{
+
+}
+.promocode__mask .code-valid{
+    font-weight: bold;
+    color: green;
+}
+.code-valid i{
+    margin-left: 5px;
+    background-color: #ced4da;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    text-align: center;
+    line-height: 16px;
+    border-radius: 50%;
+    color: #000;
+    font-size: 12px;
+    opacity: 0.5;
 }
 .booking__form--control .booking__form--control--input{
     width: 100%;
 }
-.booking__form--promo input{
-    border-width: 0;
-    height: 40px;
-    padding: 0;
-    font-weight: bold;
-    font-weight: bold;
-    text-transform: uppercase;
-    width: 100%;
+.booking__form--promo.expanded .overlay,
+.booking__form--promo.expanded .promo--popup--wrapper{
+    opacity: 1;
 }
-.booking__form--promo .form-control::placeholder{
-    font-weight: normal;
-    text-transform: initial;
-    color: #000;
+.booking__form--promo.expanded .booking__form--promo--popup{
+    pointer-events: all;
+}
+.booking__form--promo .booking__form--control{
+    cursor: pointer;
+}
 
-}
-.booking__form--promo  ::-ms-input-placeholder{
-
-    color: #000;
-}
-.booking__form--promo :-ms-input-placeholder{
-
-    color: #000;
-}
 .booking__form--control--input input:focus ~ label,
 .booking__form--control--input input:not(:empty) ~ label{
 
@@ -2746,8 +2836,16 @@ del .currency-symbol{
     display: none;
     pointer-events: none;
 }
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-infor:before, 
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-infor:after{
+
+}
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-price:before, 
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-price:after{
+
+}
 .btn-status{
-    background-color: #4caf50;
+    background: linear-gradient(3deg, #217e05, #0dcb15);
     display: inline-block;
     padding: 5px 10px 5px 5px;
     border-radius: 20px;
