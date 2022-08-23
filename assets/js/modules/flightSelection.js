@@ -6,7 +6,12 @@ import {
   constants,
 } from "../constants/constant.js";
 import config, { baseURL, languageId } from "../config.js";
-import { isExistsInput, dateFormat, getScheduleTime } from "../utils/helper.js";
+import {
+  isExistsInput,
+  dateFormat,
+  getScheduleTime,
+  isEmpty,
+} from "../utils/helper.js";
 import { dateLocale } from "../translate.js";
 import { client } from "../api/client.js";
 
@@ -29,6 +34,10 @@ const flightSelection = {
   },
   currentStack: "",
   constant: constants,
+  actionType: {
+    ADD: "add",
+    REMOVE: "remove",
+  },
   start: function (locale) {
     const _this = this;
     this.setDefault(locale);
@@ -42,6 +51,7 @@ const flightSelection = {
     );
 
     this.handleEvent();
+    this.handleSelectFlight();
   },
   setDefault: function ({ locale }) {
     this.bookingInformation.locale = locale;
@@ -139,9 +149,9 @@ const flightSelection = {
           };
           try {
             slider.setLoading(true);
-            // flightOptionsDepart
-            //   .find(".booking__layout--flights")
-            //   .html(loadingTemplate());
+            flightOptionsDepart
+              .find(".booking__layout--flights")
+              .html(loadingTemplate());
             const [airportData, flightOptions] = await asyncData(lang);
 
             airportData && airportData.status === true
@@ -181,12 +191,14 @@ const flightSelection = {
             );
             const flightList = _this.flightItemsOptions(
               _this.bookingInformation.travelOption[departTripCode],
-              _this.airportGroups
+              _this.airportGroups,
+              departTripCode,
+              constants.DEPARTURE
             );
-            // flightOptionsDepart.find(".booking__layout--flights").html("");
-            // for (const fl of flightList) {
-            //   flightOptionsDepart.find(".booking__layout--flights").append(fl);
-            // }
+            flightOptionsDepart.find(".booking__layout--flights").html("");
+            for (const fl of flightList) {
+              flightOptionsDepart.find(".booking__layout--flights").append(fl);
+            }
           }
         });
 
@@ -255,7 +267,9 @@ const flightSelection = {
             );
             const flightList = _this.flightItemsOptions(
               _this.bookingInformation.travelOption[returnTripCode],
-              _this.airportGroups
+              _this.airportGroups,
+              returnTripCode,
+              constants.RETURN
             );
             flightOptionsReturn.find(".booking__layout--flights").html("");
             for (const fl of flightList) {
@@ -265,7 +279,7 @@ const flightSelection = {
           }
         });
   },
-  flightItemsOptions: function (flightOptions, airportData) {
+  flightItemsOptions: function (flightOptions, airportData, flightT, sector) {
     let type;
     let departDate,
       promoCodeApplicability,
@@ -276,7 +290,7 @@ const flightSelection = {
       numberOfStops;
 
     let flightListHtml = [];
-    flightOptions.forEach((fl) => {
+    flightOptions.forEach((fl, indFl) => {
       let classes = "";
       classes =
         fl.numberOfChanges === 0 ? constants.DIRECT : constants.ONE_STOP;
@@ -336,6 +350,9 @@ const flightSelection = {
           departDate,
           type,
           flights,
+          journey: flightT,
+          index: indFl,
+          sector,
         })
       );
     });
@@ -345,6 +362,15 @@ const flightSelection = {
   flightItem: function (data) {
     const flightOptionItem = document.createElement("div");
     flightOptionItem.classList.add("flight-option-item");
+    flightOptionItem.setAttribute("data-journey", data.journey);
+    flightOptionItem.setAttribute("data-index", data.index);
+    flightOptionItem.setAttribute("data-sector", data.sector);
+    /**
+     *
+     * more data to handle on javascript when click select flight
+     * @params data-flight
+     *
+     */
 
     const flightOptionBar = document.createElement("div");
     flightOptionBar.classList.add("flight-option-bar");
@@ -654,7 +680,97 @@ const flightSelection = {
     flightOptionItem.append(flightOptionDropdown);
     return flightOptionItem;
   },
-  handleSelectFlight: function () {},
+  handleSelectFlight: function () {
+    const _this = this;
+
+    const selectFlightOption = (e, action) => {
+      e.preventDefault();
+
+      if (action === _this.actionType.ADD) {
+        const item = e.target.closest(".flight-option-item");
+        const flightIndex = $(item).data("index"),
+          flightJourney = $(item).data("journey"),
+          sector = $(item).data("sector");
+
+        const keyType =
+          sector === constants.DEPARTURE
+            ? "departureSelected"
+            : "returnSelected";
+
+        _this.bookingInformation[keyType] = {
+          ..._this.bookingInformation[keyType],
+          index: flightIndex,
+          journey: flightJourney,
+        };
+
+        updateViewSelectedItem(sector, action);
+      }
+
+      if (action === _this.actionType.REMOVE) {
+        const sector = $(e.target).data("sector");
+
+        const keyType =
+          sector === constants.DEPARTURE
+            ? "departureSelected"
+            : "returnSelected";
+
+        $(e.target)
+          .closest(".booking__layout--flights")
+          .removeClass("flight-selected");
+
+        updateViewSelectedItem(sector, action);
+      }
+
+      console.log(_this.bookingInformation);
+    };
+
+    const updateViewSelectedItem = (sector, action) => {
+      if (sector === undefined || sector === "") return;
+      const flightSector =
+        sector === constants.DEPARTURE
+          ? $("#booking__layout--flights--depart")
+          : $("#booking__layout--flights--return");
+      const flightItems = flightSector.find(".flight-option-item");
+
+      flightItems.each((index, item) => {
+        if ($(item).hasClass("selecting")) {
+          $(item).removeClass("selecting");
+          $(item).find(".flight-option-btns")
+            .html(`<button class="btn btn-booking-selecting" type="button">
+            Chọn
+          </button>`);
+        }
+      });
+
+      if (action === _this.actionType.ADD) {
+        flightSector.addClass("flight-selected");
+        $(flightItems[_this.bookingInformation.returnSelected.index]).addClass(
+          "selecting"
+        );
+        $(flightItems[_this.bookingInformation.returnSelected.index]).find(
+          ".flight-option-btns"
+        ).html(`<div class="btn-status">
+          <i class="bi bi-check"></i>
+          <span class="status-text">Đã chọn</span>
+        </div>`);
+      }
+      if (action === _this.actionType.REMOVE) {
+        flightSector.removeClass("flight-selected");
+      }
+    };
+
+    updateViewSelectedItem();
+
+    $(
+      "#booking__layout--flights--depart .booking__layout--flights, #booking__layout--flights--return .booking__layout--flights"
+    ).on("click", ".btn-booking-selecting", (e) =>
+      selectFlightOption(e, "add")
+    );
+
+    $(
+      "#booking__layout--flights--depart, #booking__layout--flights--return"
+    ).on("click", ".btn-reselecting", (e) => selectFlightOption(e, "remove"));
+  },
   handleEvent: function () {
     /*
      *

@@ -73,8 +73,16 @@ export const bookingInformation = {
   sessionId: "",
   sessionExpIn: "",
   travelOption: {},
-  returnSelected: {},
-  departureSelected: {},
+  returnSelected: {
+    index: "",
+    journey: "",
+    flight: [],
+  },
+  departureSelected: {
+    index: "",
+    journey: "",
+    flight: [],
+  },
 };
 
 export const airportDataGroup = [];
