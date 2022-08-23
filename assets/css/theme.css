@@ -2846,7 +2846,14 @@ del .currency-symbol{
     display: none;
 }
 .booking__layout--flights.flight-selected .flight-option-item.selecting{
-    border-color: #4caf50;
+    border-color: green;
+}
+
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-price:after, 
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-price:before, 
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-infor:after, 
+.booking__layout--flights.flight-selected .flight-option-item.selecting .flight-option-infor:before{
+    background-color: green;
 }
 .booking__layout--flights.flight-selected .flight-option-item:not(.selecting){
     display: none;
@@ -2874,23 +2881,22 @@ del .currency-symbol{
     margin-right: 5px;
 }
 .btn-status{
-    background: linear-gradient(3deg, #217e05, #0dcb15);
+   
     display: inline-block;
-    padding: 5px 10px 5px 5px;
     border-radius: 20px;
-    color: #fff;
+    color: green;
     font-size: 13px;
 }
 .btn-status i{
-    background-color: #fff;
+    background-color: green;
     width: 20px;
     height: 20px;
     border-radius: 50%;
-    color: #4caf50;
+    color: #fff;
     text-align: center;
     font-size: 18px;
-    float: left;
-    margin-right: 5px;
+    float: right;
+    margin-left: 5px;
     line-height: 1.1;
 }
 .flight-option-onstop p{

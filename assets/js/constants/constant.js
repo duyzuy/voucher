@@ -28,6 +28,14 @@ export const status = {
   PENDING: "pending",
   LOADING: "loading",
 };
+export const actions = {
+  ADD: "add",
+  REMOVE: "remove",
+  DELETE: "delete",
+  EDIT: "edit",
+  UPDATE: "update",
+  CREATE: "create",
+};
 export const bkInforKey = {
   TripType: "tripType",
   Depart: "departCode",
@@ -39,7 +47,7 @@ export const bkInforKey = {
   Promotion: "promoCode",
   Locale: "locale",
   TravelOption: "travelOption",
-  DepartureSelected: "returnSelected",
+  DepartureSelected: "departureSelected",
   ReturnSelected: "returnSelected",
   Adult: "adult",
   Children: "children",

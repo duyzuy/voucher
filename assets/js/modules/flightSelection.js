@@ -4,6 +4,7 @@ import {
   bookingInformation,
   bkInforKey,
   constants,
+  actions,
 } from "../constants/constant.js";
 import config, { baseURL, languageId } from "../config.js";
 import {
@@ -694,8 +695,8 @@ const flightSelection = {
 
         const keyType =
           sector === constants.DEPARTURE
-            ? "departureSelected"
-            : "returnSelected";
+            ? bkInforKey.DepartureSelected
+            : bkInforKey.ReturnSelected;
 
         _this.bookingInformation[keyType] = {
           ..._this.bookingInformation[keyType],
@@ -711,8 +712,10 @@ const flightSelection = {
 
         const keyType =
           sector === constants.DEPARTURE
-            ? "departureSelected"
-            : "returnSelected";
+            ? bkInforKey.DepartureSelected
+            : bkInforKey.ReturnSelected;
+
+        _this.bookingInformation[keyType] = {};
 
         $(e.target)
           .closest(".booking__layout--flights")
@@ -730,6 +733,11 @@ const flightSelection = {
         sector === constants.DEPARTURE
           ? $("#booking__layout--flights--depart")
           : $("#booking__layout--flights--return");
+
+      const keyType =
+        sector === constants.DEPARTURE
+          ? bkInforKey.DepartureSelected
+          : bkInforKey.ReturnSelected;
       const flightItems = flightSector.find(".flight-option-item");
 
       flightItems.each((index, item) => {
@@ -744,10 +752,10 @@ const flightSelection = {
 
       if (action === _this.actionType.ADD) {
         flightSector.addClass("flight-selected");
-        $(flightItems[_this.bookingInformation.returnSelected.index]).addClass(
+        $(flightItems[_this.bookingInformation[keyType].index]).addClass(
           "selecting"
         );
-        $(flightItems[_this.bookingInformation.returnSelected.index]).find(
+        $(flightItems[_this.bookingInformation[keyType].index]).find(
           ".flight-option-btns"
         ).html(`<div class="btn-status">
           <i class="bi bi-check"></i>
